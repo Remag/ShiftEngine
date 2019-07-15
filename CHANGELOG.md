@@ -1,3 +1,10 @@
+
+
+==========================================================
+
+Original I Wanna Be The Engine: viri edition changelog
+==========================================================
+
 ### v1.04
 - Made the screen edge kill you on your X/Y intersect now (as with other games)
 - Added screenwrap option on either axis (VVVVVV style)
