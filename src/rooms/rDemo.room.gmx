@@ -60,8 +60,6 @@
     <instance objName="oBlock" x="96" y="448" name="inst_B428D824" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oPlatform" x="160" y="416" name="inst_23D65B47" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oPlatform" x="256" y="384" name="inst_D6F5726C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="384" y="256" name="inst_4B6CE443" locked="0" code="Group = 1;&#xA;Dir = 210;&#xA;Spd = 27;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="&lt;undefined&gt;" x="64" y="416" name="inst_024DE77B" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="736" y="512" name="inst_D29B3112" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="736" y="544" name="inst_65C20759" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="704" y="544" name="inst_33A55F1D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

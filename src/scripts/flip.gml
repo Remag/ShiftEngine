@@ -3,7 +3,7 @@
 
 with( oPlayer ) {
     GravityDir = -GravityDir;
-    if( global.giveDjumpOnFlip ) {
+    if( global.GiveDjumpOnFlip ) {
         Djump = true;
     }
     vspeed = 0;

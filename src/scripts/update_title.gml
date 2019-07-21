@@ -3,9 +3,9 @@
 var d, h, m, s, t, c;
 
 // Current time elapsed (per-save).
-t = global.time; 
+t = global.Time;
 // Caption Template.
-c = global.windowCap; 
+c = global.WindowCap; 
 
 // Seconds in an hour.
 h = string( floor( t / 3600 ) );
@@ -22,7 +22,7 @@ t %= 10;
 // Seconds (Second Digit)
 s += string( floor( t ) ); 
 
-c = string_replace( c, "%D", string( global.death ) ); // Match %D with Deaths
+c = string_replace( c, "%D", string( global.Death ) ); // Match %D with Deaths
 c = string_replace( c, "%H", string( h ) ); // Match %H with Hours
 c = string_replace( c, "%M", string( m ) ); // Match %M with Minutes
 c = string_replace( c, "%S", string( s ) ); // Match %S with Seconds

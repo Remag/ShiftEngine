@@ -1,10 +1,10 @@
 /// die()
 // Kills the calling player
 
-global.death++;
+global.Death++;
 update_title();
-if( global.saveData[? "started"] ) {
-    save( false );
+if( !get_game_value( "engine.freshSave" ) ) {
+    save_stats();
 }
 play_sound( seDeath );
 var emitter = instance_create( x, y, oPlayerBloodEmitter );

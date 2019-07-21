@@ -45,9 +45,9 @@ set_mask();
 Dir = 1;
 
 // Autosaving
-if( global.autosave ) {
-    save( true );
-    global.autosave = false;
+if( global.Autosave ) {
+    save_game();
+    global.Autosave = false;
 }
 
 // Custom sprites should be set here
@@ -84,7 +84,7 @@ sprite_index = SIdle; // Ensuring it's the right sprite from creation
             <string>/// Debug: Change V-Align
 
 if( !Frozen ) {
-    if( global.debug &amp;&amp; keyboard_check_pressed( global.k_debug_valign ) ) {
+    if( global.Debug &amp;&amp; keyboard_check_pressed( global.VAlignDebugKeyBind ) ) {
         var vf = floor( y );
         var va = y - vf;
         var newVa = get_integer( "New V-Align:", va );
@@ -121,12 +121,12 @@ if( !Frozen ) {
 var h = 0; // Default (player not moving)
 
 // Checking input.
-if( global.lrAnywhere ) {
-    L = keyboard_check_direct( global.k_left );
-    R = keyboard_check_direct( global.k_right );
+if( global.LrAnywhere ) {
+    L = keyboard_check_direct( global.LeftKeyBind );
+    R = keyboard_check_direct( global.RightKeyBind );
 } else {
-    L = keyboard_check( global.k_left );
-    R = keyboard_check( global.k_right );
+    L = keyboard_check( global.LeftKeyBind );
+    R = keyboard_check( global.RightKeyBind );
 }
 
 if( !Frozen ) {
@@ -188,6 +188,60 @@ if( abs( vspeed ) &gt; Vscap ) {
     vspeed = sign(vspeed) * Vscap; 
 }
 
+// Player controlled movement.
+if( !Frozen ) {
+    if( global.Debug ) {
+        if( global.AdTrick &amp;&amp; floorBlock != noone ) {
+            if( keyboard_check_pressed( ord( "A" ) ) ) {
+                hspeed -= 1;
+            } else if( keyboard_check_pressed( ord( "D" ) ) ) {
+                hspeed += 1;
+            }
+        }
+        if( keyboard_check( global.DragDebugKeyBind ) || mouse_check_button( global.DragMouseDebugKeyBind ) ) {
+            x = mouse_x; 
+            y = mouse_y; 
+            vspeed = 0;
+        }
+    }
+    if( keyboard_check_pressed( global.JumpKeyBind ) ) {
+        var aboveBlock = ( floorBlock != noone );
+        var abovePlatform = place_meeting( x, y + GravityDir, oPlatform );
+        var touchingWater1 = inWater1 || place_meeting( x, y + GravityDir, oWater1 );
+        var touchingWater2 = inWater2 || place_meeting( x, y + GravityDir, oWater2 );
+        var touchingWater3 = inWater3 || place_meeting( x, y + GravityDir, oWater3 );
+        if( OnPlatform || abovePlatform || aboveBlock || touchingWater1 ) {
+            vspeed = -Jump1; // First jump
+            Djump = true; // Make sure you can djump afterwards
+            play_sound( seJump ); // Jump sound
+        } else if( Djump || global.InfiniteJump || touchingWater2 || touchingWater3 ) { 
+            Djump = touchingWater3;
+            vspeed = -Jump2; // Doublejump
+            sprite_index = SJump; // Jumping sprite
+            play_sound( seJump2 ); // Djump sound
+        }
+    }
+    if( keyboard_check_released( global.JumpKeyBind ) ) {
+        if( vspeed * GravityDir &lt; 0 ) {
+            // Jump released
+            vspeed *= 0.45; 
+        }
+    }
+    if( keyboard_check_pressed( global.ShootKeyBind ) ) {
+        if( instance_number( oBullet ) &lt; global.BulletCap ) {
+            with( instance_create( x, y, oBullet ) ) { // Create bullet
+                Shooter = other.id;
+                hspeed = other.Dir * 16; // Set speed (16px/f)
+                alarm[0] = 40; // Destroy in 40 frames
+                play_sound( seShoot ); // Play sound
+            }
+        }
+    }
+    if( global.CanSuicide &amp;&amp; keyboard_check_pressed( global.SuicideKeyBind ) ) {
+        die();
+    }
+}
+
 if( onVineL || onVineR ) {
     // Setting (inverse) player direction.
     if( onVineR ) {
@@ -201,10 +255,10 @@ if( onVineL || onVineR ) {
     sprite_index = SSlide; 
     image_speed = 0.5;
     
-    if( ( onVineL &amp;&amp; keyboard_check_pressed( global.k_right ) ) ||
-        ( onVineR &amp;&amp; keyboard_check_pressed( global.k_left ) ) )
+    if( ( onVineL &amp;&amp; keyboard_check_pressed( global.RightKeyBind ) ) ||
+        ( onVineR &amp;&amp; keyboard_check_pressed( global.LeftKeyBind ) ) )
     {
-        if( keyboard_check( global.k_jump ) ) {
+        if( keyboard_check( global.JumpKeyBind ) ) {
             // Jumping off from vines.
             // Jumpoff hspeed.
             if( onVineR ) {
@@ -230,59 +284,6 @@ if( onVineL || onVineR ) {
     }
 }
 
-if( !Frozen ) {
-    if( global.debug ) {
-        if( global.adTrick &amp;&amp; floorBlock != noone ) {
-            if( keyboard_check_pressed( ord( "A" ) ) ) {
-                hspeed -= 1;
-            } else if( keyboard_check_pressed( ord( "D" ) ) ) {
-                hspeed += 1;
-            }
-        }
-        if( keyboard_check( global.k_debug_drag ) || mouse_check_button( global.k_debug_dragmouse ) ) {
-            x = mouse_x; 
-            y = mouse_y; 
-            vspeed = 0;
-        }
-    }
-    if( keyboard_check_pressed( global.k_jump ) ) {
-        var aboveBlock = ( floorBlock != noone );
-        var abovePlatform = place_meeting( x, y + GravityDir, oPlatform );
-        var touchingWater1 = inWater1 || place_meeting( x, y + GravityDir, oWater1 );
-        var touchingWater2 = inWater2 || place_meeting( x, y + GravityDir, oWater2 );
-        var touchingWater3 = inWater3 || place_meeting( x, y + GravityDir, oWater3 );
-        if( OnPlatform || abovePlatform || aboveBlock || touchingWater1 ) {
-            vspeed = -Jump1; // First jump
-            Djump = true; // Make sure you can djump afterwards
-            play_sound( seJump ); // Jump sound
-        } else if( Djump || global.infiniteJump || touchingWater2 || touchingWater3 ) { 
-            Djump = touchingWater3;
-            vspeed = -Jump2; // Doublejump
-            sprite_index = SJump; // Jumping sprite
-            play_sound( seJump2 ); // Djump sound
-        }
-    }
-    if( keyboard_check_released( global.k_jump ) ) {
-        if( vspeed * GravityDir &lt; 0 ) {
-            // Jump released
-            vspeed *= 0.45; 
-        }
-    }
-    if( keyboard_check_pressed( global.k_shoot ) ) {
-        if( instance_number( oBullet ) &lt; global.bulletCap ) {
-            with( instance_create( x, y, oBullet ) ) { // Create bullet
-                Shooter = other.id;
-                hspeed = other.Dir * 16; // Set speed (16px/f)
-                alarm[0] = 40; // Destroy in 40 frames
-                play_sound( seShoot ); // Play sound
-            }
-        }
-    }
-    if( global.canSuicide &amp;&amp; keyboard_check_pressed( global.k_suicide ) ) {
-        die();
-    }
-}
-
 // Water Physics
 if( inWater1 || inWater2 || inWater3 ) {
     if( vspeed * GravityDir &gt; 2 ) {
@@ -291,7 +292,7 @@ if( inWater1 || inWater2 || inWater3 ) {
 }
 
 // Room Edge - Death, Switching or Wrapping
-if( global.wrapPlayerX ) {
+if( global.WrapPlayerX ) {
     while( x &gt; room_width ) {
         x -= room_width;
     }
@@ -299,7 +300,7 @@ if( global.wrapPlayerX ) {
         x += room_width;
     }
 }
-if( global.wrapPlayerY ) {
+if( global.WrapPlayerY ) {
     while( y &gt; room_height ) {
         y -= room_height;
     }
@@ -309,7 +310,7 @@ if( global.wrapPlayerY ) {
 }
 
 // Check for screen edge.
-if( global.killPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt; room_height || y &lt; 0 ) ) {
+if( global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt; room_height || y &lt; 0 ) ) {
     die();
 }
 
@@ -337,7 +338,7 @@ if( global.killPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt;
             <kind>1</kind>
             <string>/// Death
 
-if( !global.god ) {
+if( !global.God ) {
     die();
 }
 
@@ -488,18 +489,18 @@ if( GravityDir == -1 ) {
 
 yd = round( yd ); // crispy GM8-like rounding (mm)
 
-if( global.god ) {
+if( global.God ) {
     alpha = 0.7;
 } else {
     alpha = 1.0;
 }
 
-if( global.drawPlayer ) {
+if( global.DrawPlayer ) {
     draw_sprite_ext( sprite_index, image_index, xd, yd, image_xscale * Dir,
         image_yscale * GravityDir, image_angle, image_blend, alpha );
 }
 
-if( global.drawHitbox ) {
+if( global.DrawHitbox ) {
     draw_sprite_ext( mask_index, image_index, x, y, image_xscale,
         image_yscale, image_angle, image_blend, alpha * 0.8 );
 }

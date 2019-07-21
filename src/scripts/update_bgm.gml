@@ -3,14 +3,14 @@
 // Pass "noone" as music to stop current track.
 
 if( argument0 ) {
-    var vol = audio_sound_get_gain( argument0  ) * global.musicVolume * global.masterVolume;
+    var vol = audio_sound_get_gain( argument0  ) * global.MusicVolume * global.MasterVolume;
     var inst = audio_play_sound( argument0, 0, argument1 );
-    audio_stop_sound( global.instanceBGM );
+    audio_stop_sound( global.InstanceBGM );
     audio_sound_gain( inst, vol, 0 );
-    global.currentBGM = argument0;
-    global.instanceBGM = inst;
+    global.CurrentBGM = argument0;
+    global.InstanceBGM = inst;
 } else {
-    audio_stop_sound( global.instanceBGM );
-    global.currentBGM = noone;
+    audio_stop_sound( global.InstanceBGM );
+    global.CurrentBGM = noone;
 }
 

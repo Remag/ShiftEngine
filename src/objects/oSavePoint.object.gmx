@@ -32,7 +32,7 @@ Grav = image_yscale; // Normal Gravity
 image_speed = 0;
 Cooldown = false;
 
-if( global.difficulty &gt; Difficulty ) {
+if( global.Difficulty &gt; Difficulty ) {
     instance_destroy();
 }
 
@@ -89,23 +89,23 @@ if( !Cooldown &amp;&amp; instance_exists( oPlayer ) ) {
     var touchingBullet = instance_place( x, y, oBullet );
     var isRelevantPlayerTouching = touchingPlayer != noone &amp;&amp; touchingPlayer.GravityDir == Grav;
     
-    var bulletContact = !global.sSaves 
+    var bulletContact = !global.SSaves 
         &amp;&amp; touchingBullet != noone 
         &amp;&amp; instance_exists( touchingBullet.Shooter ) 
         &amp;&amp; touchingBullet.Shooter.GravityDir == Grav;
-    var playerContact = !global.sSaves 
+    var playerContact = !global.SSaves 
         &amp;&amp; isRelevantPlayerTouching 
-        &amp;&amp; keyboard_check( global.k_shoot );
-    var sSaves = global.sSaves 
+        &amp;&amp; keyboard_check( global.ShootKeyBind );
+    var sSaves = global.SSaves 
         &amp;&amp; isRelevantPlayerTouching 
-        &amp;&amp; keyboard_check( global.k_save );
+        &amp;&amp; keyboard_check( global.SaveKeyBind );
         
     if( bulletContact || playerContact || sSaves ) {
        Cooldown = true;
        alarm[0] = 30;
        image_index = 1;
        image_speed = 0.017;
-       save( true ); 
+       save_game(); 
     }
 }   
 

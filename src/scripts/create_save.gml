@@ -1,18 +1,17 @@
 /// create_save()
 // Fills up savefile with default values
-// Value "started" determines if you actually saved in it once
-// If the game is not "started" it will start from the first room instead
+// Value "freshSave" determines if you actually saved in it once.
 
-global.saveData = ds_map_create();
-ds_map_add( global.saveData, "x", noone );
-ds_map_add( global.saveData, "y", noone );
-ds_map_add( global.saveData, "dir", noone );
-ds_map_add( global.saveData, "time", 0 );
-ds_map_add( global.saveData, "death", 0 );
-ds_map_add( global.saveData, "room", 0 );
-ds_map_add( global.saveData, "grav", 1 );
-ds_map_add( global.saveData, "started", false );
-ds_map_add( global.saveData, "djump", true );
+global.SaveData = ds_map_create();
+ds_map_add( global.SaveData, "engine.x", noone );
+ds_map_add( global.SaveData, "engine.y", noone );
+ds_map_add( global.SaveData, "engine.dir", noone );
+ds_map_add( global.SaveData, "engine.time", 0 );
+ds_map_add( global.SaveData, "engine.death", 0 );
+ds_map_add( global.SaveData, "engine.room", 0 );
+ds_map_add( global.SaveData, "engine.grav", 1 );
+ds_map_add( global.SaveData, "engine.freshSave", true );
+ds_map_add( global.SaveData, "engine.djump", true );
 
 // If you for whatever reason start the game in the air, set djump to false here
 // (if you want to make the player not be able to djump that is)

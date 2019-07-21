@@ -55,7 +55,7 @@ AutoNext = false;
             <string>/// Go to room
 if( room_exists( RoomTo ) ) {
     if( AutoNext ) {
-        global.autosave = true;
+        global.Autosave = true;
     }
     room_goto( RoomTo );
 } else {

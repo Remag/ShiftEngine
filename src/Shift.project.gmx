@@ -80,10 +80,17 @@
       <script>scripts\set_mask.gml</script>
     </scripts>
     <scripts name="saves">
-      <script>scripts\load.gml</script>
-      <script>scripts\save.gml</script>
+      <script>scripts\load_from_file.gml</script>
+      <script>scripts\reload_game.gml</script>
+      <script>scripts\save_game.gml</script>
+      <script>scripts\save_stats.gml</script>
       <script>scripts\new_game.gml</script>
       <script>scripts\create_save.gml</script>
+      <script>scripts\get_save_file_name.gml</script>
+      <script>scripts\get_save_data.gml</script>
+      <script>scripts\get_game_value.gml</script>
+      <script>scripts\get_game_flag.gml</script>
+      <script>scripts\set_game_value.gml</script>
     </scripts>
     <script>scripts\init.gml</script>
   </scripts>

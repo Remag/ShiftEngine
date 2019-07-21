@@ -4,30 +4,30 @@
 // Only do that when you're FIRST loading the save!
 
 if( argument1 ) {
-    ds_map_clear( global.saveData );
-    global.saveData = ds_map_secure_load( "save" + string( global.saveIndex ) );
-    if( global.saveData == -1 ) {
+    ds_map_destroy( global.SaveData );
+    global.SaveData = get_save_data( global.SaveIndex );
+    if( global.SaveData == -1 ) {
         new_game();
         return 0;
     }
 }
 
-if( global.saveData[? "started"] || argument0 ) {
+if( !global.SaveData[? "freshSave"] || argument0 ) {
     // Load data - values are self-explainatory from the ds_map keys (inside [? ""])
     var sx, sy, sr, sf, sd, st, sg, sdj;
-    sx = global.saveData[? "x"];
-    sy = global.saveData[? "y"];
-    sr = global.saveData[? "room"];
-    sf = global.saveData[? "dir"];
-    sd = global.saveData[? "death"];
-    st = global.saveData[? "time"];
-    sg = global.saveData[? "grav"];
-    sdj = global.saveData[? "djump"];
+    sx = global.SaveData[? "x"];
+    sy = global.SaveData[? "y"];
+    sr = global.SaveData[? "room"];
+    sf = global.SaveData[? "dir"];
+    sd = global.SaveData[? "death"];
+    st = global.SaveData[? "time"];
+    sg = global.SaveData[? "grav"];
+    sdj = global.SaveData[? "djump"];
     
     // Loading death&time
     if( argument0 ) {
-        global.death = sd;
-        global.time = st;
+        global.Death = sd;
+        global.Time = st;
         update_title();
     }
     
@@ -36,7 +36,7 @@ if( global.saveData[? "started"] || argument0 ) {
         with( instance_create( sx, sy, oPlayerEntranceData ) ) {
             EntranceId = -1;
             Dir = sf;
-            Djump = sdj || global.saveHop;
+            Djump = sdj || global.SaveHop;
             GravityDir = sg;
         }
         room_goto( sr );

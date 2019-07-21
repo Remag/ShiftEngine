@@ -40,8 +40,9 @@ with( argument0 ) {
     }
     
     debugtext += "(" + string( round( fps ) ) + " apparent)"; // room_speed but accounts lag
+    debugtext += " D: " + string( global.Death );
     
-    if( global.god ) {
+    if( global.God ) {
         debugtext += " [god]";
     }
     
