@@ -13,14 +13,8 @@ with( oPlayer ) {
     set_mask();
     
     // Prevent getting stuck on flip, move out of blocks
-    if( GravityDir == 1 ) {
-        while( instance_place( x, y, oBlock ) != noone ) {
-            y += 1;
-        }
-    } else {
-        while( instance_place( x, y, oBlock ) != noone ) {
-            y -= 1;
-        }
+    while( instance_place( x, y, oBlock ) != noone ) {
+        y += GravityDir;
     }
 }
 

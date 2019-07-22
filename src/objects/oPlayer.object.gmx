@@ -32,9 +32,9 @@ R = 0;
 
 // Instance Variables
 GravityDir = 1;
-gravity = 0.4 * GravityDir;
-Jump1 = 8.5 * GravityDir;
-Jump2 = 7 * GravityDir;
+gravity = 0.4;
+Jump1 = 8.5;
+Jump2 = 7;
 OnPlatform = false;
 image_speed = 0.2;
 Frozen = false;
@@ -180,12 +180,12 @@ if( !OnPlatform ) {
 }
 
 // Conveyor Magic.
-if( floorConveyor != noone ) { 
+if( floorConveyor != noone ) {
     hspeed += floorConveyor.Cspeed; 
 }
-// Vspeed capping.
+// vspeed capping.
 if( abs( vspeed ) &gt; Vscap ) {
-    vspeed = sign(vspeed) * Vscap; 
+    vspeed = sign( vspeed ) * Vscap; 
 }
 
 // Player controlled movement.
@@ -200,7 +200,9 @@ if( !Frozen ) {
         }
         if( keyboard_check( global.DragDebugKeyBind ) || mouse_check_button( global.DragMouseDebugKeyBind ) ) {
             x = mouse_x; 
+            xprevious = x;
             y = mouse_y; 
+            yprevious = y;
             vspeed = 0;
         }
     }
@@ -314,6 +316,7 @@ if( global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt;
     die();
 }
 
+
 </string>
           </argument>
         </arguments>
@@ -413,33 +416,25 @@ if( GravityDir == 1 ) {
             <kind>1</kind>
             <string>/// Collision (No Solids!)
 
-// Move back to before hsp/vsp was applied.
+// Move back to before the kid was moved.
 x = xprevious;
 y = yprevious;
 
-// Snap to blocks Horizontally.
-if( instance_place( x + hspeed, y, oBlock ) ) {
-    if ( hspeed &lt;= 0 ) {
-        while( instance_place( x - 1, y, oBlock ) == noone ) {
-            x -= 1;
-        }
-    } else {
-        while( instance_place( x + 1, y, oBlock ) == noone ) {
-            x += 1;
-        }
-    } 
+var horizontalCollision = ( instance_place( x + hspeed, y, oBlock ) != noone );
+var verticalCollision = ( instance_place( x, y + vspeed, oBlock ) != noone );
+// Snap to blocks horizontally.
+if( horizontalCollision &amp;&amp; hspeed != 0 ) {
+    while( instance_place( x + sign( hspeed ), y, oBlock ) == noone ) {
+        x += sign( hspeed );
+    }
     hspeed = 0;
 }
 
 // Snap to blocks vertically.
-if( instance_place( x, y + vspeed, oBlock ) ) {
-    if( vspeed &lt;= 0 ) {
-        while( instance_place( x, y - 1, oBlock ) == noone ) {
-            y -= 1;
-        }
-    } else {
-        while( instance_place( x, y + 1, oBlock ) == noone ) {
-            y += 1;
+if( verticalCollision ) {
+    if( vspeed != 0 ) {
+        while( instance_place( x, y + sign( vspeed ), oBlock ) == noone ) {
+            y += sign( vspeed );
         }
     }
     
@@ -448,11 +443,11 @@ if( instance_place( x, y + vspeed, oBlock ) ) {
     vspeed = 0;
 }
 
-if( instance_place( x + hspeed, y + vspeed, oBlock ) ) {
+// Check if the block is positioned strictly diagonally from the kid. 
+// Stop horizontal movement to avoid collision in that case.
+if( !horizontalCollision &amp;&amp; !verticalCollision ) {
     hspeed = 0;
 }
-
-// Apply remaining hsp/vsp that we took at the start.
 x += hspeed;
 y += vspeed;
 
