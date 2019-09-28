@@ -12,6 +12,10 @@
       <sound>sound\seDeath</sound>
       <sound>sound\seShoot</sound>
     </sounds>
+    <sounds name="testMusic">
+      <sound>sound\musLunarAbyss</sound>
+      <sound>sound\sndSnap</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="block">
@@ -68,11 +72,13 @@
   <scripts name="scripts">
     <scripts name="audio">
       <script>scripts\play_sound.gml</script>
+      <script>scripts\stop_sound.gml</script>
       <script>scripts\update_bgm.gml</script>
     </scripts>
     <scripts name="engine">
       <script>scripts\update_title.gml</script>
       <script>scripts\draw_debug_ui.gml</script>
+      <script>scripts\draw_text_outline.gml</script>
     </scripts>
     <scripts name="player">
       <script>scripts\die.gml</script>
@@ -91,6 +97,12 @@
       <script>scripts\get_game_value.gml</script>
       <script>scripts\get_game_flag.gml</script>
       <script>scripts\set_game_value.gml</script>
+    </scripts>
+    <scripts name="avoidance">
+      <script>scripts\avoidance_initialize.gml</script>
+      <script>scripts\avoidance_get_step.gml</script>
+      <script>scripts\avoidance_finish.gml</script>
+      <script>scripts\avoidance_set_step.gml</script>
     </scripts>
     <script>scripts\init.gml</script>
   </scripts>
@@ -147,11 +159,24 @@
       <object>objects\oSavePoint</object>
       <object>objects\oSaveBlocker</object>
     </objects>
+    <objects name="avoidance">
+      <object>objects\oAvoidance</object>
+      <object>objects\oAvoidanceEntity</object>
+      <object>objects\oAvoidanceKiller</object>
+      <object>objects\oAvoidanceEditSlider</object>
+      <object>objects\oAvoidanceDebugInfo</object>
+      <object>objects\oAvoidanceTimingTable</object>
+    </objects>
+    <objects name="avoidanceTest">
+      <object>objects\oTestAvoidanceController</object>
+      <object>objects\oAvoidanceFruit</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rInit</room>
     <room>rooms\rDemo</room>
     <room>rooms\rTemplate</room>
+    <room>rooms\rTestAvoidance</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -47,6 +47,6 @@ with( argument0 ) {
     }
     
     draw_set_color( textColor );
-    draw_text( drawX, drawY, debugtext );
+    draw_text_outline( drawX, drawY, debugtext, c_white, c_black );
 }
 

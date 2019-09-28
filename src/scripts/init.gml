@@ -58,7 +58,7 @@ global.SaveIndex = -1; // Current Savefile. Initial value is unknown until the s
 /// [World]
 update_title(); // Set window title based on global.windowCap
 global.SSaves = false; // S key for saving instead of shooting/touchshooting
-global.StartRoom = rDemo; // The first room when a new game is started
+global.StartRoom = rTestAvoidance; // The first room when a new game is started
 texture_set_interpolation(false); // Make sure sprite interpolation is off
 
 /// [Mixer]
@@ -70,6 +70,6 @@ global.InstanceBGM = noone; // Instance of the current BGM (set by update_bgm)
 
 /// [Debug]
 global.Debug = true; // Enables cheats & debug hotkeys
-global.DebugGui = true; // Enables the drawing of the debug GUI
+global.DebugGui = false; // Enables the drawing of the debug GUI
 global.God = false; // Invincibility (can also be toggled via debug hotkey k_debug_god)
 
