@@ -34,7 +34,7 @@ global.SaveIndex = -1; // Current Savefile. Initial value is unknown until the s
 /// [World]
 update_title(); // Set window title based on global.windowCap
 global.SSaves = false; // S key for saving instead of shooting/touchshooting
-global.StartRoom = rTestAvoidance; // The first room when a new game is started
+global.StartRoom = rNeedleDemo; // The first room when a new game is started
 texture_set_interpolation( false ); // Make sure sprite interpolation is off
 
 /// [Mixer]

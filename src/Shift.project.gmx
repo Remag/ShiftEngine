@@ -180,6 +180,7 @@
     <room>rooms\rInit</room>
     <room>rooms\rDemo</room>
     <room>rooms\rTemplate</room>
+    <room>rooms\rNeedleDemo</room>
     <room>rooms\rTestAvoidance</room>
   </rooms>
   <help>
