@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>editSliderLength = 672;
-editSliderY = 64;
+editSliderY = 48;
 editSliderLeft = 64;
 editSliderRight = editSliderLeft + editSliderLength;
 
@@ -54,11 +54,11 @@ editSliderRight = editSliderLeft + editSliderLength;
             <kind>1</kind>
             <string>if( mouse_check_button_pressed( mb_left ) ) {
     var clickDeltaY = abs( mouse_y - editSliderY );
-    if( clickDeltaY &lt; 32 ) {
+    if( clickDeltaY &lt; 24 ) {
         var clickPosX = mouse_x - editSliderLeft;
         var relPos = clickPosX / editSliderLength;
         relPos = clamp( relPos, 0, 1 );
-        var stepPos = round( relPos * oAvoidance.duration );
+        var stepPos = round( relPos * oAvoidance.Duration );
 
         avoidance_set_step( stepPos );
     }
@@ -87,7 +87,7 @@ editSliderRight = editSliderLeft + editSliderLength;
             <kind>1</kind>
             <string>var step = avoidance_get_step();
 
-var relPos = step / oAvoidance.duration;
+var relPos = step / oAvoidance.Duration;
 relPos = clamp( relPos, 0, 1 );
 var pxOffset = relPos * editSliderLength;
 

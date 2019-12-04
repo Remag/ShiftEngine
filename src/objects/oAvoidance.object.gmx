@@ -29,8 +29,11 @@
     instance_destroy();
 }
 
-step = 0;
-realStep = 0;
+Step = 0;
+RealStep = 0;
+MusicStartRequired = false;
+IsPaused = false;
+MusicVolume = 1;
 
 </string>
           </argument>
@@ -54,7 +57,7 @@ realStep = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>stop_sound( musicId );
+            <string>event_user( 0 );
 </string>
           </argument>
         </arguments>
@@ -77,21 +80,52 @@ realStep = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( !instance_exists( oPlayer ) || step &gt;= duration ) {
-    stop_sound( musicId );
+            <string>if( !instance_exists( oPlayer ) || Step &gt;= Duration || IsPaused ) {
+    stop_sound( MusicId );
+    MusicStartRequired = true;
     exit;
+} else if( MusicStartRequired ) {
+    var vol = audio_sound_get_gain( MusicObjectId ) * MusicVolume * global.MusicVolume * global.MasterVolume;
+    MusicId = audio_play_sound( MusicObjectId, 0, false );
+    audio_sound_gain( MusicId, vol, 0 );
+    audio_sound_set_track_position( MusicId, Step / 50 );
+    MusicStartRequired = false;
 }
 
 // Correct the game time if it desyncs from real time.
-var deltaStep = realStep - step;
+var deltaStep = RealStep - Step;
 if( abs( deltaStep ) &gt; 5 ) {
     // A big lag spike, adjust music to game time.
-   audio_sound_set_track_position( musicId, step / 50 );
+   audio_sound_set_track_position( MusicId, Step / 50 );
    //show_debug_message( "Music sync" );
-   realStep = step;
+   RealStep = Step;
 }
-step++;
-realStep += 50 * delta_time / 1000000;
+Step++;
+RealStep += 50 * delta_time / 1000000;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cleanup
+stop_sound( MusicId );
 </string>
           </argument>
         </arguments>
@@ -114,7 +148,7 @@ realStep += 50 * delta_time / 1000000;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>stop_sound( musicId );
+            <string>event_user( 0 );
 </string>
           </argument>
         </arguments>
@@ -137,7 +171,7 @@ realStep += 50 * delta_time / 1000000;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>stop_sound( musicId );
+            <string>event_user( 0 );
 </string>
           </argument>
         </arguments>

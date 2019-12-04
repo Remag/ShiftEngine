@@ -64,6 +64,9 @@
     <sprites name="world">
       <sprite>sprites\sSavePoint</sprite>
     </sprites>
+    <sprites name="UI">
+      <sprite>sprites\sUiCross</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\guyTiles</background>
@@ -97,6 +100,10 @@
       <script>scripts\get_game_value.gml</script>
       <script>scripts\get_game_flag.gml</script>
       <script>scripts\set_game_value.gml</script>
+    </scripts>
+    <scripts name="controls">
+      <script>scripts\init_controls.gml</script>
+      <script>scripts\button_check_pressed.gml</script>
     </scripts>
     <scripts name="avoidance">
       <script>scripts\avoidance_initialize.gml</script>
@@ -161,6 +168,8 @@
     </objects>
     <objects name="avoidance">
       <object>objects\oAvoidance</object>
+      <object>objects\oAvoidancePersistentData</object>
+      <object>objects\oAvoidanceHotkeys</object>
       <object>objects\oAvoidanceEntity</object>
       <object>objects\oAvoidanceKiller</object>
       <object>objects\oAvoidanceEditSlider</object>

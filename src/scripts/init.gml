@@ -1,28 +1,4 @@
-/// [Keybinds]
-global.LeftKeyBind = vk_left; // Movement (Left)
-global.RightKeyBind = vk_right; // Movement (Right)
-global.JumpKeyBind = vk_shift; // Player Jump
-global.ShootKeyBind = ord("Z"); // Player Shoot
-global.RestartKeyBind = ord("R"); // Restart (after dying)
-global.PauseKeyBind = ord("P"); // Pause [UNIMPLEMENTED]
-global.SaveKeyBind = ord("S"); // Save button if global.sSaves is on
-global.SuicideKeyBind = ord("Q"); // Suicide button (req. global.canSuicide)
-global.ExitKeyBind = vk_escape; // Exit game
-global.GameResetKeyBind = vk_f2; // Soft reset game
-global.FullscreenKeyBind = vk_f4; // Toggle fullscreen
-
-// [Keybinds/Debug]
-global.GodDebugKeyBind = vk_home; // Godmode Toggle
-global.ToggleUiDebugKeyBind = vk_insert; // Debug UI Toggle
-global.SaveDebugKeyBind = vk_end; // Save at current position
-global.FlipDebugKeyBind = ord("G"); // Flip gravity
-global.FpsDebugKeyBind = ord("F"); // Set FPS (displays prompt)
-global.VAlignDebugKeyBind = ord("V"); // Set V-Align (displays prompt)
-global.HitboxDebugKeyBind = ord("H"); // Toggle hitbox display
-global.DragDebugKeyBind = vk_tab; // Hold to snap player to mouse x-y
-global.DragMouseDebugKeyBind = mb_middle; // Above, but instead it's a mouse button
-global.PrevRoomDebugKeyBind = vk_pagedown; // Go back a room (if it exists & not rInit)
-global.NextRoomDebugKeyBind = vk_pageup; // Go forwards a room (if it exists)
+init_controls();
 
 /// [Player]
 global.CanPause = true; // Completely unimplemented (so far!)
@@ -59,7 +35,7 @@ global.SaveIndex = -1; // Current Savefile. Initial value is unknown until the s
 update_title(); // Set window title based on global.windowCap
 global.SSaves = false; // S key for saving instead of shooting/touchshooting
 global.StartRoom = rTestAvoidance; // The first room when a new game is started
-texture_set_interpolation(false); // Make sure sprite interpolation is off
+texture_set_interpolation( false ); // Make sure sprite interpolation is off
 
 /// [Mixer]
 global.MasterVolume = 1.0; // Master Volume (0.0 ~ 1.0)

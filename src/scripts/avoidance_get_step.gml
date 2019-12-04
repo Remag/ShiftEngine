@@ -1,1 +1,1 @@
-return oAvoidance.step - 1;
+return oAvoidance.Step - 1;

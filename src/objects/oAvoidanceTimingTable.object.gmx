@@ -25,30 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>timingsList = ds_list_create();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>ds_list_destroy( timingsList );
+            <string>PanelX = 48;
+PanelY = 88;
+LineHeight = 32;
+MaxLineDisplayCount = 5;
+CrossRectHWidth = 20;
+CrossRectHHeight = LineHeight / 2;
+SelectionRectLeft = -10;
+SelectionRectRight = 140;
+
+TableFreezeTiming = -1;
 </string>
           </argument>
         </arguments>
@@ -72,76 +58,80 @@
           <argument>
             <kind>1</kind>
             <string>var step = avoidance_get_step();
+var timingsList = oAvoidancePersistentData.TimingsList;
 var timingsCount = ds_list_size( timingsList );
-for( var i = 0; i &lt; timingsCount; i++ ) {  
-    var timing = timingsList[|i];   
-    if( timing == step ) {
-        play_sound( sndSnap );
-        break;
-    } else if( timing &gt; step ) {
-         break;
+if( instance_exists( oPlayer ) &amp;&amp; !oAvoidance.IsPaused ) {
+    for( var i = 0; i &lt; timingsCount; i++ ) {  
+        var timing = timingsList[|i];   
+        if( timing == step + 1 ) {
+            play_sound( sndSnap );
+            break;
+        } else if( timing &gt; step ) {
+             break;
+        }
     }
 }
 
-if( keyboard_check_pressed( vk_space ) ) {
+if( keyboard_check_pressed( global.AvoidanceAddTiming ) ) {
     var newTiming = step;
-    var timingsCount = ds_list_size( timingsList );
     for( var i = 0; i &lt; timingsCount; i++ ) {
         var timing = timingsList[|i];   
         if( timing &gt;= newTiming ) {
             ds_list_insert( timingsList, i, newTiming );
+            play_sound( sndSnap );
             exit;
         }
     }
     ds_list_insert( timingsList, timingsCount, newTiming );
+    play_sound( sndSnap );
 }
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="5">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>ds_list_destroy( timingsList );
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>ds_list_destroy( timingsList );
+if( mouse_check_button_pressed( mb_left ) ) {
+    // Find the display count.\
+    var displayStep = step;
+    if( TableFreezeTiming != -1 ) {
+       displayStep = TableFreezeTiming;
+    }
+    
+    var count = ds_list_size( timingsList );
+    var displayCount = 0;
+    var firstTimingPos = 0;
+    for( var i = 0; i &lt; count; i++ ) {
+        var currentStep = timingsList[|i];
+        if( currentStep &gt; displayStep - 40 ) {
+            firstTimingPos = i;
+            displayCount = min( MaxLineDisplayCount + 1, count - i );
+            break;
+        }
+    }
+
+    var mouseLinePos = floor( ( mouse_y - PanelY + 5 ) / LineHeight );
+    var timingPos = mouseLinePos + firstTimingPos;
+    var lineLeft = PanelX + SelectionRectLeft;
+    var lineRight = PanelX + SelectionRectRight;
+    if( mouse_x &gt;= lineLeft &amp;&amp; mouse_x &lt; lineRight ) {
+        if( mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
+            var oldTiming = timingsList[|timingPos];
+            var newTiming = get_integer( "Adjust timing", oldTiming );
+            if( newTiming &gt; 0 ) {
+                // Delete the old timing and insert a new one.
+                ds_list_delete( timingsList, timingPos );
+                for( var i = 0; i &lt; timingsCount; i++ ) {
+                    var timing = timingsList[|i];   
+                    if( timing &gt;= newTiming ) {
+                        ds_list_insert( timingsList, i, newTiming );
+                        exit;
+                    }
+                }
+                ds_list_add( timingsList, newTiming );
+            }
+        }
+    } else if( mouse_x &gt;= lineRight &amp;&amp; mouse_x &lt; lineRight + 2 * CrossRectHWidth ) {
+        if( mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
+            ds_list_delete( timingsList, timingPos );
+        }
+    }   
+}
 </string>
           </argument>
         </arguments>
@@ -164,11 +154,13 @@ if( keyboard_check_pressed( vk_space ) ) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var panelX = 48;
-var panelY = 88;
-var lineHeight = 32;
+            <string>
+var timingsList = oAvoidancePersistentData.TimingsList;
 
 var step = avoidance_get_step();
+if( TableFreezeTiming != -1 ) {
+    step = TableFreezeTiming;
+}
 
 var count = ds_list_size( timingsList );
 var displayCount = 0;
@@ -184,20 +176,50 @@ for( var i = 0; i &lt; count; i++ ) {
             timingColor = merge_color( c_lime, c_white, colorDiff );
         } else {
             var timingPosition = clamp( ( currentStep - step ) / 5, 0, 1 );
-            timingColor = merge_colour( c_lime, c_white, timingPosition );
+            timingColor = merge_color( c_lime, c_white, timingPosition );
             timingAlpha = 1;
         }
-        var lineY = panelY + displayCount * lineHeight;
+        var lineY = PanelY + displayCount * LineHeight;
         var timingStr = 'Step: ' + string( currentStep );
         draw_set_alpha( timingAlpha );
-        draw_text_outline( panelX, lineY, timingStr, timingColor, c_black );
+        draw_text_outline( PanelX, lineY, timingStr, timingColor, c_black );
         displayCount++;
     }
-    if( displayCount &gt; 5 ) {
+    if( displayCount &gt; MaxLineDisplayCount ) {
         break;
     }
 }
+
 draw_set_alpha( 1 );
+var mouseLinePos = floor( ( mouse_y - PanelY + 5 ) / LineHeight );
+var lineLeft = PanelX + SelectionRectLeft;
+var lineRight = PanelX + SelectionRectRight;
+var lineTop = PanelY + mouseLinePos * LineHeight - 5;
+var lineBottom = lineTop + LineHeight;
+if( mouse_x &gt;= lineLeft &amp;&amp; mouse_x &lt; lineRight + 2 * CrossRectHWidth &amp;&amp; mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
+    draw_set_color( c_white );
+    draw_rectangle( lineLeft, lineBottom, lineRight, lineTop, true );
+    var crossX = lineRight + CrossRectHWidth;
+    var crossY = ( lineBottom + lineTop ) / 2;
+    var crossLeft = crossX - CrossRectHWidth;
+    var crossRight = crossX + CrossRectHWidth;
+    var crossTop = crossY - CrossRectHHeight;
+    var crossBottom = crossY + CrossRectHHeight;
+    var crossColor;
+    if( abs( mouse_x - crossX ) &lt; CrossRectHWidth &amp;&amp; abs( mouse_y - crossY ) &lt; CrossRectHHeight ) {
+        crossColor = c_yellow;
+    } else {
+        crossColor = c_white;
+    }
+    draw_sprite_ext( sUiCross, 0, crossX, crossY, 1, 1, 0, crossColor, 1 );
+    draw_set_color( crossColor );
+    draw_rectangle( crossLeft, crossBottom, crossRight, crossTop, true );
+    draw_set_color( c_white );
+    TableFreezeTiming = step;
+} else {
+    TableFreezeTiming = -1;
+}
+
 
 </string>
           </argument>
