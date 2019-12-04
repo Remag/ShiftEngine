@@ -18,54 +18,50 @@
     </sounds>
   </sounds>
   <sprites name="sprites">
-    <sprites name="block">
-      <sprite>sprites\sBlock</sprite>
-      <sprite>sprites\sConveyor</sprite>
-      <sprite>sprites\sPlatform</sprite>
-      <sprite>sprites\sSaveBlocker</sprite>
-      <sprite>sprites\sWater</sprite>
-      <sprite>sprites\sTrigger</sprite>
-      <sprite>sprites\sVineL</sprite>
-      <sprite>sprites\sVineR</sprite>
-    </sprites>
-    <sprites name="editor">
-      <sprite>sprites\sKnifeIcon</sprite>
-      <sprite>sprites\sWorldIcon</sprite>
-    </sprites>
-    <sprites name="gravity">
-      <sprite>sprites\sGravUp</sprite>
-      <sprite>sprites\sGravDown</sprite>
-    </sprites>
-    <sprites name="killers">
-      <sprites name="Spikes">
+    <sprites name="Engine">
+      <sprites name="physics">
+        <sprite>sprites\sBlock</sprite>
+        <sprite>sprites\sConveyor</sprite>
+        <sprite>sprites\sPlatform</sprite>
+        <sprite>sprites\sWater</sprite>
+        <sprite>sprites\sTrigger</sprite>
+        <sprite>sprites\sVineL</sprite>
+        <sprite>sprites\sVineR</sprite>
+        <sprite>sprites\sGravUp</sprite>
+        <sprite>sprites\sGravDown</sprite>
+        <sprite>sprites\sSavePoint</sprite>
+        <sprite>sprites\sSaveBlocker</sprite>
+      </sprites>
+      <sprites name="killers">
         <sprite>sprites\sSpikeUp</sprite>
         <sprite>sprites\sSpikeDown</sprite>
         <sprite>sprites\sSpikeLeft</sprite>
         <sprite>sprites\sSpikeRight</sprite>
-        <sprite>sprites\sSpikeUpMini</sprite>
-        <sprite>sprites\sSpikeDownMini</sprite>
-        <sprite>sprites\sSpikeLeftMini</sprite>
-        <sprite>sprites\sSpikeRightMini</sprite>
+        <sprite>sprites\sMiniSpikeUp</sprite>
+        <sprite>sprites\sMiniSpikeDown</sprite>
+        <sprite>sprites\sMiniSpikeLeft</sprite>
+        <sprite>sprites\sMiniSpikeRight</sprite>
+        <sprite>sprites\sFruit</sprite>
       </sprites>
-      <sprite>sprites\sFruit</sprite>
-    </sprites>
-    <sprites name="player">
-      <sprite>sprites\sBlood</sprite>
-      <sprite>sprites\sBullet</sprite>
-      <sprite>sprites\sPlayerFall</sprite>
-      <sprite>sprites\sPlayerIdle</sprite>
-      <sprite>sprites\sPlayerJump</sprite>
-      <sprite>sprites\sPlayerMask</sprite>
-      <sprite>sprites\sPlayerMaskFlip</sprite>
-      <sprite>sprites\sPlayerRunning</sprite>
-      <sprite>sprites\sPlayerSliding</sprite>
-      <sprite>sprites\sPlayerStart</sprite>
-    </sprites>
-    <sprites name="world">
-      <sprite>sprites\sSavePoint</sprite>
-    </sprites>
-    <sprites name="UI">
-      <sprite>sprites\sUiCross</sprite>
+      <sprites name="player">
+        <sprite>sprites\sBlood</sprite>
+        <sprite>sprites\sBullet</sprite>
+        <sprite>sprites\sPlayerFall</sprite>
+        <sprite>sprites\sPlayerIdle</sprite>
+        <sprite>sprites\sPlayerJump</sprite>
+        <sprite>sprites\sPlayerMask</sprite>
+        <sprite>sprites\sPlayerMaskFlip</sprite>
+        <sprite>sprites\sPlayerRun</sprite>
+        <sprite>sprites\sPlayerSlide</sprite>
+        <sprite>sprites\sPlayerStart</sprite>
+      </sprites>
+      <sprites name="UI">
+        <sprite>sprites\sUiCross</sprite>
+      </sprites>
+      <sprites name="editor">
+        <sprite>sprites\sKnifeIcon</sprite>
+        <sprite>sprites\sWorldIcon</sprite>
+      </sprites>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -119,7 +115,6 @@
   <objects name="objects">
     <objects name="world">
       <object>objects\oWorld</object>
-      <object>objects\oPhysics</object>
     </objects>
     <objects name="blocks">
       <object>objects\oBlock</object>
@@ -141,10 +136,10 @@
         <object>objects\oSpikeDown</object>
         <object>objects\oSpikeLeft</object>
         <object>objects\oSpikeRight</object>
-        <object>objects\oSpikeUpMini</object>
-        <object>objects\oSpikeDownMini</object>
-        <object>objects\oSpikeLeftMini</object>
-        <object>objects\oSpikeRightMini</object>
+        <object>objects\oMiniSpikeUp</object>
+        <object>objects\oMiniSpikeDown</object>
+        <object>objects\oMiniSpikeLeft</object>
+        <object>objects\oMiniSpikeRight</object>
       </objects>
       <object>objects\oKiller</object>
       <object>objects\oFruit</object>

@@ -2,7 +2,7 @@
 <object>
   <spriteName>sConveyor</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>oBlock</parentName>
@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>Cspeed = 3; // hspeed + cspeed
+            <string>Cspeed = 3;
 
-// Reminder that using non-multiples of 3 fucks up your halign
+
 </string>
           </argument>
         </arguments>

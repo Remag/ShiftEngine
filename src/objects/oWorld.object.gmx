@@ -198,7 +198,7 @@ if( global.Debug ) {
           <argument>
             <kind>1</kind>
             <string>/// Ensure correct FPS
-room_speed = global.EngineFPS;
+room_speed = global.EngineFps;
 
 </string>
           </argument>

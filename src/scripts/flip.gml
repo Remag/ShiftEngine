@@ -9,7 +9,8 @@ with( oPlayer ) {
     vspeed = 0;
     Jump1 = abs( Jump1 ) * GravityDir;
     Jump2 = abs( Jump2 ) * GravityDir;
-    gravity = abs( gravity ) * GravityDir;
+    Gravity = abs( Gravity ) * GravityDir;
+    HFrameStep = 0;
     set_mask();
     
     // Prevent getting stuck on flip, move out of blocks

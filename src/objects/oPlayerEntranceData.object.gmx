@@ -28,12 +28,17 @@
             <string>// Entrance identifier signifies an entrance object to use for player creation.
 // If the identifier is -1, player loading data is stored in this object.
 if( EntranceId == -1 ) {
-    with( instance_create( x, y, oPlayer ) ) {
-        Dir = other.Dir;
-        Djump = other.Djump;
-        if( GravityDir != other.GravityDir ) {
-            flip();
-        }
+    var player = instance_create( x, y, oPlayer );
+    player.Dir = Dir;
+    player.Djump = Djump;
+    if( player.GravityDir != GravityDir ) {
+        flip();
+    }
+  
+    // Autosaving.
+    if( global.Autosave ) {
+        save_game();
+        global.Autosave = false;
     }
     instance_destroy();
 }
