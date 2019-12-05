@@ -88,7 +88,7 @@ MusicVolume = 1;
     var vol = audio_sound_get_gain( MusicObjectId ) * MusicVolume * global.MusicVolume * global.MasterVolume;
     MusicId = audio_play_sound( MusicObjectId, 0, false );
     audio_sound_gain( MusicId, vol, 0 );
-    audio_sound_set_track_position( MusicId, Step / 50 );
+    audio_sound_set_track_position( MusicId, Step / global.EngineFps );
     MusicStartRequired = false;
 }
 
@@ -96,12 +96,12 @@ MusicVolume = 1;
 var deltaStep = RealStep - Step;
 if( abs( deltaStep ) &gt; 5 ) {
     // A big lag spike, adjust music to game time.
-   audio_sound_set_track_position( MusicId, Step / 50 );
+   audio_sound_set_track_position( MusicId, Step / global.EngineFps );
    //show_debug_message( "Music sync" );
    RealStep = Step;
 }
 Step++;
-RealStep += 50 * delta_time / 1000000;
+RealStep += global.EngineFps * delta_time / 1000000;
 </string>
           </argument>
         </arguments>

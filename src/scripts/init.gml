@@ -46,6 +46,6 @@ global.InstanceBGM = noone; // Instance of the current BGM (set by update_bgm)
 
 /// [Debug]
 global.Debug = true; // Enables cheats & debug hotkeys
-global.DebugGui = false; // Enables the drawing of the debug GUI
+global.DebugGui = true; // Enables the drawing of the debug GUI
 global.God = false; // Invincibility (can also be toggled via debug hotkey k_debug_god)
 

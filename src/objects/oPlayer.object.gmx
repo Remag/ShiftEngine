@@ -37,7 +37,7 @@ Gravity = 0.4;
 Jump1 = 8.5;
 Jump2 = 7;
 OnPlatform = false;
-image_speed = 0.2;
+image_speed = 0.135;
 Frozen = false;
 Djump = false;
 Hscap = 3;
@@ -181,13 +181,13 @@ if( h != 0 ) {
     hspeed = Hscap * h; 
     // Running sprite.
     sprite_index = SRun;
-    image_speed = 0.5; 
+    image_speed = 0.335; 
 } else {
     // Stop moving.
     hspeed = 0; 
     // Idle sprite.
     sprite_index = SIdle; 
-    image_speed = 0.2; 
+    image_speed = 0.135; 
 }
 
 if( !OnPlatform ) {
@@ -285,7 +285,7 @@ if( onVineL || onVineR ) {
     HFrameStep = 0;
     // Sliding sprite.
     sprite_index = SSlide; 
-    image_speed = 0.5;
+    image_speed = 0.335;
     
     if( ( onVineL &amp;&amp; keyboard_check_pressed( global.RightKeyBind ) ) ||
         ( onVineR &amp;&amp; keyboard_check_pressed( global.LeftKeyBind ) ) )
