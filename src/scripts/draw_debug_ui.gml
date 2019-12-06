@@ -40,7 +40,7 @@ with( argument0 ) {
     }
     
     debugtext += "(" + string( round( fps ) ) + " apparent)"; // room_speed but accounts lag
-    debugtext += " D: " + string( global.Death );
+    debugtext += " D: " + string( oWorld.DeathCount );
     
     if( global.God ) {
         debugtext += " [god]";

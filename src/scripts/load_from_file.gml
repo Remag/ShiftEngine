@@ -1,9 +1,8 @@
 /// load_from_file
-// Create a loaded game from the file indicated by global.SaveIndex.
+// Create a loaded game from the file indicated by oWorld.SaveIndex.
 
-ds_map_destroy( global.SaveData );
-global.SaveData = get_save_data( global.SaveIndex );
-if( global.SaveData == -1 ) {
+oWorld.SaveData = get_save_data( oWorld.SaveIndex );
+if( SaveData == -1 ) {
     new_game();
     return 0;
 }

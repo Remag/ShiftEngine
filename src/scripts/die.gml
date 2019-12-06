@@ -1,7 +1,7 @@
 /// die()
 // Kills the calling player
 
-global.Death++;
+oWorld.DeathCount++;
 update_title();
 if( !get_game_value( "engine.freshSave" ) ) {
     save_stats();

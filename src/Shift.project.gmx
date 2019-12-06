@@ -46,8 +46,8 @@
       <sprites name="player">
         <sprite>sprites\sBlood</sprite>
         <sprite>sprites\sBullet</sprite>
-        <sprite>sprites\sPlayerFall</sprite>
         <sprite>sprites\sPlayerIdle</sprite>
+        <sprite>sprites\sPlayerFall</sprite>
         <sprite>sprites\sPlayerJump</sprite>
         <sprite>sprites\sPlayerMask</sprite>
         <sprite>sprites\sPlayerMaskFlip</sprite>
@@ -56,6 +56,7 @@
         <sprite>sprites\sPlayerStart</sprite>
       </sprites>
       <sprites name="UI">
+        <sprite>sprites\sMenuTick</sprite>
         <sprite>sprites\sUiCross</sprite>
       </sprites>
       <sprites name="editor">
@@ -69,15 +70,21 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="internal">
+      <script>scripts\load_metadata.gml</script>
+      <script>scripts\save_metadata.gml</script>
+      <script>scripts\update_title.gml</script>
+      <script>scripts\draw_debug_ui.gml</script>
+      <script>scripts\check_common_hotkeys.gml</script>
+    </scripts>
+    <scripts name="general">
+      <script>scripts\draw_text_outline.gml</script>
+      <script>scripts\initialize_game.gml</script>
+    </scripts>
     <scripts name="audio">
       <script>scripts\play_sound.gml</script>
       <script>scripts\stop_sound.gml</script>
       <script>scripts\update_bgm.gml</script>
-    </scripts>
-    <scripts name="engine">
-      <script>scripts\update_title.gml</script>
-      <script>scripts\draw_debug_ui.gml</script>
-      <script>scripts\draw_text_outline.gml</script>
     </scripts>
     <scripts name="player">
       <script>scripts\die.gml</script>
@@ -85,14 +92,13 @@
       <script>scripts\set_mask.gml</script>
     </scripts>
     <scripts name="saves">
-      <script>scripts\load_from_file.gml</script>
       <script>scripts\reload_game.gml</script>
       <script>scripts\save_game.gml</script>
       <script>scripts\save_stats.gml</script>
-      <script>scripts\new_game.gml</script>
-      <script>scripts\create_save.gml</script>
       <script>scripts\get_save_file_name.gml</script>
+      <script>scripts\create_save_data.gml</script>
       <script>scripts\get_save_data.gml</script>
+      <script>scripts\delete_save_data.gml</script>
       <script>scripts\get_game_value.gml</script>
       <script>scripts\get_game_flag.gml</script>
       <script>scripts\set_game_value.gml</script>
@@ -100,6 +106,7 @@
     <scripts name="controls">
       <script>scripts\init_controls.gml</script>
       <script>scripts\button_check_pressed.gml</script>
+      <script>scripts\get_button_name.gml</script>
     </scripts>
     <scripts name="avoidance">
       <script>scripts\avoidance_initialize.gml</script>
@@ -107,14 +114,45 @@
       <script>scripts\avoidance_finish.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
     </scripts>
+    <scripts name="easing">
+      <script>scripts\tween_sine_in.gml</script>
+      <script>scripts\tween_sine_out.gml</script>
+      <script>scripts\tween_sine_inout.gml</script>
+      <script>scripts\tween_exp_in.gml</script>
+      <script>scripts\tween_exp_out.gml</script>
+      <script>scripts\tween_exp_inout.gml</script>
+      <script>scripts\tween_quad_in.gml</script>
+      <script>scripts\tween_quad_out.gml</script>
+      <script>scripts\tween_quad_inout.gml</script>
+      <script>scripts\tween_linear.gml</script>
+    </scripts>
+    <scripts name="instance_manipulation">
+      <script>scripts\instance_move_to.gml</script>
+      <script>scripts\instance_offset.gml</script>
+    </scripts>
     <script>scripts\init.gml</script>
   </scripts>
   <fonts name="fonts">
-    <font>fonts\debugFont</font>
+    <font>fonts\fDebugFont</font>
+    <font>fonts\fMenuOptionFont</font>
   </fonts>
   <objects name="objects">
-    <objects name="world">
-      <object>objects\oWorld</object>
+    <objects name="internal">
+      <objects name="world">
+        <object>objects\oGameInitializer</object>
+        <object>objects\oWorld</object>
+      </objects>
+      <objects name="avoidance">
+        <object>objects\oAvoidance</object>
+        <object>objects\oAvoidancePersistentData</object>
+        <object>objects\oAvoidanceHotkeys</object>
+        <object>objects\oAvoidanceEditSlider</object>
+        <object>objects\oAvoidanceDebugInfo</object>
+        <object>objects\oAvoidanceTimingTable</object>
+      </objects>
+      <objects name="commands">
+        <object>objects\oMoveCommand</object>
+      </objects>
     </objects>
     <objects name="blocks">
       <object>objects\oBlock</object>
@@ -160,22 +198,21 @@
       <object>objects\oSaveBlocker</object>
     </objects>
     <objects name="avoidance">
-      <object>objects\oAvoidance</object>
-      <object>objects\oAvoidancePersistentData</object>
-      <object>objects\oAvoidanceHotkeys</object>
       <object>objects\oAvoidanceEntity</object>
       <object>objects\oAvoidanceKiller</object>
-      <object>objects\oAvoidanceEditSlider</object>
-      <object>objects\oAvoidanceDebugInfo</object>
-      <object>objects\oAvoidanceTimingTable</object>
     </objects>
     <objects name="avoidanceTest">
       <object>objects\oTestAvoidanceController</object>
       <object>objects\oAvoidanceFruit</object>
     </objects>
+    <objects name="menu">
+      <object>objects\oPressShift</object>
+      <object>objects\oMainMenu</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rInit</room>
+    <room>rooms\rMainMenu</room>
     <room>rooms\rDemo</room>
     <room>rooms\rTemplate</room>
     <room>rooms\rNeedleTest</room>

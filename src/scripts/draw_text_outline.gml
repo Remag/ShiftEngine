@@ -1,8 +1,16 @@
-var textX = argument0;
-var textY = argument1;
-var textStr = argument2;
-var textColor = argument3;
-var outlineColor = argument4;
+/// draw_text_outline( textX, textY, textStr, opt_textColor, opt_outlineColor )
+var textX = argument[0];
+var textY = argument[1];
+var textStr = argument[2];
+
+var textColor = c_white;
+if( argument_count > 3 ) {
+    textColor = argument[3];
+} 
+var outlineColor = c_black;
+if( argument_count > 4 ) {
+    outlineColor = argument[4];
+}
 
 //draw the text outline
 draw_set_color( outlineColor );

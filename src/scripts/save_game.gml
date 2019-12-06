@@ -1,14 +1,20 @@
 /// save_game()
-// Save current player position and progress to the file indicated by global.SaveIndex.
+// Save current player position and progress to the file indicated by oWorld.SaveIndex.
 
-with( oPlayer ) {
-    global.SaveData[? "engine.x"] = x;
-    global.SaveData[? "engine.y"] = y;
-    global.SaveData[? "engine.dir"] = Dir;
-    global.SaveData[? "engine.room"] = room;
-    global.SaveData[? "engine.grav"] = GravityDir;
-    global.SaveData[? "engine.djump"] = Djump;
+if( instance_exists( oPlayer ) ) {
+    oWorld.SaveData[? "engine.x"] = oPlayer.x;
+    oWorld.SaveData[? "engine.y"] = oPlayer.y;
+    oWorld.SaveData[? "engine.dir"] = oPlayer.Dir;
+    oWorld.SaveData[? "engine.grav"] = oPlayer.GravityDir;
+    oWorld.SaveData[? "engine.djump"] = oPlayer.Djump;
+} else {
+    oWorld.SaveData[? "engine.x"] = noone;
+    oWorld.SaveData[? "engine.y"] = noone;
+    oWorld.SaveData[? "engine.dir"] = noone;
+    oWorld.SaveData[? "engine.grav"] = noone;
+    oWorld.SaveData[? "engine.djump"] = noone;
 }
 
-global.SaveData[? "engine.freshSave"] = false;
+oWorld.SaveData[? "engine.room"] = room;
+oWorld.SaveData[? "engine.freshSave"] = false;
 save_stats();

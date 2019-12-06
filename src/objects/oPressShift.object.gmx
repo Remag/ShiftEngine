@@ -25,7 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MusicVolumeAlpha = 0;
+            <string>alarm[0] = 30;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>visible = !visible;
+alarm[0] = 30;
 </string>
           </argument>
         </arguments>
@@ -48,7 +72,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MusicVolumeAlpha -= 0.05;
+            <string>if( button_check_pressed( global.JumpKeyBind ) ) {
+    with( oMainMenu ) {
+        var targetX = x;
+        var targetY = y;
+        x = 600;
+        y = 950;
+        visible = true;
+        instance_move_to( id, targetX, targetY, 35 );
+    }
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -71,33 +105,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( global.Debug ) {
-    var panelX = 635;
-    var panelY = 88;
-    var lineHeight = 16;
-    
-    var step = avoidance_get_step();
-    draw_set_font( fDebugFont );
-    draw_set_halign( fa_left );
-    draw_set_valign( fa_top );
-    draw_text_outline( panelX, panelY, "Frame: " + string( step ), c_white, c_black );
-    var secondsCount = floor( step / 50 mod 60 );
-    var secondsStr;
-    if( secondsCount &lt; 10 ) {
-        secondsStr = '0' + string( secondsCount );
-    } else {
-        secondsStr = string( secondsCount );
-    }
-    draw_text_outline( panelX, panelY + lineHeight, "Time: " + string( floor( step / 50 / 60 ) ) + ":" + string( secondsStr ), c_white, c_black );
-    draw_text_outline( panelX, panelY + 2 * lineHeight, "Count: " + string( instance_count ), c_white, c_black );
-    
-    var volumeX = 350;
-    var volumeY = 88;
-    draw_set_alpha( MusicVolumeAlpha );
-    var volumeLevel = round( 100 * oAvoidance.MusicVolume );
-    draw_text_outline( volumeX, volumeY, "Music: " + string( volumeLevel ) + "%", c_lime, c_black );
-    draw_set_alpha( 1 );
-}
+            <string>draw_set_font( fMenuOptionFont );
+draw_set_halign( fa_center );
+var name = get_button_name( global.JumpKeyBind );
+draw_text_outline( x, y, "Press " + name );
+draw_set_halign( fa_left );
+
 </string>
           </argument>
         </arguments>

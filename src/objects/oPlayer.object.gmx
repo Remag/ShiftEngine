@@ -560,10 +560,8 @@ if( global.God ) {
     alpha = 1.0;
 }
 
-if( global.DrawPlayer ) {
-    draw_sprite_ext( sprite_index, image_index, xd, yd, image_xscale * Dir,
-        image_yscale * GravityDir, image_angle, image_blend, alpha );
-}
+draw_sprite_ext( sprite_index, image_index, xd, yd, image_xscale * Dir,
+    image_yscale * GravityDir, image_angle, image_blend, alpha );
 
 if( global.DrawHitbox ) {
     draw_sprite_ext( mask_index, image_index, x, y, image_xscale,

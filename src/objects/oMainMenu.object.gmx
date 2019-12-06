@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -25,30 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MusicVolumeAlpha = 0;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>MusicVolumeAlpha -= 0.05;
+            <string>MenuOptions[0] = "Continue";
+MenuOptions[1] = "New Game";
+MenuOptions[2] = "Settings";
+MenuOptions[3] = "Quit"
+
+OptionDisabled[0] = global.LastSaveIndex == -1;
+OptionDisabled[1] = false;
+OptionDisabled[2] = false;
+OptionDisabled[3] = false;
+
+OptionEventId[0] = 0;
+OptionEventId[1] = 1;
+OptionEventId[2] = 2;
+OptionEventId[3] = 3;
+
+OptionColor = c_white;
+DisabledOptionColor = c_gray;
+
+ActiveOptionPos = 0;
+var optionCount = array_length_1d( MenuOptions );
+for( var i = 0; i &lt; optionCount; i++ ) {
+    if( !OptionDisabled[i] ) {
+        ActiveOptionPos = i;
+        break;
+    }
+}
+
+initialize_game( 1 );
 </string>
           </argument>
         </arguments>
@@ -71,33 +75,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( global.Debug ) {
-    var panelX = 635;
-    var panelY = 88;
-    var lineHeight = 16;
-    
-    var step = avoidance_get_step();
-    draw_set_font( fDebugFont );
-    draw_set_halign( fa_left );
-    draw_set_valign( fa_top );
-    draw_text_outline( panelX, panelY, "Frame: " + string( step ), c_white, c_black );
-    var secondsCount = floor( step / 50 mod 60 );
-    var secondsStr;
-    if( secondsCount &lt; 10 ) {
-        secondsStr = '0' + string( secondsCount );
-    } else {
-        secondsStr = string( secondsCount );
+            <string>draw_set_halign( fa_center );
+draw_set_font( fMenuOptionFont );
+
+var optionCount = array_length_1d( MenuOptions );
+
+var lineHeight = 24;
+for( var i = 0; i &lt; optionCount; i++ ) {
+    var optionX = x + i * lineHeight;
+    var optionY = y;
+    var fontColor = OptionColor;
+    if( OptionDisabled[i] ) {
+        fontColor = DisabledOptionColor;
     }
-    draw_text_outline( panelX, panelY + lineHeight, "Time: " + string( floor( step / 50 / 60 ) ) + ":" + string( secondsStr ), c_white, c_black );
-    draw_text_outline( panelX, panelY + 2 * lineHeight, "Count: " + string( instance_count ), c_white, c_black );
-    
-    var volumeX = 350;
-    var volumeY = 88;
-    draw_set_alpha( MusicVolumeAlpha );
-    var volumeLevel = round( 100 * oAvoidance.MusicVolume );
-    draw_text_outline( volumeX, volumeY, "Music: " + string( volumeLevel ) + "%", c_lime, c_black );
-    draw_set_alpha( 1 );
+    draw_text_outline( optionX, optionY, MenuOptions[i], fontColor );
+    if( i == ActiveOptionPos ) {
+        var margin = 20;
+        var optionWidth = string_length( MenuOptions[i] );
+        draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - margin, optionY );
+        draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + margin, optionY );
+    }
 }
+
+draw_set_halign( fa_left );
 </string>
           </argument>
         </arguments>

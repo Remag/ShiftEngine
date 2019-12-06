@@ -3,9 +3,9 @@
 var d, h, m, s, t, c;
 
 // Current time elapsed (per-save).
-t = global.Time;
+t = oWorld.TimeSeconds;
 // Caption Template.
-c = global.WindowCap; 
+c = global.DeathtimeTitleFormat; 
 
 // Seconds in an hour.
 h = string( floor( t / 3600 ) );
@@ -22,10 +22,10 @@ t %= 10;
 // Seconds (Second Digit)
 s += string( floor( t ) ); 
 
-c = string_replace( c, "%D", string( global.Death ) ); // Match %D with Deaths
+c = string_replace( c, "%D", string( oWorld.DeathCount ) ); // Match %D with Deaths
 c = string_replace( c, "%H", string( h ) ); // Match %H with Hours
 c = string_replace( c, "%M", string( m ) ); // Match %M with Minutes
 c = string_replace( c, "%S", string( s ) ); // Match %S with Seconds
 
-window_set_caption( c ); // Set formatted string as title
+window_set_caption( global.WindowTitle + c ); // Set formatted string as title
 

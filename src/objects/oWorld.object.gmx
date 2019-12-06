@@ -28,14 +28,34 @@
             <string>/// Init
 
 sprite_index = noone;
-Timer = 0;
-
-init();
-
-// If you want a menu instead, go to to it
-global.SaveIndex = 1;
-load_from_file();
-
+TimePrecise = 0;
+TimeSeconds = 0;
+DeathCount = 0;
+SaveData = -1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cleanup
+event_user( 0 );
 </string>
           </argument>
         </arguments>
@@ -62,13 +82,12 @@ load_from_file();
 if( global.TimeTicking ) {
     var dt = delta_time / 1000000;
     if( global.TimeWhileDead || instance_exists( oPlayer ) ) {
-        Timer += dt;
+        TimePrecise += dt;
     }
-    if( Timer &gt;= 1.0 ) {
-        while( Timer &gt; 1.0 ) {
-            Timer--;
-            global.Time++;
-        }
+    if( TimePrecise &gt;= 1.0 ) {
+        var secondCount = floor( TimePrecise );
+        TimeSeconds += secondCount;
+        TimePrecise -= secondCount;
         update_title();
     }
 }
@@ -96,31 +115,21 @@ if( global.TimeTicking ) {
             <kind>1</kind>
             <string>/// Keys
 
+check_common_hotkeys();
+
 // Restart the room.
 if( keyboard_check_pressed( global.RestartKeyBind ) ) {
     reload_game();
 }
 
-// Exit game.
-if( keyboard_check_pressed( global.ExitKeyBind ) ) {
-    game_end();
-}
-
 // Soft reset
 if( keyboard_check_pressed( global.GameResetKeyBind ) ) {
-    // Clear save ds_map.
-    ds_map_destroy( global.SaveData ); 
     with( all ) {
         // Destroy all instances.
         instance_destroy(); 
     }
     // Goto init.
     room_goto( rInit ); 
-}
-
-// Toggle fullscreen
-if( keyboard_check_pressed( global.FullscreenKeyBind ) ) {
-    window_set_fullscreen( !window_get_fullscreen() );
 }
 
 // Debug hotkeys
@@ -180,6 +189,33 @@ if( global.Debug ) {
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cleanup
+
+if( SaveData != -1 ) {
+    ds_map_destroy( SaveData );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="4">
       <action>
         <libid>1</libid>
@@ -200,6 +236,30 @@ if( global.Debug ) {
             <string>/// Ensure correct FPS
 room_speed = global.EngineFps;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cleanup
+event_user( 0 );
 </string>
           </argument>
         </arguments>
@@ -226,8 +286,7 @@ room_speed = global.EngineFps;
 
 if( global.DebugGui ) {
     if( instance_number( oPlayer ) &gt; 0 ) {
-        draw_debug_ui( instance_find( oPlayer, 0 ), 5, 5, c_white, debugFont );
-        // For multiple players you could add another one here but find(player, 1) etc
+        draw_debug_ui( instance_find( oPlayer, 0 ), 5, 5, c_white, fDebugFont );
     }
 }
 
