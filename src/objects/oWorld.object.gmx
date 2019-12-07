@@ -117,22 +117,15 @@ if( global.TimeTicking ) {
 
 check_common_hotkeys();
 
+// Exit game.
+if( keyboard_check_pressed( global.ExitKeyBind ) ) {
+    game_end();
+}
 // Restart the room.
 if( keyboard_check_pressed( global.RestartKeyBind ) ) {
     reload_game();
 }
-
-// Soft reset
-if( keyboard_check_pressed( global.GameResetKeyBind ) ) {
-    with( all ) {
-        // Destroy all instances.
-        instance_destroy(); 
-    }
-    // Goto init.
-    room_goto( rInit ); 
-}
-
-// Debug hotkeys
+// Debug hotkeys.
 if( global.Debug ) {
     // Godmode.
     if( keyboard_check_pressed( global.GodDebugKeyBind ) ) {

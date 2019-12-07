@@ -46,17 +46,19 @@
       <sprites name="player">
         <sprite>sprites\sBlood</sprite>
         <sprite>sprites\sBullet</sprite>
-        <sprite>sprites\sPlayerIdle</sprite>
-        <sprite>sprites\sPlayerFall</sprite>
-        <sprite>sprites\sPlayerJump</sprite>
         <sprite>sprites\sPlayerMask</sprite>
         <sprite>sprites\sPlayerMaskFlip</sprite>
+        <sprite>sprites\sPlayerIdle</sprite>
         <sprite>sprites\sPlayerRun</sprite>
+        <sprite>sprites\sPlayerFall</sprite>
+        <sprite>sprites\sPlayerJump</sprite>
         <sprite>sprites\sPlayerSlide</sprite>
         <sprite>sprites\sPlayerStart</sprite>
       </sprites>
       <sprites name="UI">
         <sprite>sprites\sMenuTick</sprite>
+        <sprite>sprites\sTimeIcon</sprite>
+        <sprite>sprites\sSkullIcon</sprite>
         <sprite>sprites\sUiCross</sprite>
       </sprites>
       <sprites name="editor">
@@ -76,10 +78,13 @@
       <script>scripts\update_title.gml</script>
       <script>scripts\draw_debug_ui.gml</script>
       <script>scripts\check_common_hotkeys.gml</script>
+      <script>scripts\exit_game.gml</script>
+      <script>scripts\create_time_string.gml</script>
     </scripts>
     <scripts name="general">
       <script>scripts\draw_text_outline.gml</script>
       <script>scripts\initialize_game.gml</script>
+      <script>scripts\show_confirm_prompt.gml</script>
     </scripts>
     <scripts name="audio">
       <script>scripts\play_sound.gml</script>
@@ -135,6 +140,7 @@
   <fonts name="fonts">
     <font>fonts\fDebugFont</font>
     <font>fonts\fMenuOptionFont</font>
+    <font>fonts\fMenuDescriptionFont</font>
   </fonts>
   <objects name="objects">
     <objects name="internal">
@@ -152,6 +158,9 @@
       </objects>
       <objects name="commands">
         <object>objects\oMoveCommand</object>
+      </objects>
+      <objects name="UI">
+        <object>objects\oBaseMenu</object>
       </objects>
     </objects>
     <objects name="blocks">
@@ -208,6 +217,10 @@
     <objects name="menu">
       <object>objects\oPressShift</object>
       <object>objects\oMainMenu</object>
+      <object>objects\oConfirmPrompt</object>
+      <object>objects\oSaveSlotMenu</object>
+      <object>objects\oSettingsMenu</object>
+      <object>objects\oKeyControlsMenu</object>
     </objects>
   </objects>
   <rooms name="rooms">

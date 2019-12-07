@@ -26,3 +26,4 @@ draw_text( textX, textY - 1, textStr );
 //draw the text itself
 draw_set_color( textColor );
 draw_text( textX, textY, textStr );
+draw_set_color( c_white );

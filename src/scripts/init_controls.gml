@@ -11,6 +11,15 @@ global.ExitKeyBind = vk_escape; // Exit game
 global.GameResetKeyBind = vk_f2; // Soft reset game
 global.FullscreenKeyBind = vk_f4; // Toggle fullscreen
 
+// UI keybinds.
+global.MenuSelectKeyBind = vk_shift;
+global.MenuSelectSecondKeyBind = ord( "Z" );
+global.MenuBackKeyBind = vk_escape;
+global.MenuNextKeyBind = vk_down;
+global.MenuPreviousKeyBind = vk_up;
+global.MenuIncreaseKeyBind = vk_right;
+global.MenuDecreaseKeyBind = vk_left;
+
 // Debug keybinds.
 global.GodDebugKeyBind = vk_home; // Godmode Toggle
 global.ToggleUiDebugKeyBind = vk_end; // Debug UI Toggle
@@ -24,6 +33,6 @@ global.DragMouseDebugKeyBind = mb_middle; // Above, but instead it's a mouse but
 global.PrevRoomDebugKeyBind = vk_pagedown; // Go back a room (if it exists & not rInit)
 global.NextRoomDebugKeyBind = vk_pageup; // Go forwards a room (if it exists)
 
-// Avoidance controls.
 global.AvoidancePause = vk_enter;
 global.AvoidanceAddTiming = vk_space;
+

@@ -32,8 +32,8 @@
 
 Step++;
 if( Step &gt;= Duration ) {
-    TargetId.x = StartX + DeltaX;
-    TargetId.y = StartY + DeltaY;
+    TargetId.x = xstart + DeltaX;
+    TargetId.y = ystart + DeltaY;
     instance_destroy();
     exit;
 }

@@ -25,7 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = 50;
+            <string>OptionCount = array_length_1d( MenuOptions );
+
+ActiveOptionPos = 0;
+for( var i = 0; i &lt; OptionCount; i++ ) {
+    if( !OptionDisabled[i] ) {
+        ActiveOptionPos = i;
+        break;
+    }
+}
+
+TickImageIndex = 0;
+TickImageSpeed = 2 / 45;
 </string>
           </argument>
         </arguments>
@@ -48,8 +59,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>visible = !visible;
-alarm[0] = 50;
+            <string>IsEnabled = true;
 </string>
           </argument>
         </arguments>
@@ -72,17 +82,55 @@ alarm[0] = 50;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( button_check_pressed( global.JumpKeyBind ) ) {
-    with( oMainMenu ) {
-        var targetX = x;
-        var targetY = y;
-        x = 600;
-        y = 950;
-        visible = true;
-        alarm[0] = true;
-        instance_move_to( id, targetX, targetY, 30 );
+            <string>if( !IsEnabled ) {
+    exit;
+}
+TickImageIndex += TickImageSpeed;
+
+if( button_check_pressed( global.MenuBackKeyBind ) ) {
+    if( BackEventId &gt;= 0 ) {
+        event_user( BackEventId );
     }
-    instance_destroy();
+}
+if( button_check_pressed( global.MenuNextKeyBind ) ) {
+    for( var optionPos = ActiveOptionPos + 1; optionPos &lt; OptionCount; optionPos++ ) {
+        if( !OptionDisabled[optionPos] ) {
+            ActiveOptionPos = optionPos;
+            break;
+        }
+    }
+}
+if( button_check_pressed( global.MenuPreviousKeyBind ) ) {
+    for( var optionPos = ActiveOptionPos - 1; optionPos &gt;= 0; optionPos-- ) {
+        if( !OptionDisabled[optionPos] ) {
+            ActiveOptionPos = optionPos;
+            break;
+        }
+    }
+}
+if( button_check_pressed( global.MenuSelectKeyBind ) || button_check_pressed( global.MenuSelectSecondKeyBind ) ) {
+    if( !OptionDisabled[ActiveOptionPos] ) {
+        var confirmEventId = ConfirmEventIds[ActiveOptionPos];
+        if( confirmEventId &gt;= 0 ) {
+            event_user( confirmEventId );
+        }
+    }
+}
+if( button_check_pressed( global.MenuIncreaseKeyBind ) ) {
+    if( !OptionDisabled[ActiveOptionPos] ) {
+        var increaseEventId = IncreaseEventIds[ActiveOptionPos];
+        if( increaseEventId &gt;= 0 ) {
+            event_user( increaseEventId );
+        }
+    }    
+}
+if( button_check_pressed( global.MenuDecreaseKeyBind ) ) {
+    if( !OptionDisabled[ActiveOptionPos] ) {
+        var decreaseEventId = DecreaseEventIds[ActiveOptionPos];
+        if( decreaseEventId &gt;= 0 ) {
+            event_user( decreaseEventId );
+        }
+    } 
 }
 </string>
           </argument>
@@ -106,12 +154,30 @@ alarm[0] = 50;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font( fMenuOptionFont );
-draw_set_halign( fa_center );
-var name = get_button_name( global.JumpKeyBind );
-draw_text_outline( x, y, "Press " + name );
-draw_set_halign( fa_left );
+            <string>draw_set_halign( fa_center );
+draw_set_valign( fa_center );
+draw_set_font( fMenuOptionFont );
 
+var lineHeight = 48;
+for( var i = 0; i &lt; OptionCount; i++ ) {
+    var optionX = x;
+    var optionY = y + i * lineHeight;
+    var fontColor = OptionColor;
+    if( OptionDisabled[i] ) {
+        fontColor = DisabledOptionColor;
+    } else if( i == ActiveOptionPos ) {
+        fontColor = ActiveOptionColor;
+        var margin = 20;
+        var optionWidth = string_width( MenuOptions[i] );
+        draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - margin, optionY );
+        draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + margin, optionY );
+    }   
+    draw_text_outline( optionX, optionY, MenuOptions[i], fontColor );        
+}
+
+draw_set_halign( fa_left );
+draw_set_valign( fa_top );
+draw_set_color( c_white );
 </string>
           </argument>
         </arguments>

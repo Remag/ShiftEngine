@@ -5,7 +5,7 @@
   <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>oBaseMenu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -30,35 +30,46 @@ MenuOptions[1] = "New Game";
 MenuOptions[2] = "Settings";
 MenuOptions[3] = "Quit"
 
-OptionDisabled[0] = global.LastSaveIndex == -1;
+OptionDisabled[0] = false;
 OptionDisabled[1] = false;
 OptionDisabled[2] = false;
 OptionDisabled[3] = false;
 
-OptionEventId[0] = 0;
-OptionEventId[1] = 1;
-OptionEventId[2] = 2;
-OptionEventId[3] = 3;
+// Events triggered on pressing confirm.
+ConfirmEventIds[0] = 0;
+ConfirmEventIds[1] = 1;
+ConfirmEventIds[2] = 2;
+ConfirmEventIds[3] = 3;
+
+// Events triggered on pressing increase.
+IncreaseEventIds[0] = -1;
+IncreaseEventIds[1] = -1;
+IncreaseEventIds[2] = -1;
+IncreaseEventIds[3] = -1;
+
+// Events triggered on pressing decrease.
+DecreaseEventIds[0] = -1;
+DecreaseEventIds[1] = -1;
+DecreaseEventIds[2] = -1;
+DecreaseEventIds[3] = -1;
+
+BackEventId = 4;
 
 OptionColor = c_white;
 DisabledOptionColor = c_gray;
+ActiveOptionColor = c_yellow;
 
-ActiveOptionPos = 0;
-var optionCount = array_length_1d( MenuOptions );
-for( var i = 0; i &lt; optionCount; i++ ) {
-    if( !OptionDisabled[i] ) {
-        ActiveOptionPos = i;
-        break;
-    }
-}
+IsEnabled = false;
 
-initialize_game( 1 );
+event_inherited();
+
+
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -75,29 +86,197 @@ initialize_game( 1 );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign( fa_center );
-draw_set_font( fMenuOptionFont );
+            <string>check_common_hotkeys();
+event_inherited();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Confirm and quit
+show_confirm_prompt( "Quit game, are you sure?", exit_game );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Quit
+game_end();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Settings
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// New game
 
-var optionCount = array_length_1d( MenuOptions );
+var slot1Data = oSaveSlotMenu.SaveData[1];
+var slot2Data = oSaveSlotMenu.SaveData[2];
+var slot3Data = oSaveSlotMenu.SaveData[3];
+var isSlot1Fresh = slot1Data[?"engine.freshSave"];
+var isSlot2Fresh = slot2Data[?"engine.freshSave"];
+var isSlot3Fresh = slot3Data[?"engine.freshSave"];
 
-var lineHeight = 24;
-for( var i = 0; i &lt; optionCount; i++ ) {
-    var optionX = x + i * lineHeight;
-    var optionY = y;
-    var fontColor = OptionColor;
-    if( OptionDisabled[i] ) {
-        fontColor = DisabledOptionColor;
-    }
-    draw_text_outline( optionX, optionY, MenuOptions[i], fontColor );
-    if( i == ActiveOptionPos ) {
-        var margin = 20;
-        var optionWidth = string_length( MenuOptions[i] );
-        draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - margin, optionY );
-        draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + margin, optionY );
-    }
+if( isSlot1Fresh &amp;&amp; isSlot2Fresh &amp;&amp; isSlot3Fresh ) {
+    initialize_game( 1 );
+} else {
+    IsEnabled = false;
+    oSaveSlotMenu.ActiveOptionPos = 0;
+    oSaveSlotMenu.alarm[0] = 1;
+    oSaveSlotMenu.ForceStartNewGame = true;
+    instance_move_to( oSaveSlotMenu, xstart, ystart, 30 );
+    instance_move_to( id, oSettingsMenu.x, oSettingsMenu.y, 30 );
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Continue game
 
-draw_set_halign( fa_left );
+var slot1Data = oSaveSlotMenu.SaveData[1];
+var slot2Data = oSaveSlotMenu.SaveData[2];
+var slot3Data = oSaveSlotMenu.SaveData[3];
+var isSlot1Fresh = slot1Data[?"engine.freshSave"];
+var isSlot2Fresh = slot2Data[?"engine.freshSave"];
+var isSlot3Fresh = slot3Data[?"engine.freshSave"];
+
+// Automatically continue games if a single slot exists.
+if( !isSlot1Fresh &amp;&amp; isSlot2Fresh &amp;&amp; isSlot3Fresh ) {
+    initialize_game( 1 );
+} else if( isSlot1Fresh &amp;&amp; !isSlot2Fresh &amp;&amp; isSlot3Fresh ) {
+    initialize_game( 2 );
+} else if( isSlot1Fresh &amp;&amp; isSlot2Fresh &amp;&amp; !isSlot3Fresh ) {
+    initialize_game( 3 );
+} else {
+    // Show slot selection.
+    IsEnabled = false;
+    oSaveSlotMenu.ActiveOptionPos = 0;
+    oSaveSlotMenu.alarm[0] = 1;
+    oSaveSlotMenu.ForceStartNewGame = false;
+    instance_move_to( oSaveSlotMenu, xstart, ystart, 30 );
+    instance_move_to( id, oSettingsMenu.x, oSettingsMenu.y, 30 );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Check if continue game options needs to be disabled.
+var slot1Data = oSaveSlotMenu.SaveData[1];
+var slot2Data = oSaveSlotMenu.SaveData[2];
+var slot3Data = oSaveSlotMenu.SaveData[3];
+if( slot1Data[?"engine.freshSave"] &amp;&amp; slot2Data[?"engine.freshSave"] &amp;&amp; slot3Data[?"engine.freshSave"] ) {
+    OptionDisabled[0] = true;
+    ActiveOptionPos = 1;
+}
 </string>
           </argument>
         </arguments>

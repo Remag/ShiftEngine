@@ -22,9 +22,9 @@ global.Difficulty = 0; // Not really implemented - only used in saves
 global.EngineFps = 75; // Set on every room start
 global.IsPaused = false; // Determines if the game is paused
 global.TimeTicking = true; // Determines if time should be incrementing
-// Formatted windowtitle - %T - time, %D - deaths, %H - hours, %M - mins, %s - secs
 global.WindowTitle = "ShiftEngine Game";
-global.DeathtimeTitleFormat = " - Deaths: %D | Time: %H:%M:%S"; // Parsed in update_title automatically
+// Death and time information format - %T - time, %D - deaths
+global.DeathtimeTitleFormat = " - Deaths: %D | Time: %T"; // Parsed in update_title automatically
 
 /// [World]
 global.SSaves = false; // S key for saving instead of shooting/touchshooting

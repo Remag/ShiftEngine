@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>init();
+window_set_caption( global.WindowTitle );
 room_goto( rMainMenu );
 </string>
           </argument>
