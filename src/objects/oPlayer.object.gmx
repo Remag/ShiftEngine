@@ -56,6 +56,9 @@ SFall = sPlayerFall;
 SJump = sPlayerJump;
 SRun = sPlayerRun;
 SSlide = sPlayerSlide;
+
+// Intermediate sprites for smooth transitions.
+// Set to -1 to not use them.
 SQuarterStep = sPlayerQuarterStep;
 SFallStart = sPlayerFallStart;
 
@@ -330,6 +333,21 @@ if( onVineL || onVineR ) {
             }
             AnimationState = 3;
         }
+    } else if( global.ShowVineParticles ) {
+        var particleX;
+        var particleY;
+        var particleDir;
+        if( onVineL ) {
+            particleX = bbox_left;
+            particleY = y;
+            particleDir = random_range( -90, 60 );
+        } else {
+            particleX = bbox_right;
+            particleY = y;
+            particleDir = random_range( 120, 180 );
+        }
+        var particle = instance_create( particleX, particleY, oVineParticle );
+        particle.direction = particleDir;
     }
 }
 

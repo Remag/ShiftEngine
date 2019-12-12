@@ -38,7 +38,7 @@ if( AnimationState == 0 ) {
 
 } else if( AnimationState == 3 ) {
     // Falling.
-    if( AnimationStep <= 12 ) {
+    if( AnimationStep <= 12 && SFallStart >= 0 ) {
         baseSprite = SFallStart;
         image_speed = 0;  
         image_index = min( AnimationStep * 0.334, 3 );
@@ -56,7 +56,7 @@ if( AnimationState == 0 ) {
 // Choose directed sprite from base sprite and animation direction.
 var resultSprite;
 if( AnimationState == 1 || AnimationState == 0 ) {
-    if( abs( AnimationDir ) < 1 ) {
+    if( abs( AnimationDir ) < 1 && SQuarterStep >= 0 ) {
         resultSprite = SQuarterStep;
     } else {
         resultSprite = baseSprite;

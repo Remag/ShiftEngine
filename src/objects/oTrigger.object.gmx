@@ -2,7 +2,7 @@
 <object>
   <spriteName>sTrigger</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -25,10 +25,46 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Variables
+            <string>/// Object description
 
-Group = 0; // Which trigger-group to activate?
+// A trigger is an object that allows you to define custom events on player collision.
+// This is a base engine object and it should not be modified.
+// Instead you can customize a trigger using creation code or create a 
+// custom trigger object with this parent.
 
+// IsActive controls if all custom events happen on player collision.
+// By default the trigger starts active and deactivates after the first collision.
+// You can customize this behavior by changing the variable at any point.
+IsActive = true;
+
+// There are several ways you can use this object.
+// They are equally expressive, you can choose the way you use this
+// by your personal preference.
+
+// OnTrigger is a script id that gets executed on activation.
+// For example, you can write:
+// OnTrigger = flip;
+// to create a trigger that flips gravity on touch.
+// By default nothing is executed.
+OnTrigger = -1;
+
+// TriggerEventId is an id of a user-defined event that is called on collision 
+// for this trigger and all the linked instances (see below).
+// You can create a custom trigger object, set this as its parent 
+// and create a user-defined event there.
+// By default event 0 is called, if present.
+TriggerEventId = 0;
+
+// You can also define a linked object or instance.
+// A user-defined event will also trigger for all existing linked instances.
+// For example:
+// LinkedId = oTrapSpike;
+// will call a user-defined event for all instances of oTrapSpike.
+// By default no objects are linked.
+LinkedId = noone;
+
+// Trigger visibility is controlled by a debug flag.
+visible = global.DebugShowTriggers;
 </string>
           </argument>
         </arguments>
@@ -51,9 +87,21 @@ Group = 0; // Which trigger-group to activate?
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Activation
-global.triggers[Group] = true;
+            <string>if( !IsActive ) {
+    exit;
+}
+IsActive = false;
+// Call OnTrigger.
+if( script_exists( OnTrigger ) ) {
+    script_execute( OnTrigger );
+}
 
+// Call a custom event.
+event_user( TriggerEventId );
+// Also call it for all linked instances.
+with( LinkedId ) {
+    event_user( other.TriggerEventId );
+}
 </string>
           </argument>
         </arguments>

@@ -15,6 +15,7 @@ global.WrapPlayerX = false; // Teleport the player to an opposing edge (X-Axis)
 global.WrapPlayerY = false; // Teleport the player to an opposing edge (Y-Axis)
 global.KillPlayerOnEdge = true; // The standard thing.
 global.TimeWhileDead = false; // Determines if time should advance while the player is dead
+global.ShowVineParticles = true; // Determines if decorative particles spawn during player slide animation.
 
 /// [Internal]
 global.Autosave = false; // Makes the player save(true) on next creation
@@ -41,5 +42,6 @@ global.InstanceBGM = noone; // Instance of the current BGM (set by update_bgm)
 /// [Debug]
 global.Debug = true; // Enables cheats & debug hotkeys
 global.DebugGui = true; // Enables the drawing of the debug GUI
+global.DebugShowTriggers = false; // Shows all instances of oTrigger
 global.God = false; // Invincibility (can also be toggled via debug hotkey k_debug_god)
 

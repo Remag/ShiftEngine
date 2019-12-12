@@ -23,7 +23,9 @@
         <sprite>sprites\sBlock</sprite>
         <sprite>sprites\sConveyor</sprite>
         <sprite>sprites\sPlatform</sprite>
-        <sprite>sprites\sWater</sprite>
+        <sprite>sprites\sWater1</sprite>
+        <sprite>sprites\sWater2</sprite>
+        <sprite>sprites\sWater3</sprite>
         <sprite>sprites\sTrigger</sprite>
         <sprite>sprites\sVineL</sprite>
         <sprite>sprites\sVineR</sprite>
@@ -31,6 +33,7 @@
         <sprite>sprites\sGravDown</sprite>
         <sprite>sprites\sSavePoint</sprite>
         <sprite>sprites\sSaveBlocker</sprite>
+        <sprite>sprites\sVineParticle</sprite>
       </sprites>
       <sprites name="killers">
         <sprite>sprites\sSpikeUp</sprite>
@@ -137,6 +140,7 @@
     <scripts name="instance_manipulation">
       <script>scripts\instance_move_to.gml</script>
       <script>scripts\instance_offset.gml</script>
+      <script>scripts\instance_fade.gml</script>
     </scripts>
     <script>scripts\init.gml</script>
   </scripts>
@@ -161,6 +165,7 @@
       </objects>
       <objects name="commands">
         <object>objects\oMoveCommand</object>
+        <object>objects\oFadeCommand</object>
       </objects>
       <objects name="UI">
         <object>objects\oBaseMenu</object>
@@ -172,6 +177,7 @@
       <object>objects\oPlatform</object>
       <object>objects\oVineL</object>
       <object>objects\oVineR</object>
+      <object>objects\oVineParticle</object>
       <object>objects\oWater1</object>
       <object>objects\oWater2</object>
       <object>objects\oWater3</object>
@@ -202,8 +208,9 @@
       <object>objects\oPlayerEntranceData</object>
       <object>objects\oPlayerEntrance</object>
     </objects>
-    <objects name="other">
+    <objects name="triggers">
       <object>objects\oRoomSwitch</object>
+      <object>objects\oTrigger</object>
     </objects>
     <objects name="save">
       <object>objects\oSavePoint</object>
@@ -213,9 +220,10 @@
       <object>objects\oAvoidanceEntity</object>
       <object>objects\oAvoidanceKiller</object>
     </objects>
-    <objects name="avoidanceTest">
+    <objects name="demo">
       <object>objects\oTestAvoidanceController</object>
       <object>objects\oAvoidanceFruit</object>
+      <object>objects\oTriggerFruit</object>
     </objects>
     <objects name="menu">
       <object>objects\oPressShift</object>

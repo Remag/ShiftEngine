@@ -32,6 +32,7 @@ global.DragDebugKeyBind = vk_tab; // Hold to snap player to mouse x-y
 global.DragMouseDebugKeyBind = mb_middle; // Above, but instead it's a mouse button
 global.PrevRoomDebugKeyBind = vk_pagedown; // Go back a room (if it exists & not rInit)
 global.NextRoomDebugKeyBind = vk_pageup; // Go forwards a room (if it exists)
+global.ShowTriggersDebugKeyBind = ord( "T" ); // Toggle trigger display;
 
 global.AvoidancePause = vk_enter;
 global.AvoidanceAddTiming = vk_space;

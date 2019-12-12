@@ -3,7 +3,7 @@
   <caption></caption>
   <width>1200</width>
   <height>912</height>
-  <vsnap>24</vsnap>
+  <vsnap>48</vsnap>
   <hsnap>48</hsnap>
   <isometric>0</isometric>
   <speed>75</speed>
@@ -71,7 +71,6 @@
     <instance objName="oVineR" x="384" y="384" name="inst_A0C39771" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oConveyor" x="576" y="384" name="inst_6DC1917E" locked="0" code="" scaleX="3.06382989883423" scaleY="1.02127659320831" colour="4294967295" rotation="0"/>
     <instance objName="oConveyor" x="768" y="384" name="inst_55988286" locked="0" code="Cspeed = -3;&#xA;" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="oFruit" x="960" y="240" name="inst_5B6C8C90" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oSavePoint" x="432" y="336" name="inst_B3F64105" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oPlatform" x="240" y="240" name="inst_C1071C62" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="48" y="288" name="inst_E6610B3D" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
@@ -84,6 +83,8 @@
     <instance objName="oBlock" x="1104" y="264" name="inst_026703CE" locked="0" code="" scaleX="1" scaleY="4.66666650772095" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="1056" y="480" name="inst_7D95A434" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="oBlock" x="1008" y="480" name="inst_37602411" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oTrigger" x="720" y="384" name="inst_C2CEB910" locked="0" code="LinkedId = oTriggerFruit;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="oTriggerFruit" x="745" y="264" name="inst_9923EFF5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="guyTiles" x="384" y="384" w="48" h="48" xo="0" yo="0" id="10000145" name="inst_42BAF155" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

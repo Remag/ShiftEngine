@@ -166,9 +166,17 @@ if( global.Debug ) {
         }
     }
     
-    // Reveal hitbox.
+    // Reveal/hide hitbox.
     if( keyboard_check_pressed( global.HitboxDebugKeyBind ) ) {
         global.DrawHitbox = !global.DrawHitbox;
+    }
+    
+    // Reveal/hide triggers.
+    if( keyboard_check_pressed( global.ShowTriggersDebugKeyBind ) ) {
+        global.DebugShowTriggers = !global.DebugShowTriggers;
+        with( oTrigger ) {
+            visible = global.DebugShowTriggers;
+        }
     }
     
     // Debug UI Toggle.
