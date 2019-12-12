@@ -50,9 +50,11 @@
         <sprite>sprites\sPlayerMaskFlip</sprite>
         <sprite>sprites\sPlayerIdle</sprite>
         <sprite>sprites\sPlayerRun</sprite>
-        <sprite>sprites\sPlayerFall</sprite>
         <sprite>sprites\sPlayerJump</sprite>
+        <sprite>sprites\sPlayerFall</sprite>
         <sprite>sprites\sPlayerSlide</sprite>
+        <sprite>sprites\sPlayerFallStart</sprite>
+        <sprite>sprites\sPlayerQuarterStep</sprite>
         <sprite>sprites\sPlayerStart</sprite>
       </sprites>
       <sprites name="UI">
@@ -80,6 +82,7 @@
       <script>scripts\check_common_hotkeys.gml</script>
       <script>scripts\exit_game.gml</script>
       <script>scripts\create_time_string.gml</script>
+      <script>scripts\update_kid_sprite.gml</script>
     </scripts>
     <scripts name="general">
       <script>scripts\draw_text_outline.gml</script>
@@ -228,6 +231,7 @@
     <room>rooms\rMainMenu</room>
     <room>rooms\rDemo</room>
     <room>rooms\rTemplate</room>
+    <room>rooms\rZ</room>
     <room>rooms\rNeedleTest</room>
     <room>rooms\rNeedleDemo</room>
     <room>rooms\rTestAvoidance</room>

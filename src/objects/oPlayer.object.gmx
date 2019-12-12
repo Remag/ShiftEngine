@@ -37,23 +37,30 @@ Gravity = 0.4;
 Jump1 = 8.5;
 Jump2 = 7;
 OnPlatform = false;
-image_speed = 0.135;
 Frozen = false;
 Djump = false;
 Hscap = 3;
 Vscap = 9;
 set_mask();
 Dir = 1;
+LastMoveDir = 1;
+
+// Animation control variables.
+AnimationState = 0;
+AnimationStep = 0;
+AnimationDir = Dir;
 
 // Custom sprites should be set here
-SFall = sPlayerFall;
 SIdle = sPlayerIdle;
+SFall = sPlayerFall;
 SJump = sPlayerJump;
 SRun = sPlayerRun;
 SSlide = sPlayerSlide;
+SQuarterStep = sPlayerQuarterStep;
+SFallStart = sPlayerFallStart;
 
 sprite_index = SIdle; // Ensuring it's the right sprite from creation
-
+image_speed = 0.135;
 </string>
           </argument>
         </arguments>
@@ -142,6 +149,8 @@ if( !Frozen ) {
             <kind>1</kind>
             <string>/// Movement
 
+var prevAnimationState = AnimationState;
+
 var h = 0; // Default (player not moving)
 
 // Checking input.
@@ -154,10 +163,17 @@ if( global.LrAnywhere ) {
 }
 
 if( !Frozen ) {
-    if( R ) {
+    if( R &amp;&amp; L ) {
+        // Move to the most recently pressed direction.
+        h = -LastMoveDir;
+    } else if( R ) {
+        LastMoveDir = 1;
         h = 1;
     } else if( L ) {
+        LastMoveDir = -1;
         h = -1;
+    } else {
+        LastMoveDir = 1;
     }
 }
 
@@ -179,22 +195,24 @@ if( h != 0 ) {
     }
     // Setting speed.
     hspeed = Hscap * h; 
-    // Running sprite.
-    sprite_index = SRun;
-    image_speed = 0.335; 
+    // Running state.
+    AnimationState = 1;
 } else {
     // Stop moving.
     hspeed = 0; 
     // Idle sprite.
-    sprite_index = SIdle; 
-    image_speed = 0.135; 
+    AnimationState = 0;
 }
 
 if( !OnPlatform ) {
-    if( vspeed * GravityDir &lt; -0.05 ) {
-        sprite_index = SJump;
-    } else if( vspeed * GravityDir &gt; 0.05 ) {
-        sprite_index = SFall;
+    if( floorBlock == noone ) {
+        // Air animation state.
+        var fallDir = vspeed * GravityDir;
+        if( fallDir &lt;= 0 ) {
+            AnimationState = 2;
+        } else {
+            AnimationState = 3;
+        }
     }
 } else {
     // Platform Magic.
@@ -247,7 +265,7 @@ if( !Frozen ) {
             Djump = touchingWater3;
             vspeed = -Jump2; // Doublejump
             HFrameStep = 0;
-            sprite_index = SJump; // Jumping sprite
+            AnimationState = 2;
             play_sound( seJump2 ); // Djump sound
         }
     }
@@ -260,7 +278,7 @@ if( !Frozen ) {
     }
     if( keyboard_check_pressed( global.ShootKeyBind ) ) {
         if( instance_number( oBullet ) &lt; global.BulletCap ) {
-            with( instance_create( x, y, oBullet ) ) { // Create bullet
+            with( instance_create( x, y - 3, oBullet ) ) { // Create bullet
                 Shooter = other.id;
                 hspeed = other.Dir * 16; // Set speed (16px/f)
                 alarm[0] = 40; // Destroy in 40 frames
@@ -284,8 +302,7 @@ if( onVineL || onVineR ) {
     vspeed = 2 * GravityDir;
     HFrameStep = 0;
     // Sliding sprite.
-    sprite_index = SSlide; 
-    image_speed = 0.335;
+    AnimationState = 4;
     
     if( ( onVineL &amp;&amp; keyboard_check_pressed( global.RightKeyBind ) ) ||
         ( onVineR &amp;&amp; keyboard_check_pressed( global.LeftKeyBind ) ) )
@@ -303,7 +320,7 @@ if( onVineL || onVineR ) {
             // Play vine-jump sound.
             play_sound( seJump3 ); 
             // Jumping sprite.
-            sprite_index = SJump; 
+            AnimationState = 2;
         } else {
             // Falling off from vines.
             if( onVineR ) {
@@ -311,7 +328,7 @@ if( onVineL || onVineR ) {
             } else {
                 hspeed = 3;
             }
-            sprite_index = SFall;
+            AnimationState = 3;
         }
     }
 }
@@ -364,6 +381,7 @@ if( HFrameStep == 0 ) {
     HFrameStep = 0;
 }
 
+update_kid_sprite( prevAnimationState );
 </string>
           </argument>
         </arguments>
@@ -511,6 +529,7 @@ if( verticalCollision ) {
     var isLanding = ( GravityDir == 1 &amp;&amp; vspeed &gt;= 0 ) || ( GravityDir == -1 &amp;&amp; vspeed &lt;= 0 );
     Djump = Djump || isLanding;
     vspeed = 0;
+    HFrameStep = 0;
 }
 
 // Check if the block is positioned strictly diagonally from the kid. 
