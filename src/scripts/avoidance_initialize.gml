@@ -7,7 +7,7 @@ var musicId = play_sound( music );
 avoid.MusicId = musicId;
 avoid.MusicObjectId = music;
 avoid.Controller = controller;
-avoid.Duration = audio_sound_length( musicId ) * 50;
+avoid.Duration = audio_sound_length( musicId ) * room_speed;
 
 if( global.Debug ) {
     instance_create( 0, 0, oAvoidanceEditSlider );

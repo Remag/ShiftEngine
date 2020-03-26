@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MenuOptions[0] = "";
+            <string>MenuBgColor = make_color_rgb( 70, 70, 70 );
+SlotBgColor = make_color_rgb( 30, 30, 30 );
+MenuBorderColor = make_color_rgb( 0, 0, 0 );
+
+MenuOptions[0] = "";
 MenuOptions[1] = "Back";
 
 OptionDisabled[0] = false;
@@ -296,40 +300,78 @@ if( OverwriteModePos == -1 ) {
             <string>draw_set_halign( fa_left );
 draw_set_valign( fa_center );
 draw_set_font( fMenuDescriptionFont );
-var slotRectWidth = 444;
-var slotRectHeight = 120;
-var textLMargin = 8;
-var textTMargin = 10;
-var tickMargin = 20;
-var lineHeight = 32;
-var slotHeaderMargin = 5; 
+var bgRectWidth = 520;
+var bgRectHeight = 150;
 
-// Slot rectangle.
-var rectL = x - slotRectWidth / 2;
-var rectR = x + slotRectWidth / 2;
+var slotWidth = 160;
+var slotHeight = 130;
+var slotInnerMargin = 10;
+
+var textLMargin = 15;
+var textTMargin = 10;
+var tickMargin = 23;
+
+var lineHeight = 32;
+var slotHeaderMargin = 15; 
+
+var slotHMargin = ( bgRectWidth - 3 * slotWidth - 2 * slotInnerMargin ) / 2;
+var slotVMargin = ( bgRectHeight - slotHeight ) / 2;
+
+// Slot bounding rectangle.
+var rectL = x - bgRectWidth / 2;
+var rectR = x + bgRectWidth / 2;
 var rectT = y;
-var rectB = y + slotRectHeight;
-draw_set_color( c_black );
+var rectB = y + bgRectHeight;
+draw_set_color( MenuBgColor );
 draw_rectangle( rectL, rectB, rectR, rectT, false );
-draw_set_color( c_white );
-var rectSegmentWidth = slotRectWidth / 3;
-draw_rectangle( rectL, rectB, rectL + rectSegmentWidth, rectT, true );
-draw_rectangle( rectL + rectSegmentWidth, rectB, rectR - rectSegmentWidth, rectT, true );
-draw_rectangle( rectR - rectSegmentWidth, rectB, rectR, rectT, true );
+draw_set_color( MenuBorderColor );
+draw_rectangle( rectL, rectB, rectR, rectT, true );
+
+// Slot inner rectangles.
+var slotB = rectB - slotVMargin;
+var slotT = slotB - slotHeight;
+var slot1L = rectL + slotHMargin;
+var slot1R = slot1L + slotWidth;
+var slot1Color = MenuBorderColor;
+if( ActiveSlotIndex == 1 &amp;&amp; ActiveOptionPos == 0 ) {
+    slot1Color = ActiveSlotColor;
+}
+var slot2Color = MenuBorderColor;
+if( ActiveSlotIndex == 2 &amp;&amp; ActiveOptionPos == 0 ) {
+    slot2Color = ActiveSlotColor;
+}
+var slot3Color = MenuBorderColor;
+if( ActiveSlotIndex == 3 &amp;&amp; ActiveOptionPos == 0 ) {
+    slot3Color = ActiveSlotColor;
+}
+var slot2L = slot1R + slotInnerMargin;
+var slot2R = slot2L + slotWidth;
+var slot3L = slot2R + slotInnerMargin;
+var slot3R = slot3L + slotWidth;
+draw_set_color( SlotBgColor );
+draw_rectangle( slot1L, slotB, slot1R, slotT, false );
+draw_rectangle( slot2L, slotB, slot2R, slotT, false );
+draw_rectangle( slot3L, slotB, slot3R, slotT, false );
+draw_set_color( slot1Color );
+draw_rectangle( slot1L, slotB, slot1R, slotT, true );
+draw_set_color( slot2Color );
+draw_rectangle( slot2L, slotB, slot2R, slotT, true );
+draw_set_color( slot3Color );
+draw_rectangle( slot3L, slotB, slot3R, slotT, true );
 
 // Slot information.
 for( var i = 0; i &lt; 3; i++ ) {
-    var slotX = rectL + i * rectSegmentWidth;
-    var slotTextY = y + textTMargin + lineHeight / 2;
+    var slotX = slot1L + i * ( slotWidth + slotInnerMargin );
+    var slotTextY = slotT + textTMargin + lineHeight / 2;
     var slotIndex = i + 1;
     var textColor = SlotTextColor;
     var slotName = "Slot " + string( slotIndex );
-    var slotCenterX = slotX + rectSegmentWidth / 2;
+    var slotCenterX = slotX + slotWidth / 2;
     if( ActiveSlotIndex == slotIndex &amp;&amp; ActiveOptionPos == 0 ) {
         textColor = ActiveSlotColor;
-        var slotWidth = string_width( slotName );
-        draw_sprite( sMenuTick, TickImageIndex, slotCenterX - slotWidth / 2 - tickMargin, slotTextY );
-        draw_sprite( sMenuTick, TickImageIndex, slotCenterX + slotWidth / 2 + tickMargin, slotTextY );
+        var slotNameWidth = string_width( slotName );
+        draw_sprite( sMenuTick, TickImageIndex, slotCenterX - slotNameWidth / 2 - tickMargin, slotTextY );
+        draw_sprite( sMenuTick, TickImageIndex, slotCenterX + slotNameWidth / 2 + tickMargin, slotTextY );
     }
     draw_set_halign( fa_center );
     draw_text_outline( slotCenterX, slotTextY, slotName, textColor );
@@ -341,22 +383,30 @@ for( var i = 0; i &lt; 3; i++ ) {
         if( isFreshSave ) {
             // New save label.
             draw_set_halign( fa_center );
-            draw_text_outline( slotX + rectSegmentWidth / 2, slotTextY + lineHeight * 1.5, "New Game", textColor );
+            draw_text_outline( slotX + slotWidth / 2, slotTextY + lineHeight * 1.5, "New Game", textColor );
             draw_set_halign( fa_left );
         } else {
             // Death and time information.
             var deathCount = saveData[?"engine.death"];
             var time = saveData[?"engine.time"];
-        
-            draw_text_outline( slotX + textLMargin + 22, slotTextY + lineHeight + slotHeaderMargin, string( deathCount ), textColor );
-            draw_text_outline( slotX + textLMargin + 22, slotTextY + lineHeight * 2 + slotHeaderMargin, create_time_string( time ), textColor );
-            draw_sprite( sSkullIcon, 0, slotX + textLMargin, slotTextY + lineHeight + slotHeaderMargin );
-            draw_sprite( sTimeIcon, 0, slotX + textLMargin, slotTextY + lineHeight * 2 + slotHeaderMargin );
+
+            var statTextMaxWidth = slotWidth - 2 * textLMargin - 24;
+            var deathText = string( deathCount );        
+            var deathTextScale = min( 1.0, statTextMaxWidth / string_width( deathText ) );
+            var timeText = create_time_string( time );    
+            var timeTextScale = min( 1.0, statTextMaxWidth / string_width( timeText ) );
+            var textX = slotX + textLMargin + 24;
+            var deathY = slotTextY + lineHeight + slotHeaderMargin;
+            var timeY = slotTextY + lineHeight * 2 + slotHeaderMargin;
+            draw_text_scaled_outline( textX, deathY, deathTextScale, deathTextScale, deathText, textColor );
+            draw_text_scaled_outline( textX, timeY, timeTextScale, timeTextScale, timeText, textColor );
+            draw_sprite( sSkullIcon, 0, slotX + textLMargin, deathY );
+            draw_sprite( sTimeIcon, 0, slotX + textLMargin, timeY );
         }
     } else {
         // Overwrite prompt.
         draw_set_halign( fa_center );
-        draw_text_outline( slotX + rectSegmentWidth / 2, slotTextY + lineHeight + slotHeaderMargin, "Overwrite?", c_orange );
+        draw_text_outline( slotX + slotWidth / 2, slotTextY + lineHeight + slotHeaderMargin, "Overwrite?", c_orange );
         draw_set_halign( fa_left );
         var yesColor = ActiveSlotColor;
         var noColor = SlotTextColor;
@@ -374,7 +424,7 @@ draw_set_halign( fa_center );
 draw_set_valign( fa_center );
 draw_set_font( fMenuOptionFont );
 var optionX = x;
-var optionY = y + slotRectHeight + 48;
+var optionY = y + slotHeight + 60;
 var fontColor = OptionColor;
 if( OptionDisabled[1] ) {
     fontColor = DisabledOptionColor;

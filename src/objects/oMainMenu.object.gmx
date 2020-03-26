@@ -159,6 +159,10 @@ game_end();
           <argument>
             <kind>1</kind>
             <string>/// Settings
+IsEnabled = false;
+oSettingsMenu.alarm[0] = 1;
+instance_move_to( oSettingsMenu, xstart, ystart, 30 );
+instance_move_to( id, oSaveSlotMenu.x, oSaveSlotMenu.y, 30 );
 </string>
           </argument>
         </arguments>

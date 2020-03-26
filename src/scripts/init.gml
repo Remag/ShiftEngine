@@ -20,7 +20,6 @@ global.ShowVineParticles = true; // Determines if decorative particles spawn dur
 /// [Internal]
 global.Autosave = false; // Makes the player save(true) on next creation
 global.Difficulty = 0; // Not really implemented - only used in saves
-global.EngineFps = 75; // Set on every room start
 global.IsPaused = false; // Determines if the game is paused
 global.TimeTicking = true; // Determines if time should be incrementing
 global.WindowTitle = "ShiftEngine Game";
@@ -33,9 +32,9 @@ global.StartRoom = rNeedleDemo; // The first room when a new game is started
 texture_set_interpolation( false ); // Make sure sprite interpolation is off
 
 /// [Mixer]
-global.MasterVolume = 1.0; // Master Volume (0.0 ~ 1.0)
-global.MusicVolume = 1.0; // Music Volume (0.0 ~ 1.0)
-global.SoundVolume = 1.0; // SFX Volume (0.0 ~ 1.0)
+global.MasterVolume = 1.0; // Master volume (0.0 - 1.0)
+global.MusicVolume = 1.0; // Music volume (0.0 - 1.0)
+global.MusicMuted = false; // Music volume override.
 global.CurrentBGM = noone; // Current BGM (set by update_bgm)
 global.InstanceBGM = noone; // Instance of the current BGM (set by update_bgm)
 

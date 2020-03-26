@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>editSliderLength = 672;
+            <string>editSliderLength = 1000;
 editSliderY = 48;
 editSliderLeft = 64;
 editSliderRight = editSliderLeft + editSliderLength;

@@ -86,9 +86,11 @@
       <script>scripts\exit_game.gml</script>
       <script>scripts\create_time_string.gml</script>
       <script>scripts\update_kid_sprite.gml</script>
+      <script>scripts\update_music_volume.gml</script>
     </scripts>
     <scripts name="general">
       <script>scripts\draw_text_outline.gml</script>
+      <script>scripts\draw_text_scaled_outline.gml</script>
       <script>scripts\initialize_game.gml</script>
       <script>scripts\show_confirm_prompt.gml</script>
     </scripts>
@@ -231,7 +233,7 @@
       <object>objects\oConfirmPrompt</object>
       <object>objects\oSaveSlotMenu</object>
       <object>objects\oSettingsMenu</object>
-      <object>objects\oKeyControlsMenu</object>
+      <object>objects\oKeyboardControlsMenu</object>
     </objects>
   </objects>
   <rooms name="rooms">
