@@ -25,10 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MenuOptions[0] = "Continue";
+            <string>RectWidth = 250;
+RectHeight = 280;
+RectColor = make_color_rgb( 70, 70, 70 );
+BorderColor = make_color_rgb( 30, 30, 30 );
+
+MenuOptions[0] = "Continue";
 MenuOptions[1] = "New Game";
 MenuOptions[2] = "Settings";
 MenuOptions[3] = "Quit"
+
+OptionValues[0] = "";
+OptionValues[1] = "";
+OptionValues[2] = "";
+OptionValues[3] = "";
 
 OptionDisabled[0] = false;
 OptionDisabled[1] = false;

@@ -25,11 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MenuOptions[0] = "Master Volume:";
+            <string>RectWidth = 420;
+RectHeight = 300;
+RectColor = make_color_rgb( 70, 70, 70 );
+BorderColor = make_color_rgb( 30, 30, 30 );
+
+MenuOptions[0] = "Master Volume:";
 MenuOptions[1] = "Music Volume:";
 MenuOptions[2] = "Mute Music:";
 MenuOptions[3] = "Keyboard Controls"
 MenuOptions[4] = "Back"
+
+ValueOptionLineWidth = 330;
+event_user( 15 );
+OptionValues[3] = "";
+OptionValues[4] = "";
 
 OptionDisabled[0] = false;
 OptionDisabled[1] = false;
@@ -69,6 +79,35 @@ IsEnabled = false;
 event_inherited();
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="25">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update option values.
+OptionValues[0] = string( round( global.MasterVolume * 100 ) ) + '%';
+OptionValues[1] = string( round( global.MusicVolume * 100 ) ) + '%';
+OptionValues[2] = "Off";
+if( global.MusicMuted ) {
+    OptionValues[2] = "On";
+}
 </string>
           </argument>
         </arguments>
@@ -145,6 +184,7 @@ instance_move_to( id, xstart, ystart, 30 );
             <string>/// Toggle music mute.
 global.MusicMuted = !global.MusicMuted;
 update_music_volume();
+event_user( 15 );
 </string>
           </argument>
         </arguments>
@@ -168,8 +208,9 @@ update_music_volume();
           <argument>
             <kind>1</kind>
             <string>/// Decrease music.
-global.MusicVolume -= 0.01;
+global.MusicVolume = max( 0, global.MusicVolume - 0.01 );
 update_music_volume();
+event_user( 15 );
 </string>
           </argument>
         </arguments>
@@ -193,8 +234,9 @@ update_music_volume();
           <argument>
             <kind>1</kind>
             <string>/// Increase music.
-global.MusicVolume += 0.01;
+global.MusicVolume = min( 1, global.MusicVolume + 0.01 );
 update_music_volume();
+event_user( 15 );
 </string>
           </argument>
         </arguments>
@@ -218,8 +260,9 @@ update_music_volume();
           <argument>
             <kind>1</kind>
             <string>/// Decrease sound.
-global.MasterVolume -= 0.01;
+global.MasterVolume = max( 0, global.MasterVolume - 0.01 );
 update_music_volume();
+event_user( 15 );
 </string>
           </argument>
         </arguments>
@@ -243,8 +286,9 @@ update_music_volume();
           <argument>
             <kind>1</kind>
             <string>/// Increase sound.
-global.MasterVolume += 0.01;
+global.MasterVolume = min( 1, global.MasterVolume + 0.01 );
 update_music_volume();
+event_user( 15 );
 </string>
           </argument>
         </arguments>

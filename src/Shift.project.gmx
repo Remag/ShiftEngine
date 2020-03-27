@@ -119,6 +119,7 @@
     <scripts name="controls">
       <script>scripts\init_controls.gml</script>
       <script>scripts\button_check_pressed.gml</script>
+      <script>scripts\button_check.gml</script>
       <script>scripts\get_button_name.gml</script>
     </scripts>
     <scripts name="avoidance">
@@ -222,11 +223,6 @@
       <object>objects\oAvoidanceEntity</object>
       <object>objects\oAvoidanceKiller</object>
     </objects>
-    <objects name="demo">
-      <object>objects\oTestAvoidanceController</object>
-      <object>objects\oAvoidanceFruit</object>
-      <object>objects\oTriggerFruit</object>
-    </objects>
     <objects name="menu">
       <object>objects\oPressShift</object>
       <object>objects\oMainMenu</object>
@@ -234,6 +230,11 @@
       <object>objects\oSaveSlotMenu</object>
       <object>objects\oSettingsMenu</object>
       <object>objects\oKeyboardControlsMenu</object>
+    </objects>
+    <objects name="demo">
+      <object>objects\oTestAvoidanceController</object>
+      <object>objects\oAvoidanceFruit</object>
+      <object>objects\oTriggerFruit</object>
     </objects>
   </objects>
   <rooms name="rooms">

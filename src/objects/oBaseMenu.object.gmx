@@ -37,6 +37,11 @@ for( var i = 0; i &lt; OptionCount; i++ ) {
 
 TickImageIndex = 0;
 TickImageSpeed = 2 / 45;
+
+MenuNextHoldStep = 0;
+MenuPrevHoldStep = 0;
+MenuIncHoldStep = 0;
+MenuDecHoldStep = 0;
 </string>
           </argument>
         </arguments>
@@ -92,7 +97,13 @@ if( button_check_pressed( global.MenuBackKeyBind ) ) {
         event_user( BackEventId );
     }
 }
-if( button_check_pressed( global.MenuNextKeyBind ) ) {
+
+if( button_check( global.MenuNextKeyBind ) ) {
+    MenuNextHoldStep++;
+} else {
+    MenuNextHoldStep = 0;
+}
+if( button_check_pressed( global.MenuNextKeyBind ) || ( MenuNextHoldStep &gt;= 23 &amp;&amp; MenuNextHoldStep % 4 == 0 ) ) {
     for( var optionPos = ActiveOptionPos + 1; optionPos &lt; OptionCount; optionPos++ ) {
         if( !OptionDisabled[optionPos] ) {
             ActiveOptionPos = optionPos;
@@ -100,7 +111,13 @@ if( button_check_pressed( global.MenuNextKeyBind ) ) {
         }
     }
 }
-if( button_check_pressed( global.MenuPreviousKeyBind ) ) {
+
+if( button_check( global.MenuPreviousKeyBind ) ) {
+    MenuPrevHoldStep++;
+} else {
+    MenuPrevHoldStep = 0;
+}
+if( button_check_pressed( global.MenuPreviousKeyBind ) || ( MenuPrevHoldStep &gt;= 23 &amp;&amp; MenuPrevHoldStep % 4 == 0 ) ) {
     for( var optionPos = ActiveOptionPos - 1; optionPos &gt;= 0; optionPos-- ) {
         if( !OptionDisabled[optionPos] ) {
             ActiveOptionPos = optionPos;
@@ -108,6 +125,7 @@ if( button_check_pressed( global.MenuPreviousKeyBind ) ) {
         }
     }
 }
+
 if( button_check_pressed( global.MenuSelectKeyBind ) || button_check_pressed( global.MenuSelectSecondKeyBind ) ) {
     if( !OptionDisabled[ActiveOptionPos] ) {
         var confirmEventId = ConfirmEventIds[ActiveOptionPos];
@@ -116,7 +134,13 @@ if( button_check_pressed( global.MenuSelectKeyBind ) || button_check_pressed( gl
         }
     }
 }
-if( button_check_pressed( global.MenuIncreaseKeyBind ) ) {
+
+if( button_check( global.MenuIncreaseKeyBind ) ) {
+    MenuIncHoldStep++;
+} else {
+    MenuIncHoldStep = 0;
+}
+if( button_check_pressed( global.MenuIncreaseKeyBind ) || MenuIncHoldStep &gt;= 20 ) {
     if( !OptionDisabled[ActiveOptionPos] ) {
         var increaseEventId = IncreaseEventIds[ActiveOptionPos];
         if( increaseEventId &gt;= 0 ) {
@@ -124,7 +148,13 @@ if( button_check_pressed( global.MenuIncreaseKeyBind ) ) {
         }
     }    
 }
-if( button_check_pressed( global.MenuDecreaseKeyBind ) ) {
+
+if( button_check( global.MenuDecreaseKeyBind ) ) {
+    MenuDecHoldStep++;
+} else {
+    MenuDecHoldStep = 0;
+}
+if( button_check_pressed( global.MenuDecreaseKeyBind ) || MenuDecHoldStep &gt;= 20 ) {
     if( !OptionDisabled[ActiveOptionPos] ) {
         var decreaseEventId = DecreaseEventIds[ActiveOptionPos];
         if( decreaseEventId &gt;= 0 ) {
@@ -154,25 +184,53 @@ if( button_check_pressed( global.MenuDecreaseKeyBind ) ) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign( fa_center );
-draw_set_valign( fa_center );
+            <string>draw_set_valign( fa_center );
 draw_set_font( fMenuOptionFont );
 
 var lineHeight = 48;
+var menuHeight = lineHeight * OptionCount;
+var menuMargin = ( RectHeight - menuHeight ) / 2;
+var rLeft = x - RectWidth / 2;
+var rRight = rLeft + RectWidth;
+var rTop = y - lineHeight / 2 - menuMargin;
+var rBottom = rTop + RectHeight;
+
+draw_set_color( RectColor );
+draw_rectangle( rLeft, rBottom, rRight, rTop, false );
+draw_set_color( BorderColor );
+draw_rectangle( rLeft, rBottom, rRight, rTop, true );
+draw_set_color( c_white );
+
 for( var i = 0; i &lt; OptionCount; i++ ) {
     var optionX = x;
     var optionY = y + i * lineHeight;
     var fontColor = OptionColor;
+    var optionWidth = string_width( MenuOptions[i] );
+    var tickMargin = 20;
     if( OptionDisabled[i] ) {
         fontColor = DisabledOptionColor;
     } else if( i == ActiveOptionPos ) {
         fontColor = ActiveOptionColor;
-        var margin = 20;
-        var optionWidth = string_width( MenuOptions[i] );
-        draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - margin, optionY );
-        draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + margin, optionY );
-    }   
-    draw_text_outline( optionX, optionY, MenuOptions[i], fontColor );        
+    }
+    
+    if( OptionValues[i] == "" ) {
+        if( i == ActiveOptionPos ) {
+            draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - tickMargin, optionY );
+            draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + tickMargin, optionY );
+        }   
+        draw_set_halign( fa_center );
+        draw_text_outline( optionX, optionY, MenuOptions[i], fontColor );        
+    } else {
+        var lineHWidth = ValueOptionLineWidth / 2;
+        if( i == ActiveOptionPos ) {
+            draw_sprite( sMenuTick, TickImageIndex, optionX - lineHWidth - tickMargin, optionY );
+            draw_sprite( sMenuTick, TickImageIndex, optionX + lineHWidth + tickMargin, optionY );
+        }
+        draw_set_halign( fa_left );
+        draw_text_outline( optionX - lineHWidth, optionY, MenuOptions[i], fontColor );  
+        draw_set_halign( fa_right );
+        draw_text_outline( optionX + lineHWidth, optionY, OptionValues[i], fontColor );  
+    }
 }
 
 draw_set_halign( fa_left );

@@ -25,12 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MenuBgColor = make_color_rgb( 70, 70, 70 );
+            <string>RectWidth = 200;
+RectHeight = 400;
+RectColor = noone;
+BorderColor = noone;
+
+MenuBgColor = make_color_rgb( 70, 70, 70 );
 SlotBgColor = make_color_rgb( 30, 30, 30 );
 MenuBorderColor = make_color_rgb( 0, 0, 0 );
 
 MenuOptions[0] = "";
 MenuOptions[1] = "Back";
+
+OptionValues[0] = "";
+OptionValues[1] = "";
 
 OptionDisabled[0] = false;
 OptionDisabled[1] = false;
@@ -300,12 +308,11 @@ if( OverwriteModePos == -1 ) {
             <string>draw_set_halign( fa_left );
 draw_set_valign( fa_center );
 draw_set_font( fMenuDescriptionFont );
-var bgRectWidth = 520;
-var bgRectHeight = 150;
+var bgRectWidth = 530;
+var bgRectHeight = 210;
 
 var slotWidth = 160;
 var slotHeight = 130;
-var slotInnerMargin = 10;
 
 var textLMargin = 15;
 var textTMargin = 10;
@@ -314,8 +321,8 @@ var tickMargin = 23;
 var lineHeight = 32;
 var slotHeaderMargin = 15; 
 
-var slotHMargin = ( bgRectWidth - 3 * slotWidth - 2 * slotInnerMargin ) / 2;
-var slotVMargin = ( bgRectHeight - slotHeight ) / 2;
+var slotHMargin = ( bgRectWidth - 3 * slotWidth ) / 4;
+var slotVMargin = slotHMargin;
 
 // Slot bounding rectangle.
 var rectL = x - bgRectWidth / 2;
@@ -328,8 +335,8 @@ draw_set_color( MenuBorderColor );
 draw_rectangle( rectL, rectB, rectR, rectT, true );
 
 // Slot inner rectangles.
-var slotB = rectB - slotVMargin;
-var slotT = slotB - slotHeight;
+var slotT = rectT + slotVMargin;
+var slotB = slotT + slotHeight;
 var slot1L = rectL + slotHMargin;
 var slot1R = slot1L + slotWidth;
 var slot1Color = MenuBorderColor;
@@ -344,9 +351,9 @@ var slot3Color = MenuBorderColor;
 if( ActiveSlotIndex == 3 &amp;&amp; ActiveOptionPos == 0 ) {
     slot3Color = ActiveSlotColor;
 }
-var slot2L = slot1R + slotInnerMargin;
+var slot2L = slot1R + slotHMargin;
 var slot2R = slot2L + slotWidth;
-var slot3L = slot2R + slotInnerMargin;
+var slot3L = slot2R + slotHMargin;
 var slot3R = slot3L + slotWidth;
 draw_set_color( SlotBgColor );
 draw_rectangle( slot1L, slotB, slot1R, slotT, false );
@@ -361,7 +368,7 @@ draw_rectangle( slot3L, slotB, slot3R, slotT, true );
 
 // Slot information.
 for( var i = 0; i &lt; 3; i++ ) {
-    var slotX = slot1L + i * ( slotWidth + slotInnerMargin );
+    var slotX = slot1L + i * ( slotWidth + slotHMargin );
     var slotTextY = slotT + textTMargin + lineHeight / 2;
     var slotIndex = i + 1;
     var textColor = SlotTextColor;
@@ -424,7 +431,7 @@ draw_set_halign( fa_center );
 draw_set_valign( fa_center );
 draw_set_font( fMenuOptionFont );
 var optionX = x;
-var optionY = y + slotHeight + 60;
+var optionY = y + slotHeight + 50;
 var fontColor = OptionColor;
 if( OptionDisabled[1] ) {
     fontColor = DisabledOptionColor;
