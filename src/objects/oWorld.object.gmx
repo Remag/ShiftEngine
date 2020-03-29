@@ -118,33 +118,33 @@ if( global.TimeTicking ) {
 check_common_hotkeys();
 
 // Exit game.
-if( keyboard_check_pressed( global.ExitKeyBind ) ) {
+if( button_check_pressed( global.ExitKeyBind ) ) {
     game_end();
 }
 // Restart the room.
-if( keyboard_check_pressed( global.RestartKeyBind ) ) {
+if( button_check_pressed( global.RestartKeyBind ) ) {
     reload_game();
 }
 // Debug hotkeys.
 if( global.Debug ) {
     // Godmode.
-    if( keyboard_check_pressed( global.GodDebugKeyBind ) ) {
+    if( button_check_pressed( global.GodDebugKeyBind ) ) {
         global.God = !global.God;
     }
     
     // Save state.
-    if( keyboard_check_pressed( global.SaveDebugKeyBind ) ) {
+    if( button_check_pressed( global.SaveDebugKeyBind ) ) {
         save_game();
         play_sound( seShoot );
     }
     
     // Flip gravity.
-    if ( keyboard_check_pressed( global.FlipDebugKeyBind ) ) {
+    if ( button_check_pressed( global.FlipDebugKeyBind ) ) {
         flip();
     }
     
     // Set FPS.
-    if( keyboard_check_pressed( global.FpsDebugKeyBind ) ) {
+    if( button_check_pressed( global.FpsDebugKeyBind ) ) {
         var newFps = get_integer( "FPS:", global.EngineFPS );
         if( newFps &gt;= 1 ) {
             global.EngineFPS = newFps;
@@ -153,26 +153,26 @@ if( global.Debug ) {
     }
     
     // Room--.
-    if( keyboard_check_pressed( global.PrevRoomDebugKeyBind ) ) {
+    if( button_check_pressed( global.PrevRoomDebugKeyBind ) ) {
         if( room_exists( room - 1  ) ) {
             if( room - 1 != rInit ) {
                 room_goto( room - 1 );
             }
         }
     // Room++.
-    } else if ( keyboard_check_pressed( global.NextRoomDebugKeyBind ) ) {
+    } else if ( button_check_pressed( global.NextRoomDebugKeyBind ) ) {
         if( room_exists( room + 1 ) ) {
             room_goto( room + 1 );
         }
     }
     
     // Reveal/hide hitbox.
-    if( keyboard_check_pressed( global.HitboxDebugKeyBind ) ) {
+    if( button_check_pressed( global.HitboxDebugKeyBind ) ) {
         global.DrawHitbox = !global.DrawHitbox;
     }
     
     // Reveal/hide triggers.
-    if( keyboard_check_pressed( global.ShowTriggersDebugKeyBind ) ) {
+    if( button_check_pressed( global.ShowTriggersDebugKeyBind ) ) {
         global.DebugShowTriggers = !global.DebugShowTriggers;
         with( oTrigger ) {
             visible = global.DebugShowTriggers;
@@ -180,7 +180,7 @@ if( global.Debug ) {
     }
     
     // Debug UI Toggle.
-    if( keyboard_check_pressed( global.ToggleUiDebugKeyBind ) ) {
+    if( button_check_pressed( global.ToggleUiDebugKeyBind ) ) {
         global.DebugGui = !global.DebugGui;
     }
 }

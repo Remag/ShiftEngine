@@ -72,7 +72,7 @@ if( instance_exists( oPlayer ) &amp;&amp; !oAvoidance.IsPaused ) {
     }
 }
 
-if( keyboard_check_pressed( global.AvoidanceAddTiming ) ) {
+if( button_check_pressed( global.AvoidanceAddTiming ) ) {
     var newTiming = step;
     for( var i = 0; i &lt; timingsCount; i++ ) {
         var timing = timingsList[|i];   

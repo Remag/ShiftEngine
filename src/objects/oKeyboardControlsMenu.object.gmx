@@ -7,7 +7,377 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>RectWidth = 600;
+RectHeight = 300;
+ValueOptionLineWidth = 200;
+
+RectColor = make_color_rgb( 70, 70, 70 );
+BorderColor = make_color_rgb( 30, 30, 30 );
+OptionColor = c_white;
+ActiveOptionColor = c_yellow;
+ScannedKeyColor = c_lime;
+
+KeybindCount = global.RegisteredKeybindCount;
+for( var i = 0; i &lt; KeybindCount; i++ ) {
+    KeyNames[i] = global.RegisteredKeybindNames[i] + ":";
+    KeyCodes[i] = global.RegisteredKeyboardCodes[i];
+}
+
+ColumnCount = 2;
+OptionCount = KeybindCount + 1;
+
+var highColumnCount = KeybindCount % ColumnCount;
+var lowColumnCount = ColumnCount - highColumnCount;
+HighKeyCount = ceil( KeybindCount / ColumnCount );
+var lowKeyCount = floor( KeybindCount / ColumnCount );
+for( var i = 0; i &lt; highColumnCount; i++ ) {
+    ColumnKeyCount[i] = HighKeyCount;
+}
+for( var i = 0; i &lt; lowColumnCount; i++ ) {
+    ColumnKeyCount[highColumnCount + i] = lowKeyCount;
+}
+
+ActiveColumnPos = 0;
+ActiveOptionPos = 0;
+IsKeyScanActive = false;
+IsEnabled = false;
+
+TickImageIndex = 0;
+TickImageSpeed = 2 / 45;
+
+MenuNextHoldStep = 0;
+MenuPrevHoldStep = 0;
+MenuIncHoldStep = 0;
+MenuDecHoldStep = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>IsEnabled = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if( !IsEnabled ) {
+    exit;
+}
+TickImageIndex += TickImageSpeed;
+
+if( IsKeyScanActive ) {
+    if( button_check_pressed( global.MenuBackKeyBind ) ) {
+        IsKeyScanActive = false;
+    } else if( keyboard_check_pressed( vk_anykey ) ) {
+        var newKey = keyboard_key;
+        if( newKey == 0 ) {
+            exit;
+        }
+        if( newKey == vk_lshift || newKey == vk_rshift ) {
+            newKey = vk_shift;
+        }
+        KeyCodes[ActiveOptionPos] = newKey;
+        set_keyboard_bind( ActiveOptionPos, newKey );
+        IsKeyScanActive = false;
+    }    
+    exit;
+}
+
+if( button_check_pressed( global.MenuBackKeyBind ) ) {
+    event_user( 1 );
+}
+
+if( button_check( global.MenuNextKeyBind ) ) {
+    MenuNextHoldStep++;
+} else {
+    MenuNextHoldStep = 0;
+}
+if( button_check_pressed( global.MenuNextKeyBind ) || ( MenuNextHoldStep &gt;= 23 &amp;&amp; MenuNextHoldStep % 4 == 0 ) ) {
+    var columnPos = ActiveOptionPos;
+    for( var j = 0; j &lt; ActiveColumnPos; j++ ) {
+        columnPos -= ColumnKeyCount[j];
+    }
+    if( columnPos == ColumnKeyCount[ActiveColumnPos] - 1 ) {
+        ActiveOptionPos = OptionCount - 1;
+    } else if( ActiveOptionPos &lt; OptionCount - 1 ) {
+        ActiveOptionPos++;
+    }
+}
+
+if( button_check( global.MenuPreviousKeyBind ) ) {
+    MenuPrevHoldStep++;
+} else {
+    MenuPrevHoldStep = 0;
+}
+if( button_check_pressed( global.MenuPreviousKeyBind ) || ( MenuPrevHoldStep &gt;= 23 &amp;&amp; MenuPrevHoldStep % 4 == 0 ) ) {
+    if( ActiveOptionPos == OptionCount - 1 ) {
+        var menuPos = 0;
+        for( var i = 0; i &lt; ActiveColumnPos; i++ ) {
+            menuPos += ColumnKeyCount[i];
+        }
+        ActiveOptionPos = menuPos + ColumnKeyCount[ActiveColumnPos] - 1;
+    } else {
+        var columnPos = ActiveOptionPos;
+        for( var j = 0; j &lt; ActiveColumnPos; j++ ) {
+            columnPos -= ColumnKeyCount[j];
+        }
+        if( columnPos &gt; 0 ) {
+            ActiveOptionPos--;
+        }
+    }
+}
+
+if( button_check_pressed( global.MenuSelectKeyBind ) || button_check_pressed( global.MenuSelectSecondKeyBind ) ) {
+    event_user( 0 );
+}
+
+if( button_check( global.MenuIncreaseKeyBind ) ) {
+    MenuIncHoldStep++;
+} else {
+    MenuIncHoldStep = 0;
+}
+if( button_check_pressed( global.MenuIncreaseKeyBind ) || MenuIncHoldStep &gt;= 20 ) {
+    if( ActiveOptionPos &lt; OptionCount - 1 &amp;&amp; ActiveColumnPos &lt; ColumnCount - 1 ) {
+        var columnPos = ActiveOptionPos;
+        for( var j = 0; j &lt; ActiveColumnPos; j++ ) {
+            columnPos -= ColumnKeyCount[j];
+        }
+        if( columnPos &lt; ColumnKeyCount[ActiveColumnPos + 1] ) {
+            ActiveOptionPos += ColumnKeyCount[ActiveColumnPos];
+            ActiveColumnPos++;
+        }
+    }
+}
+
+if( button_check( global.MenuDecreaseKeyBind ) ) {
+    MenuDecHoldStep++;
+} else {
+    MenuDecHoldStep = 0;
+}
+if( button_check_pressed( global.MenuDecreaseKeyBind ) || MenuDecHoldStep &gt;= 20 ) {
+    if( ActiveOptionPos &lt; OptionCount - 1 &amp;&amp; ActiveColumnPos &gt; 0 ) {
+        var columnPos = ActiveOptionPos;
+        for( var j = 0; j &lt; ActiveColumnPos; j++ ) {
+            columnPos -= ColumnKeyCount[j];
+        }
+        if( columnPos &lt; ColumnKeyCount[ActiveColumnPos - 1] ) {
+            ActiveColumnPos--;
+            ActiveOptionPos -= ColumnKeyCount[ActiveColumnPos];    
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Back.
+IsEnabled = false;
+IsKeyScanActive = false;
+oSettingsMenu.alarm[0] = 1;
+instance_move_to( oSettingsMenu, x, y, 30 );
+instance_move_to( id, xstart, ystart, 30 );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Key change.
+
+if( ActiveOptionPos == OptionCount - 1 ) {
+    event_user( 1 );
+} else {
+    IsKeyScanActive = true;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_valign( fa_center );
+draw_set_font( fMenuDescriptionFont );
+
+var lineHeight = 48;
+var menuHeight = lineHeight * ( HighKeyCount + 1 );
+var menuVMargin = ( RectHeight - menuHeight ) / 2;
+var rLeft = x - RectWidth / 2;
+var rRight = rLeft + RectWidth;
+var rTop = y - lineHeight / 2 - menuVMargin;
+var rBottom = rTop + RectHeight;
+
+var menuHMargin = ( RectWidth - ColumnCount * ValueOptionLineWidth ) / ( ColumnCount + 1 )
+var menuLeft = rLeft + menuHMargin;
+var lineWidth = ValueOptionLineWidth + menuHMargin;
+
+draw_set_color( RectColor );
+draw_rectangle( rLeft, rBottom, rRight, rTop, false );
+draw_set_color( BorderColor );
+draw_rectangle( rLeft, rBottom, rRight, rTop, true );
+draw_set_color( c_white );
+
+for( var i = 0; i &lt; KeybindCount; i++ ) {
+    // Find column and position.
+    var columnIndex = 0;
+    var columnPos = i;
+    for( var j = 0; j &lt; ColumnCount; j++ ) {
+        if( columnPos &lt; ColumnKeyCount[j] ) {
+            columnIndex = j;
+            break;
+        }
+        columnPos -= ColumnKeyCount[j];
+    }
+    var optionX = menuLeft + columnIndex * lineWidth;
+    var optionY = y + columnPos * lineHeight;
+    var fontColor = OptionColor;
+    var keyValueStr = get_virtual_key_name( KeyCodes[i] );
+    var keyValueWidth = string_width( keyValueStr );
+    var tickMargin = 20;
+    if( i == ActiveOptionPos ) {
+        if( IsKeyScanActive ) {
+            fontColor = ScannedKeyColor;
+        } else {
+            fontColor = ActiveOptionColor;
+        }
+    }
+    
+    if( i == ActiveOptionPos ) {
+        draw_sprite( sMenuTick, TickImageIndex, optionX - tickMargin, optionY );
+        draw_sprite( sMenuTick, TickImageIndex, optionX + ValueOptionLineWidth + tickMargin, optionY );
+    }
+    draw_set_halign( fa_left );
+    draw_text_outline( optionX, optionY, KeyNames[i], fontColor );  
+    draw_set_halign( fa_right );
+    draw_text_outline( optionX + ValueOptionLineWidth, optionY, keyValueStr, fontColor );  
+}
+
+// Back option text.
+draw_set_font( fMenuOptionFont );
+draw_set_halign( fa_center );
+draw_set_valign( fa_center );
+var optionX = x;
+var optionY = y + lineHeight * HighKeyCount + 40;
+var fontColor = OptionColor;
+if( OptionCount - 1 == ActiveOptionPos ) {
+    fontColor = ActiveOptionColor;
+    var margin = 20;
+    var optionWidth = string_width( "Back" );
+    draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - margin, optionY );
+    draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + margin, optionY );
+}   
+draw_text_outline( optionX, optionY, "Back", fontColor );  
+
+draw_set_halign( fa_left );
+draw_set_valign( fa_top );
+draw_set_color( c_white );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>

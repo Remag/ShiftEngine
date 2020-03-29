@@ -27,8 +27,12 @@
             <kind>1</kind>
             <string>RectWidth = 420;
 RectHeight = 300;
+
 RectColor = make_color_rgb( 70, 70, 70 );
 BorderColor = make_color_rgb( 30, 30, 30 );
+OptionColor = c_white;
+DisabledOptionColor = c_gray;
+ActiveOptionColor = c_yellow;
 
 MenuOptions[0] = "Master Volume:";
 MenuOptions[1] = "Music Volume:";
@@ -69,10 +73,6 @@ DecreaseEventIds[3] = -1;
 IncreaseEventIds[4] = -1;
 
 BackEventId = 6;
-
-OptionColor = c_white;
-DisabledOptionColor = c_gray;
-ActiveOptionColor = c_yellow;
 
 IsEnabled = false;
 
@@ -159,6 +159,11 @@ instance_move_to( id, xstart, ystart, 30 );
           <argument>
             <kind>1</kind>
             <string>/// Keyboard controls.
+
+IsEnabled = false;
+oKeyboardControlsMenu.alarm[0] = 1;
+instance_move_to( oKeyboardControlsMenu, x, y, 30 );
+instance_move_to( id, oMainMenu.x, oMainMenu.y, 30 );
 </string>
           </argument>
         </arguments>

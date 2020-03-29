@@ -1,7 +1,4 @@
 with( oAvoidance ) {
-    with( Controller ) {
-        instance_destroy();
-    }
     instance_destroy();
 }
 

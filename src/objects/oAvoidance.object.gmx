@@ -81,14 +81,14 @@ MusicVolume = 1;
           <argument>
             <kind>1</kind>
             <string>if( !instance_exists( oPlayer ) || Step &gt;= Duration || IsPaused ) {
-    stop_sound( MusicId );
+    stop_sound( MusicInstance );
     MusicStartRequired = true;
     exit;
 } else if( MusicStartRequired ) {
-    var vol = audio_sound_get_gain( MusicObjectId ) * MusicVolume * global.MusicVolume * global.MasterVolume;
-    MusicId = audio_play_sound( MusicObjectId, 0, false );
-    audio_sound_gain( MusicId, vol, 0 );
-    audio_sound_set_track_position( MusicId, Step / room_speed );
+    var vol = audio_sound_get_gain( MusicId ) * MusicVolume * global.MusicVolume * global.MasterVolume;
+    MusicInstance = audio_play_sound( MusicId, 0, false );
+    audio_sound_gain( MusicInstance, vol, 0 );
+    audio_sound_set_track_position( MusicInstance, Step / room_speed );
     MusicStartRequired = false;
 }
 
@@ -96,8 +96,7 @@ MusicVolume = 1;
 var deltaStep = RealStep - Step;
 if( abs( deltaStep ) &gt; 5 ) {
     // A big lag spike, adjust music to game time.
-   audio_sound_set_track_position( MusicId, Step / room_speed );
-   //show_debug_message( "Music sync" );
+   audio_sound_set_track_position( MusicInstance, Step / room_speed );
    RealStep = Step;
 }
 Step++;
@@ -125,7 +124,7 @@ RealStep += room_speed * delta_time / 1000000;
           <argument>
             <kind>1</kind>
             <string>/// Cleanup
-stop_sound( MusicId );
+stop_sound( MusicInstance );
 </string>
           </argument>
         </arguments>

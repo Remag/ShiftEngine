@@ -27,8 +27,12 @@
             <kind>1</kind>
             <string>RectWidth = 250;
 RectHeight = 280;
+
 RectColor = make_color_rgb( 70, 70, 70 );
 BorderColor = make_color_rgb( 30, 30, 30 );
+OptionColor = c_white;
+DisabledOptionColor = c_gray;
+ActiveOptionColor = c_yellow;
 
 MenuOptions[0] = "Continue";
 MenuOptions[1] = "New Game";
@@ -64,10 +68,6 @@ DecreaseEventIds[2] = -1;
 DecreaseEventIds[3] = -1;
 
 BackEventId = 4;
-
-OptionColor = c_white;
-DisabledOptionColor = c_gray;
-ActiveOptionColor = c_yellow;
 
 IsEnabled = false;
 

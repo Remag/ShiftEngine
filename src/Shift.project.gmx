@@ -78,6 +78,8 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="internal">
+      <script>scripts\init.gml</script>
+      <script>scripts\init_settings.gml</script>
       <script>scripts\load_metadata.gml</script>
       <script>scripts\save_metadata.gml</script>
       <script>scripts\update_title.gml</script>
@@ -117,13 +119,18 @@
       <script>scripts\set_game_value.gml</script>
     </scripts>
     <scripts name="controls">
-      <script>scripts\init_controls.gml</script>
+      <script>scripts\register_keybind.gml</script>
+      <script>scripts\register_system_keybind.gml</script>
       <script>scripts\button_check_pressed.gml</script>
+      <script>scripts\button_check_released.gml</script>
       <script>scripts\button_check.gml</script>
+      <script>scripts\button_check_direct.gml</script>
       <script>scripts\get_button_name.gml</script>
+      <script>scripts\get_virtual_key_name.gml</script>
+      <script>scripts\set_keyboard_bind.gml</script>
     </scripts>
     <scripts name="avoidance">
-      <script>scripts\avoidance_initialize.gml</script>
+      <script>scripts\avoidance_start.gml</script>
       <script>scripts\avoidance_get_step.gml</script>
       <script>scripts\avoidance_finish.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
@@ -145,7 +152,7 @@
       <script>scripts\instance_offset.gml</script>
       <script>scripts\instance_fade.gml</script>
     </scripts>
-    <script>scripts\init.gml</script>
+    <script>scripts\init_controls.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fDebugFont</font>

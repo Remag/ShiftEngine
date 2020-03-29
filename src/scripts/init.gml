@@ -1,4 +1,9 @@
+global.RegisteredKeybindCount = 0;
+global.InputKeyCount = 0;
+ini_open( "settings.ini" );
+init_settings();
 init_controls();
+ini_close();
 load_metadata();
 
 /// [Player]
@@ -32,9 +37,6 @@ global.StartRoom = rNeedleDemo; // The first room when a new game is started
 texture_set_interpolation( false ); // Make sure sprite interpolation is off
 
 /// [Mixer]
-global.MasterVolume = 1.0; // Master volume (0.0 - 1.0)
-global.MusicVolume = 1.0; // Music volume (0.0 - 1.0)
-global.MusicMuted = false; // Music volume override.
 global.CurrentBGM = noone; // Current BGM (set by update_bgm)
 global.InstanceBGM = noone; // Instance of the current BGM (set by update_bgm)
 
@@ -44,3 +46,4 @@ global.DebugGui = true; // Enables the drawing of the debug GUI
 global.DebugShowTriggers = false; // Shows all instances of oTrigger
 global.God = false; // Invincibility (can also be toggled via debug hotkey k_debug_god)
 
+randomize();

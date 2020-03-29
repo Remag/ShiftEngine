@@ -1,3 +1,3 @@
-/// button_check_pressed( keyCode )
-
-return keyboard_check_pressed( argument0 );
+/// button_check_pressed( keyIndex )
+var keyCode = global.InpuKeyCodes[argument0];
+return keyboard_check_pressed( keyCode );

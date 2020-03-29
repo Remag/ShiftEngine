@@ -1,3 +1,3 @@
 /// button_check( keyCode )
-
-return keyboard_check( argument0 );
+var keyCode = global.InpuKeyCodes[argument0];
+return keyboard_check( keyCode );

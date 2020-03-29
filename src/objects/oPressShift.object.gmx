@@ -72,7 +72,7 @@ alarm[0] = 50;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( button_check_pressed( global.JumpKeyBind ) ) {
+            <string>if( button_check_pressed( global.MenuSelectKeyBind ) ) {
     with( oMainMenu ) {
         var targetX = x;
         var targetY = y;
@@ -108,7 +108,7 @@ alarm[0] = 50;
             <kind>1</kind>
             <string>draw_set_font( fMenuOptionFont );
 draw_set_halign( fa_center );
-var name = get_button_name( global.JumpKeyBind );
+var name = get_button_name( global.MenuSelectKeyBind );
 draw_text_outline( x, y, "Press " + name );
 draw_set_halign( fa_left );
 

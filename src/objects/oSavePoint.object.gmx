@@ -95,10 +95,10 @@ if( !Cooldown &amp;&amp; instance_exists( oPlayer ) ) {
         &amp;&amp; touchingBullet.Shooter.GravityDir == Grav;
     var playerContact = !global.SSaves 
         &amp;&amp; isRelevantPlayerTouching 
-        &amp;&amp; keyboard_check( global.ShootKeyBind );
+        &amp;&amp; button_check( global.ShootKeyBind );
     var sSaves = global.SSaves 
         &amp;&amp; isRelevantPlayerTouching 
-        &amp;&amp; keyboard_check( global.SaveKeyBind );
+        &amp;&amp; button_check( global.SaveKeyBind );
         
     if( bulletContact || playerContact || sSaves ) {
        Cooldown = true;

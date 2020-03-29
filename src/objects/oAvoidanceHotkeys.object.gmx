@@ -36,8 +36,8 @@ if( mouse_wheel_up() ) {
 } else {
     exit;
 }
-var vol = audio_sound_get_gain( oAvoidance.MusicObjectId ) * oAvoidance.MusicVolume * global.MusicVolume * global.MasterVolume;
-audio_sound_gain( oAvoidance.MusicId, vol, 0 );
+var vol = audio_sound_get_gain( oAvoidance.MusicId ) * oAvoidance.MusicVolume * global.MusicVolume * global.MasterVolume;
+audio_sound_gain( oAvoidance.MusicInstance, vol, 0 );
 oAvoidanceDebugInfo.MusicVolumeAlpha = 2;
 </string>
           </argument>

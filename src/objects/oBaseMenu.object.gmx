@@ -205,7 +205,6 @@ for( var i = 0; i &lt; OptionCount; i++ ) {
     var optionX = x;
     var optionY = y + i * lineHeight;
     var fontColor = OptionColor;
-    var optionWidth = string_width( MenuOptions[i] );
     var tickMargin = 20;
     if( OptionDisabled[i] ) {
         fontColor = DisabledOptionColor;
@@ -215,6 +214,7 @@ for( var i = 0; i &lt; OptionCount; i++ ) {
     
     if( OptionValues[i] == "" ) {
         if( i == ActiveOptionPos ) {
+            var optionWidth = string_width( MenuOptions[i] );
             draw_sprite( sMenuTick, TickImageIndex, optionX - optionWidth / 2 - tickMargin, optionY );
             draw_sprite( sMenuTick, TickImageIndex, optionX + optionWidth / 2 + tickMargin, optionY );
         }   

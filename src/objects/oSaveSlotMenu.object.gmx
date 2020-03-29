@@ -27,8 +27,12 @@
             <kind>1</kind>
             <string>RectWidth = 200;
 RectHeight = 400;
+
 RectColor = noone;
 BorderColor = noone;
+OptionColor = c_white;
+DisabledOptionColor = OptionColor;
+ActiveOptionColor = c_yellow;
 
 MenuBgColor = make_color_rgb( 70, 70, 70 );
 SlotBgColor = make_color_rgb( 30, 30, 30 );
@@ -56,10 +60,6 @@ DecreaseEventIds[0] = 3;
 DecreaseEventIds[1] = -1;
 
 BackEventId = 1;
-
-OptionColor = c_white;
-DisabledOptionColor = OptionColor;
-ActiveOptionColor = c_yellow;
 
 IsEnabled = false;
 
@@ -433,9 +433,7 @@ draw_set_font( fMenuOptionFont );
 var optionX = x;
 var optionY = y + slotHeight + 50;
 var fontColor = OptionColor;
-if( OptionDisabled[1] ) {
-    fontColor = DisabledOptionColor;
-} else if( 1 == ActiveOptionPos ) {
+if( 1 == ActiveOptionPos ) {
     fontColor = ActiveOptionColor;
     var margin = 20;
     var optionWidth = string_width( MenuOptions[1] );

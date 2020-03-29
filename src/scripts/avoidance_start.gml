@@ -1,12 +1,10 @@
-var controller = argument0;
-var music = argument1;
+/// avoidance_start( musicId )
+var musicId = argument0;
 
-instance_create( 0, 0, controller );
 var avoid = instance_create( 0, 0, oAvoidance );
-var musicId = play_sound( music );
+var musicInstance = play_sound( musicId );
+avoid.MusicInstance = musicInstance;
 avoid.MusicId = musicId;
-avoid.MusicObjectId = music;
-avoid.Controller = controller;
 avoid.Duration = audio_sound_length( musicId ) * room_speed;
 
 if( global.Debug ) {
@@ -16,12 +14,12 @@ if( global.Debug ) {
     instance_create( 0, 0, oAvoidanceHotkeys );
     
     with( oAvoidancePersistentData ) {
-        if( controller != self.Controller ) {
+        if( musicId != self.MusicId ) {
             instance_destroy();
         }
     }
     if( !instance_exists( oAvoidancePersistentData ) ) {
         var persistentData = instance_create( 0, 0, oAvoidancePersistentData );
-        persistentData.Controller = controller;
+        persistentData.MusicId = musicId;
     }
 }
