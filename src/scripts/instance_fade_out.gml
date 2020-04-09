@@ -1,4 +1,4 @@
-/// instance_fade( targetId, fadeDuration )
+/// instance_fade_out( targetId, fadeDuration )
 // Gradually lower the alpha value of all instances with the given targetId.
 // When the alpha reaches zero, destroy them.
 // Fade duration represents the maximum possible duration for fully opaque instances.

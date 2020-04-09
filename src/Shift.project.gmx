@@ -62,7 +62,7 @@
       </sprites>
       <sprites name="UI">
         <sprite>sprites\sMenuTick</sprite>
-        <sprite>sprites\sTimeIcon</sprite>
+        <sprite>sprites\sClockIcon</sprite>
         <sprite>sprites\sSkullIcon</sprite>
         <sprite>sprites\sUiCross</sprite>
       </sprites>
@@ -131,11 +131,17 @@
     </scripts>
     <scripts name="avoidance">
       <script>scripts\avoidance_start.gml</script>
-      <script>scripts\avoidance_get_step.gml</script>
       <script>scripts\avoidance_finish.gml</script>
+      <script>scripts\avoidance_get_step.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
     </scripts>
     <scripts name="easing">
+      <scripts name="return">
+        <script>scripts\tween_return_sine_inout.gml</script>
+        <script>scripts\tween_return_exp_inout.gml</script>
+        <script>scripts\tween_return_quad_inout.gml</script>
+        <script>scripts\tweem_return_linear.gml</script>
+      </scripts>
       <script>scripts\tween_sine_in.gml</script>
       <script>scripts\tween_sine_out.gml</script>
       <script>scripts\tween_sine_inout.gml</script>
@@ -150,7 +156,12 @@
     <scripts name="instance_manipulation">
       <script>scripts\instance_move_to.gml</script>
       <script>scripts\instance_offset.gml</script>
-      <script>scripts\instance_fade.gml</script>
+      <script>scripts\instance_change_color.gml</script>
+      <script>scripts\instance_change_alpha.gml</script>
+      <script>scripts\instance_scale.gml</script>
+      <script>scripts\instance_rotate_image.gml</script>
+      <script>scripts\instance_fade_out.gml</script>
+      <script>scripts\killer_set_active.gml</script>
     </scripts>
     <script>scripts\init_controls.gml</script>
   </scripts>
@@ -160,83 +171,90 @@
     <font>fonts\fMenuDescriptionFont</font>
   </fonts>
   <objects name="objects">
-    <objects name="internal">
-      <objects name="world">
-        <object>objects\oGameInitializer</object>
-        <object>objects\oWorld</object>
+    <objects name="engine">
+      <objects name="internal">
+        <objects name="world">
+          <object>objects\oGameInitializer</object>
+          <object>objects\oWorld</object>
+        </objects>
+        <objects name="avoidance">
+          <object>objects\oAvoidance</object>
+          <object>objects\oAvoidancePersistentData</object>
+          <object>objects\oAvoidanceHotkeys</object>
+          <object>objects\oAvoidanceEditSlider</object>
+          <object>objects\oAvoidanceDebugInfo</object>
+          <object>objects\oAvoidanceTimingTable</object>
+        </objects>
+        <objects name="commands">
+          <object>objects\oMoveCommand</object>
+          <object>objects\oFadeCommand</object>
+          <object>objects\oChangeColorCommand</object>
+          <object>objects\oChangeAlphaCommand</object>
+          <object>objects\oScaleCommand</object>
+          <object>objects\oRotateImageCommand</object>
+          <object>objects\oKillerActivationCommand</object>
+        </objects>
+        <objects name="UI">
+          <object>objects\oBaseMenu</object>
+        </objects>
+      </objects>
+      <objects name="blocks">
+        <object>objects\oBlock</object>
+        <object>objects\oConveyor</object>
+        <object>objects\oPlatform</object>
+        <object>objects\oVineL</object>
+        <object>objects\oVineR</object>
+        <object>objects\oVineParticle</object>
+        <object>objects\oWater1</object>
+        <object>objects\oWater2</object>
+        <object>objects\oWater3</object>
+      </objects>
+      <objects name="gravity">
+        <object>objects\oGravityUp</object>
+        <object>objects\oGravityDown</object>
+      </objects>
+      <objects name="killers">
+        <object>objects\oSpikeUp</object>
+        <object>objects\oSpikeDown</object>
+        <object>objects\oSpikeLeft</object>
+        <object>objects\oSpikeRight</object>
+        <object>objects\oMiniSpikeUp</object>
+        <object>objects\oMiniSpikeDown</object>
+        <object>objects\oMiniSpikeLeft</object>
+        <object>objects\oMiniSpikeRight</object>
+        <object>objects\oKiller</object>
+        <object>objects\oFruit</object>
+      </objects>
+      <objects name="player">
+        <objects name="blood">
+          <object>objects\oPlayerBlood</object>
+          <object>objects\oPlayerBloodEmitter</object>
+        </objects>
+        <object>objects\oBullet</object>
+        <object>objects\oPlayer</object>
+        <object>objects\oPlayerEntranceData</object>
+        <object>objects\oPlayerEntrance</object>
+      </objects>
+      <objects name="triggers">
+        <object>objects\oRoomSwitch</object>
+        <object>objects\oTrigger</object>
+      </objects>
+      <objects name="save">
+        <object>objects\oSavePoint</object>
+        <object>objects\oSaveBlocker</object>
       </objects>
       <objects name="avoidance">
-        <object>objects\oAvoidance</object>
-        <object>objects\oAvoidancePersistentData</object>
-        <object>objects\oAvoidanceHotkeys</object>
-        <object>objects\oAvoidanceEditSlider</object>
-        <object>objects\oAvoidanceDebugInfo</object>
-        <object>objects\oAvoidanceTimingTable</object>
+        <object>objects\oAvoidanceEntity</object>
+        <object>objects\oAvoidanceKiller</object>
       </objects>
-      <objects name="commands">
-        <object>objects\oMoveCommand</object>
-        <object>objects\oFadeCommand</object>
+      <objects name="menu">
+        <object>objects\oPressShift</object>
+        <object>objects\oMainMenu</object>
+        <object>objects\oConfirmPrompt</object>
+        <object>objects\oSaveSlotMenu</object>
+        <object>objects\oSettingsMenu</object>
+        <object>objects\oKeyboardControlsMenu</object>
       </objects>
-      <objects name="UI">
-        <object>objects\oBaseMenu</object>
-      </objects>
-    </objects>
-    <objects name="blocks">
-      <object>objects\oBlock</object>
-      <object>objects\oConveyor</object>
-      <object>objects\oPlatform</object>
-      <object>objects\oVineL</object>
-      <object>objects\oVineR</object>
-      <object>objects\oVineParticle</object>
-      <object>objects\oWater1</object>
-      <object>objects\oWater2</object>
-      <object>objects\oWater3</object>
-    </objects>
-    <objects name="gravity">
-      <object>objects\oGravityUp</object>
-      <object>objects\oGravityDown</object>
-    </objects>
-    <objects name="killers">
-      <object>objects\oSpikeUp</object>
-      <object>objects\oSpikeDown</object>
-      <object>objects\oSpikeLeft</object>
-      <object>objects\oSpikeRight</object>
-      <object>objects\oMiniSpikeUp</object>
-      <object>objects\oMiniSpikeDown</object>
-      <object>objects\oMiniSpikeLeft</object>
-      <object>objects\oMiniSpikeRight</object>
-      <object>objects\oKiller</object>
-      <object>objects\oFruit</object>
-    </objects>
-    <objects name="player">
-      <objects name="blood">
-        <object>objects\oPlayerBlood</object>
-        <object>objects\oPlayerBloodEmitter</object>
-      </objects>
-      <object>objects\oBullet</object>
-      <object>objects\oPlayer</object>
-      <object>objects\oPlayerEntranceData</object>
-      <object>objects\oPlayerEntrance</object>
-    </objects>
-    <objects name="triggers">
-      <object>objects\oRoomSwitch</object>
-      <object>objects\oTrigger</object>
-    </objects>
-    <objects name="save">
-      <object>objects\oSavePoint</object>
-      <object>objects\oSaveBlocker</object>
-    </objects>
-    <objects name="avoidance">
-      <object>objects\oAvoidanceEntity</object>
-      <object>objects\oAvoidanceKiller</object>
-    </objects>
-    <objects name="menu">
-      <object>objects\oPressShift</object>
-      <object>objects\oMainMenu</object>
-      <object>objects\oConfirmPrompt</object>
-      <object>objects\oSaveSlotMenu</object>
-      <object>objects\oSettingsMenu</object>
-      <object>objects\oKeyboardControlsMenu</object>
     </objects>
     <objects name="demo">
       <object>objects\oTestAvoidanceController</object>

@@ -408,7 +408,7 @@ for( var i = 0; i &lt; 3; i++ ) {
             draw_text_scaled_outline( textX, deathY, deathTextScale, deathTextScale, deathText, textColor );
             draw_text_scaled_outline( textX, timeY, timeTextScale, timeTextScale, timeText, textColor );
             draw_sprite( sSkullIcon, 0, slotX + textLMargin, deathY );
-            draw_sprite( sTimeIcon, 0, slotX + textLMargin, timeY );
+            draw_sprite( sClockIcon, 0, slotX + textLMargin, timeY );
         }
     } else {
         // Overwrite prompt.

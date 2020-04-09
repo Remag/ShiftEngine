@@ -1,4 +1,4 @@
-/// instance_offset( targetId, deltaX, deltaY, duration, opt_easingFunc )
+/// instance_offset( targetId, deltaX, deltaY, duration, easingFunc = tween_sine_inout )
 var targetId = argument[0];
 var deltaX = argument[1];
 var deltaY = argument[2];

@@ -393,7 +393,30 @@ update_kid_sprite( prevAnimationState );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Death
+            <string>/// Death check
+
+var killer = other.id;
+with( oKillerActivationCommand ) {
+    if( KillerId == killer ) {
+        if( IsActive ) {
+            break;
+        } else {
+            exit;
+        }
+    }
+    // Check the inheritance chain to see if any ids match.
+    var checkId = killer.object_index;
+    do {
+        if( KillerId == checkId ) {
+            if( IsActive ) {
+               break;
+            } else {
+               exit;
+            }
+        }
+        checkId = object_get_parent( checkId );
+    } until( checkId == -100 );
+}
 
 if( !global.God ) {
     die();
@@ -421,7 +444,30 @@ if( !global.God ) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Death
+            <string>/// Death check
+
+var killer = other.id;
+with( oKillerActivationCommand ) {
+    if( KillerId == killer ) {
+        if( IsActive ) {
+            break;
+        } else {
+            exit;
+        }
+    }
+    // Check the inheritance chain to see if any ids match.
+    var checkId = killer.object_index;
+    do {
+        if( KillerId == checkId ) {
+            if( IsActive ) {
+               break;
+            } else {
+               exit;
+            }
+        }
+        checkId = object_get_parent( checkId );
+    } until( checkId == -100 );
+}
 
 if( !global.God ) {
     die();

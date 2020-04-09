@@ -1,4 +1,4 @@
-/// instance_move_to( targetId, targetX, targetY, duration, opt_easingFunc )
+/// instance_move_to( targetId, targetX, targetY, duration, easingFunc = tween_sine_inout )
 var targetId = argument[0];
 var targetX = argument[1];
 var targetY = argument[2];

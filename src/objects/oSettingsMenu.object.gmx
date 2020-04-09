@@ -113,6 +113,34 @@ if( global.MusicMuted ) {
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="24">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Save settings.
+ini_open( "settings.ini" );
+ini_write_real( "Settings", "MasterVolume", global.MasterVolume );
+ini_write_real( "Settings", "MusicVolume", global.MusicVolume );
+ini_write_real( "Settings", "MusicMuted", global.MusicMuted );
+ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="16">
       <action>
         <libid>1</libid>
@@ -136,6 +164,7 @@ IsEnabled = false;
 oMainMenu.alarm[0] = 1;
 instance_move_to( oMainMenu, x, y, 30 );
 instance_move_to( id, xstart, ystart, 30 );
+event_user( 14 );
 </string>
           </argument>
         </arguments>
@@ -164,6 +193,7 @@ IsEnabled = false;
 oKeyboardControlsMenu.alarm[0] = 1;
 instance_move_to( oKeyboardControlsMenu, x, y, 30 );
 instance_move_to( id, oMainMenu.x, oMainMenu.y, 30 );
+event_user( 14 );
 </string>
           </argument>
         </arguments>
@@ -294,6 +324,29 @@ event_user( 15 );
 global.MasterVolume = min( 1, global.MasterVolume + 0.01 );
 update_music_volume();
 event_user( 15 );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_user( 14 );
 </string>
           </argument>
         </arguments>
