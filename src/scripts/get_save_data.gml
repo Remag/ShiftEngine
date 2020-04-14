@@ -1,4 +1,4 @@
-/// get_save_data( NUMBER saveIndex )
+/// get_save_data( saveIndex )
 // Create a ds_map containing the save data for the given slot.
 // If the file doesn't exist a new game save map is created.
 // The map must be destroyed by calling ds_map_destroy.

@@ -1,5 +1,5 @@
 /// die()
-// Kills the calling player
+// Kills the calling player.
 
 oWorld.DeathCount++;
 update_title();

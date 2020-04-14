@@ -1,5 +1,6 @@
-/// play_sound(SOUND soundFile)
-// Play soundfile. Volume affected by globals & editor volume. Returns instance.
+/// play_sound( soundResouce )
+// Play a soundfile. Volume is affected by globals & editor volume. 
+// Returns the sound instance.
 
 var vol = audio_sound_get_gain( argument0 ) * global.MasterVolume;
 var inst = audio_play_sound( argument0, 0, false );

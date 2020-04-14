@@ -4,11 +4,11 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <persistent>0</persistent>
+  <parentName>oExecutor</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="7" enumb="4">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,23 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Entrance identifier signifies an entrance object to use for player creation.
-// If the identifier is -1, player loading data is stored in this object.
-if( EntranceId == -1 ) {
-    var player = instance_create( x, y, oPlayer );
-    player.Dir = Dir;
-    player.Djump = Djump;
-    if( player.GravityDir != GravityDir ) {
-        player_flip();
-    }
-  
-    // Autosaving.
-    if( global.Autosave ) {
-        save_game();
-        global.Autosave = false;
-    }
-    instance_destroy();
-}
+            <string>script_execute( TargetScript );
 </string>
           </argument>
         </arguments>

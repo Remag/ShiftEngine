@@ -1,4 +1,4 @@
-/// flip()
+/// player_flip()
 // Flips player gravity.
 
 with( oPlayer ) {

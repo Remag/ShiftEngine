@@ -1,4 +1,6 @@
 /// get_button_name( virtualCode )
+// Returns a string containing the button name.
+// Takes a virtual key code.
 
 var code = argument0;
 switch( code ) {

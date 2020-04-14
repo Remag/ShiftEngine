@@ -1,4 +1,4 @@
-/// show_confirm_prompt( STRING questionStr, SCRIPT onConfirmAction )
+/// show_confirm_prompt( questionStr, onConfirmScript )
 var questionStr = argument0;
 var onConfirm = argument1;
 

@@ -1,6 +1,6 @@
-/// update_bgm(SOUND soundFile)
+/// update_bgm( soundResource )
 // Updates background music.
-// Pass "noone" as music to stop current track.
+// Pass "noone" as music to stop the current track.
 var soundFile = argument0;
 if( soundFile != noone ) {   
     var inst = audio_play_sound( soundFile, 0, true );

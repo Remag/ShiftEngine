@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Flip if normal gravity
 if( other.GravityDir == 1 ) {
-    flip();
+    player_flip();
 }
 
 </string>

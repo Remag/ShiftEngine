@@ -1,4 +1,4 @@
-/// reload_game()
+/// restart_game()
 // Load the game with the world's SaveData. Returns if loading was a success.
 
 var sx = oWorld.SaveData[? "engine.x"];

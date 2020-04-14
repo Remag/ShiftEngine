@@ -1,4 +1,4 @@
-/// draw_text_scaled_outline( textX, textY, scaleX, scaleY, textStr, opt_textColor, opt_outlineColor )
+/// draw_text_scaled_outline( textX, textY, scaleX, scaleY, textStr, textColor = c_white, outlineColor = c_black )
 var textX = argument[0];
 var textY = argument[1];
 var scaleX = argument[2];

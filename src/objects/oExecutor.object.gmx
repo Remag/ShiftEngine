@@ -2,13 +2,13 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="7" enumb="4">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,22 +25,48 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Entrance identifier signifies an entrance object to use for player creation.
-// If the identifier is -1, player loading data is stored in this object.
-if( EntranceId == -1 ) {
-    var player = instance_create( x, y, oPlayer );
-    player.Dir = Dir;
-    player.Djump = Djump;
-    if( player.GravityDir != GravityDir ) {
-        player_flip();
-    }
-  
-    // Autosaving.
-    if( global.Autosave ) {
-        save_game();
-        global.Autosave = false;
-    }
+            <string>ExecuteCount = 0;
+Step = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Step++;
+if( ExecuteDuration != undefined &amp;&amp; Step &gt;= ExecuteDuration ) {
     instance_destroy();
+    exit;
+}
+
+if( Step == 1 ) {
+    event_user( 0 );
+    ExecuteCount++;
+} else {
+    CurrentPeriod = min( CurrentPeriod, ExecutePeriod );
+    CurrentPeriod--;
+    var executePeriod = ExecutePeriod;
+    while( CurrentPeriod &lt;= 0 ) {
+        CurrentPeriod += executePeriod;
+        event_user( 0 );
+        ExecuteCount++;
+    }
 }
 </string>
           </argument>

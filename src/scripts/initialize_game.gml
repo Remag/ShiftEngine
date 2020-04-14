@@ -1,4 +1,4 @@
-/// initialize_game( NUMBER slotIndex )
+/// initialize_game( slotIndex )
 
 var slotIndex = argument0;
 
@@ -19,7 +19,7 @@ world.TimeSeconds = world.SaveData[? "engine.time"];
 update_title();
 
 // Start the loaded game.
-if( !reload_game() ) {
+if( !restart_game() ) {
     delete_save_data( slotIndex );
     initialize_game( slotIndex );
 }

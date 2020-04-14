@@ -82,6 +82,7 @@
       <script>scripts\init_settings.gml</script>
       <script>scripts\load_metadata.gml</script>
       <script>scripts\save_metadata.gml</script>
+      <script>scripts\initialize_game.gml</script>
       <script>scripts\update_title.gml</script>
       <script>scripts\draw_debug_ui.gml</script>
       <script>scripts\check_common_hotkeys.gml</script>
@@ -89,11 +90,17 @@
       <script>scripts\create_time_string.gml</script>
       <script>scripts\update_kid_sprite.gml</script>
       <script>scripts\update_music_volume.gml</script>
+      <script>scripts\set_mask.gml</script>
+      <scripts name="saves">
+        <script>scripts\get_save_file_name.gml</script>
+        <script>scripts\create_save_data.gml</script>
+        <script>scripts\get_save_data.gml</script>
+        <script>scripts\delete_save_data.gml</script>
+      </scripts>
     </scripts>
-    <scripts name="general">
+    <scripts name="ui">
       <script>scripts\draw_text_outline.gml</script>
       <script>scripts\draw_text_scaled_outline.gml</script>
-      <script>scripts\initialize_game.gml</script>
       <script>scripts\show_confirm_prompt.gml</script>
     </scripts>
     <scripts name="audio">
@@ -103,17 +110,12 @@
     </scripts>
     <scripts name="player">
       <script>scripts\die.gml</script>
-      <script>scripts\flip.gml</script>
-      <script>scripts\set_mask.gml</script>
+      <script>scripts\player_flip.gml</script>
     </scripts>
     <scripts name="saves">
-      <script>scripts\reload_game.gml</script>
+      <script>scripts\restart_game.gml</script>
       <script>scripts\save_game.gml</script>
       <script>scripts\save_stats.gml</script>
-      <script>scripts\get_save_file_name.gml</script>
-      <script>scripts\create_save_data.gml</script>
-      <script>scripts\get_save_data.gml</script>
-      <script>scripts\delete_save_data.gml</script>
       <script>scripts\get_game_value.gml</script>
       <script>scripts\get_game_flag.gml</script>
       <script>scripts\set_game_value.gml</script>
@@ -135,6 +137,22 @@
       <script>scripts\avoidance_get_step.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
     </scripts>
+    <scripts name="spawners">
+      <script>scripts\spawner_create.gml</script>
+      <script>scripts\spawner_attach.gml</script>
+      <script>scripts\executor_create.gml</script>
+      <script>scripts\executor_attach.gml</script>
+    </scripts>
+    <scripts name="instance_manipulation">
+      <script>scripts\instance_move_to.gml</script>
+      <script>scripts\instance_offset.gml</script>
+      <script>scripts\instance_change_color.gml</script>
+      <script>scripts\instance_change_alpha.gml</script>
+      <script>scripts\instance_scale.gml</script>
+      <script>scripts\instance_rotate_image.gml</script>
+      <script>scripts\instance_fade_out.gml</script>
+      <script>scripts\killer_set_active.gml</script>
+    </scripts>
     <scripts name="easing">
       <scripts name="return">
         <script>scripts\tween_return_sine_inout.gml</script>
@@ -152,16 +170,6 @@
       <script>scripts\tween_quad_out.gml</script>
       <script>scripts\tween_quad_inout.gml</script>
       <script>scripts\tween_linear.gml</script>
-    </scripts>
-    <scripts name="instance_manipulation">
-      <script>scripts\instance_move_to.gml</script>
-      <script>scripts\instance_offset.gml</script>
-      <script>scripts\instance_change_color.gml</script>
-      <script>scripts\instance_change_alpha.gml</script>
-      <script>scripts\instance_scale.gml</script>
-      <script>scripts\instance_rotate_image.gml</script>
-      <script>scripts\instance_fade_out.gml</script>
-      <script>scripts\killer_set_active.gml</script>
     </scripts>
     <script>scripts\init_controls.gml</script>
   </scripts>
@@ -184,6 +192,12 @@
           <object>objects\oAvoidanceEditSlider</object>
           <object>objects\oAvoidanceDebugInfo</object>
           <object>objects\oAvoidanceTimingTable</object>
+          <object>objects\oExecutor</object>
+          <object>objects\oFixedSpawner</object>
+          <object>objects\oAttachedSpawner</object>
+          <object>objects\oFixedExecutor</object>
+          <object>objects\oAttachedExecutor</object>
+          <object>objects\oSpawnDummy</object>
         </objects>
         <objects name="commands">
           <object>objects\oMoveCommand</object>
@@ -257,7 +271,7 @@
       </objects>
     </objects>
     <objects name="demo">
-      <object>objects\oTestAvoidanceController</object>
+      <object>objects\oDemoAvoidanceController</object>
       <object>objects\oAvoidanceFruit</object>
       <object>objects\oTriggerFruit</object>
     </objects>
@@ -265,12 +279,14 @@
   <rooms name="rooms">
     <room>rooms\rInit</room>
     <room>rooms\rMainMenu</room>
-    <room>rooms\rDemo</room>
     <room>rooms\rTemplate</room>
-    <room>rooms\rZ</room>
-    <room>rooms\rNeedleTest</room>
-    <room>rooms\rNeedleDemo</room>
-    <room>rooms\rTestAvoidance</room>
+    <rooms name="demo">
+      <room>rooms\rTestAvoidance</room>
+      <room>rooms\rNeedleDemo</room>
+      <room>rooms\rNeedleTest</room>
+      <room>rooms\rZ</room>
+      <room>rooms\rDemo</room>
+    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
