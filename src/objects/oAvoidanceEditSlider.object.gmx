@@ -85,9 +85,9 @@ editSliderRight = editSliderLeft + editSliderLength;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var step = avoidance_get_step();
+            <string>var step = Avoidance.Step;
 
-var relPos = step / oAvoidance.Duration;
+var relPos = step / Avoidance.Duration;
 relPos = clamp( relPos, 0, 1 );
 var pxOffset = relPos * editSliderLength;
 

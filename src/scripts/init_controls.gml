@@ -27,7 +27,6 @@ global.GodDebugKeyBind = register_system_keybind( vk_home ); // Godmode Toggle
 global.ToggleUiDebugKeyBind = register_system_keybind( vk_end ); // Debug UI Toggle
 global.SaveDebugKeyBind = register_system_keybind( vk_insert ); // Save at current position
 global.FlipDebugKeyBind = register_system_keybind( ord( "G" ) ); // Flip gravity
-global.FpsDebugKeyBind = register_system_keybind( ord( "F" ) ); // Set FPS (displays prompt)
 global.VAlignDebugKeyBind = register_system_keybind( ord( "V" ) ); // Set V-Align (displays prompt)
 global.HitboxDebugKeyBind = register_system_keybind( ord( "H" ) ); // Toggle hitbox display
 global.DragDebugKeyBind = register_system_keybind( vk_tab ); // Hold to snap player to mouse x-y

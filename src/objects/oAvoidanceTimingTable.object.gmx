@@ -57,10 +57,10 @@ TableFreezeTiming = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var step = avoidance_get_step();
+            <string>var step = Avoidance.Step;
 var timingsList = oAvoidancePersistentData.TimingsList;
 var timingsCount = ds_list_size( timingsList );
-if( instance_exists( oPlayer ) &amp;&amp; !oAvoidance.IsPaused ) {
+if( instance_exists( oPlayer ) &amp;&amp; !Avoidance.IsPaused ) {
     for( var i = 0; i &lt; timingsCount; i++ ) {  
         var timing = timingsList[|i];   
         if( timing == step + 1 ) {
@@ -157,7 +157,7 @@ if( mouse_check_button_pressed( mb_left ) ) {
             <string>
 var timingsList = oAvoidancePersistentData.TimingsList;
 
-var step = avoidance_get_step();
+var step = Avoidance.Step;
 if( TableFreezeTiming != -1 ) {
     step = TableFreezeTiming;
 }

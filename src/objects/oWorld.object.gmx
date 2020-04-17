@@ -143,15 +143,6 @@ if( global.Debug ) {
         player_flip();
     }
     
-    // Set FPS.
-    if( button_check_pressed( global.FpsDebugKeyBind ) ) {
-        var newFps = get_integer( "FPS:", global.EngineFPS );
-        if( newFps &gt;= 1 ) {
-            global.EngineFPS = newFps;
-            room_speed = global.EngineFPS;
-        }
-    }
-    
     // Room--.
     if( button_check_pressed( global.PrevRoomDebugKeyBind ) ) {
         if( room_exists( room - 1  ) ) {

@@ -8,10 +8,14 @@ avoid.MusicId = musicId;
 avoid.Duration = audio_sound_length( musicId ) * room_speed;
 
 if( global.Debug ) {
-    instance_create( 0, 0, oAvoidanceEditSlider );
-    instance_create( 0, 0, oAvoidanceTimingTable );
-    instance_create( 0, 0, oAvoidanceDebugInfo );
-    instance_create( 0, 0, oAvoidanceHotkeys );
+    var slider = instance_create( 0, 0, oAvoidanceEditSlider );
+    slider.Avoidance = avoid;
+    var timings = instance_create( 0, 0, oAvoidanceTimingTable );
+    timings.Avoidance = avoid;
+    var debugInfo = instance_create( 0, 0, oAvoidanceDebugInfo );
+    debugInfo.Avoidance = avoid;
+    var hotkeys = instance_create( 0, 0, oAvoidanceHotkeys );
+    hotkeys.Avoidance = avoid;
     
     with( oAvoidancePersistentData ) {
         if( musicId != self.MusicId ) {
@@ -23,3 +27,4 @@ if( global.Debug ) {
         persistentData.MusicId = musicId;
     }
 }
+return avoid;

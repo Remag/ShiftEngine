@@ -134,7 +134,6 @@
     <scripts name="avoidance">
       <script>scripts\avoidance_start.gml</script>
       <script>scripts\avoidance_finish.gml</script>
-      <script>scripts\avoidance_get_step.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
     </scripts>
     <scripts name="spawners">

@@ -76,7 +76,7 @@
     var panelY = 88;
     var lineHeight = 16;
     
-    var step = avoidance_get_step();
+    var step = Avoidance.Step;
     draw_set_font( fDebugFont );
     draw_set_halign( fa_left );
     draw_set_valign( fa_top );
@@ -94,7 +94,7 @@
     var volumeX = 350;
     var volumeY = 88;
     draw_set_alpha( MusicVolumeAlpha );
-    var volumeLevel = round( 100 * oAvoidance.MusicVolume );
+    var volumeLevel = round( 100 * Avoidance.MusicVolume );
     draw_text_outline( volumeX, volumeY, "Music: " + string( volumeLevel ) + "%", c_lime, c_black );
     draw_set_alpha( 1 );
 }
