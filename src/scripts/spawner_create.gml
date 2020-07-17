@@ -17,10 +17,10 @@ if( argument_count > 4 ) {
 }
 
 var spawner = instance_create( spawnX, spawnY, oFixedSpawner );
-spawner.ExecutePeriod = spawnPeriod;
-spawner.CurrentPeriod = spawnPeriod;
+spawner.Period = spawnPeriod;
+spawner.CurrentPhase = 1;
 spawner.SpawnObject = spawnObject;
-spawner.ExecuteDuration = spawnDuration;
+spawner.Duration = spawnDuration;
 return spawner;
 
 

@@ -2,5 +2,8 @@ var newStep = argument0;
 with( oAvoidanceEntity ) {
     instance_destroy();
 }
+with( oExecutor ) {
+    instance_destroy();
+}
 
-oAvoidance.Step = newStep + 1;
+global.ActiveAvoidance.Step = newStep;

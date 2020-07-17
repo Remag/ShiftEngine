@@ -1,1 +1,2 @@
-return oAvoidance.Step - 1;
+/// avoidance_get_step()
+return global.ActiveAvoidance.Step;

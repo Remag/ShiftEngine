@@ -121,7 +121,7 @@ event_inherited();
           <argument>
             <kind>1</kind>
             <string>/// Confirm and quit
-show_confirm_prompt( "Quit game, are you sure?", exit_game );
+show_confirm_prompt( "Quit game, are you sure?", exit_game_internal );
 </string>
           </argument>
         </arguments>

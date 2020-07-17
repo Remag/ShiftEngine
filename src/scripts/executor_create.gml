@@ -14,9 +14,10 @@ if( argument_count > 2 ) {
 }
 
 var executor = instance_create( 0, 0, oFixedExecutor );
-executor.ExecutePeriod = executePeriod;
+executor.Period = executePeriod;
+executor.CurrentPhase = 1;
 executor.TargetScript = targetScript;
-executor.ExecuteDuration = executeDuration;
+executor.Duration = executeDuration;
 return executor;
 
 

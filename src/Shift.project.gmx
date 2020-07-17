@@ -83,10 +83,11 @@
       <script>scripts\load_metadata.gml</script>
       <script>scripts\save_metadata.gml</script>
       <script>scripts\initialize_game.gml</script>
+      <script>scripts\cleanup_game.gml</script>
       <script>scripts\update_title.gml</script>
       <script>scripts\draw_debug_ui.gml</script>
       <script>scripts\check_common_hotkeys.gml</script>
-      <script>scripts\exit_game.gml</script>
+      <script>scripts\exit_game_internal.gml</script>
       <script>scripts\create_time_string.gml</script>
       <script>scripts\update_kid_sprite.gml</script>
       <script>scripts\update_music_volume.gml</script>
@@ -109,8 +110,10 @@
       <script>scripts\update_bgm.gml</script>
     </scripts>
     <scripts name="player">
-      <script>scripts\die.gml</script>
+      <script>scripts\player_kill.gml</script>
       <script>scripts\player_flip.gml</script>
+      <script>scripts\player_set_air_jump_count.gml</script>
+      <script>scripts\room_set_infinite_jump.gml</script>
     </scripts>
     <scripts name="saves">
       <script>scripts\restart_game.gml</script>
@@ -135,22 +138,39 @@
       <script>scripts\avoidance_start.gml</script>
       <script>scripts\avoidance_finish.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
+      <script>scripts\avoidance_get_step.gml</script>
+      <script>scripts\avoidance_register_shortcut.gml</script>
+      <script>scripts\avoidance_add_room.gml</script>
     </scripts>
     <scripts name="spawners">
       <script>scripts\spawner_create.gml</script>
       <script>scripts\spawner_attach.gml</script>
       <script>scripts\executor_create.gml</script>
       <script>scripts\executor_attach.gml</script>
+      <script>scripts\circle_params_create.gml</script>
+      <script>scripts\circle_create.gml</script>
+      <script>scripts\polygon_params_create.gml</script>
+      <script>scripts\polygon_create.gml</script>
+    </scripts>
+    <scripts name="view_manipulation">
+      <script>scripts\view_offset.gml</script>
+      <script>scripts\view_rotate.gml</script>
     </scripts>
     <scripts name="instance_manipulation">
       <script>scripts\instance_move_to.gml</script>
+      <script>scripts\instance_move_to_x.gml</script>
+      <script>scripts\instance_move_to_y.gml</script>
       <script>scripts\instance_offset.gml</script>
       <script>scripts\instance_change_color.gml</script>
       <script>scripts\instance_change_alpha.gml</script>
       <script>scripts\instance_scale.gml</script>
+      <script>scripts\instance_scale_x.gml</script>
+      <script>scripts\instance_scale_y.gml</script>
       <script>scripts\instance_rotate_image.gml</script>
+      <script>scripts\instance_redirect.gml</script>
       <script>scripts\instance_fade_out.gml</script>
       <script>scripts\killer_set_active.gml</script>
+      <script>scripts\trail_attach.gml</script>
     </scripts>
     <scripts name="easing">
       <scripts name="return">
@@ -168,7 +188,11 @@
       <script>scripts\tween_quad_in.gml</script>
       <script>scripts\tween_quad_out.gml</script>
       <script>scripts\tween_quad_inout.gml</script>
+      <script>scripts\tween_back_in.gml</script>
+      <script>scripts\tween_back_out.gml</script>
+      <script>scripts\tween_back_inout.gml</script>
       <script>scripts\tween_linear.gml</script>
+      <script>scripts\oscillate_sine.gml</script>
     </scripts>
     <script>scripts\init_controls.gml</script>
   </scripts>
@@ -197,15 +221,25 @@
           <object>objects\oFixedExecutor</object>
           <object>objects\oAttachedExecutor</object>
           <object>objects\oSpawnDummy</object>
+          <object>objects\oEntitiesShape</object>
+          <object>objects\oEntityTrail</object>
         </objects>
         <objects name="commands">
           <object>objects\oMoveCommand</object>
+          <object>objects\oMoveXCommand</object>
+          <object>objects\oMoveYCommand</object>
           <object>objects\oFadeCommand</object>
           <object>objects\oChangeColorCommand</object>
           <object>objects\oChangeAlphaCommand</object>
           <object>objects\oScaleCommand</object>
+          <object>objects\oScaleXCommand</object>
+          <object>objects\oScaleYCommand</object>
           <object>objects\oRotateImageCommand</object>
+          <object>objects\oChangeDirectionCommand</object>
           <object>objects\oKillerActivationCommand</object>
+          <object>objects\oViewOffsetCommand</object>
+          <object>objects\oViewRotateCommand</object>
+          <object>objects\oInfiniteJump</object>
         </objects>
         <objects name="UI">
           <object>objects\oBaseMenu</object>

@@ -11,5 +11,6 @@ ds_map_add( result, "engine.death", 0 );
 ds_map_add( result, "engine.room", global.StartRoom );
 ds_map_add( result, "engine.grav", noone );
 ds_map_add( result, "engine.freshSave", true );
-ds_map_add( result, "engine.djump", noone );
+ds_map_add( result, "engine.maxairjump", noone );
+ds_map_add( result, "engine.curairjump", noone );
 return result;

@@ -22,10 +22,12 @@ var resultSpawner = noone;
 with( ownerId ) {
     var spawner = instance_create( x, y, oAttachedSpawner );
     spawner.OwnerInstance = id;
-    spawner.ExecutePeriod = spawnPeriod;
+    spawner.Period = spawnPeriod;
+    spawner.CurrentPhase = 1;
     spawner.SpawnObject = spawnObject;
-    spawner.ExecuteDuration = spawnDuration;
+    spawner.Duration = spawnDuration;
     Spawner = spawner;
+    Executor = spawner;
     if( resultSpawner == noone ) {
         resultSpawner = spawner;
     } else {

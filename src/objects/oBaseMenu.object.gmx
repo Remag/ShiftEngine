@@ -42,6 +42,30 @@ MenuNextHoldStep = 0;
 MenuPrevHoldStep = 0;
 MenuIncHoldStep = 0;
 MenuDecHoldStep = 0;
+MenuSurface = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>surface_free( MenuSurface );
 </string>
           </argument>
         </arguments>
@@ -167,6 +191,52 @@ if( button_check_pressed( global.MenuDecreaseKeyBind ) || MenuDecHoldStep &gt;= 
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>surface_free( MenuSurface );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>surface_free( MenuSurface );
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -184,26 +254,30 @@ if( button_check_pressed( global.MenuDecreaseKeyBind ) || MenuDecHoldStep &gt;= 
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_valign( fa_center );
+            <string>if( !surface_exists( MenuSurface ) ) {
+    MenuSurface = surface_create( RectWidth, RectHeight );
+    surface_set_target( MenuSurface );
+    draw_clear_alpha( c_black, 1 );
+} else {
+    surface_set_target( MenuSurface );
+}
+
+draw_set_color_write_enable( true, true, true, false );
+draw_set_valign( fa_center );
 draw_set_font( fMenuOptionFont );
 
 var lineHeight = 48;
 var menuHeight = lineHeight * OptionCount;
 var menuMargin = ( RectHeight - menuHeight ) / 2;
-var rLeft = x - RectWidth / 2;
-var rRight = rLeft + RectWidth;
-var rTop = y - lineHeight / 2 - menuMargin;
-var rBottom = rTop + RectHeight;
-
 draw_set_color( RectColor );
-draw_rectangle( rLeft, rBottom, rRight, rTop, false );
+draw_rectangle( 0, RectHeight, RectWidth, 0, false );
 draw_set_color( BorderColor );
-draw_rectangle( rLeft, rBottom, rRight, rTop, true );
+draw_rectangle( 0, RectHeight, RectWidth, 0, true );
 draw_set_color( c_white );
 
 for( var i = 0; i &lt; OptionCount; i++ ) {
-    var optionX = x;
-    var optionY = y + i * lineHeight;
+    var optionX = RectWidth / 2;
+    var optionY = menuMargin + lineHeight / 2 + i * lineHeight;
     var fontColor = OptionColor;
     var tickMargin = 20;
     if( OptionDisabled[i] ) {
@@ -236,6 +310,13 @@ for( var i = 0; i &lt; OptionCount; i++ ) {
 draw_set_halign( fa_left );
 draw_set_valign( fa_top );
 draw_set_color( c_white );
+draw_set_color_write_enable( true, true, true, true );
+
+surface_reset_target();
+var rLeft = x - RectWidth / 2;
+var rTop = y - lineHeight / 2 - menuMargin;
+draw_surface_ext( MenuSurface, rLeft, rTop, image_xscale, image_yscale, image_angle, image_blend, image_alpha );
+draw_set_alpha( 1 );
 </string>
           </argument>
         </arguments>

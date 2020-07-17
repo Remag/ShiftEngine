@@ -50,23 +50,18 @@ Step = 0;
           <argument>
             <kind>1</kind>
             <string>Step++;
-if( ExecuteDuration != undefined &amp;&amp; Step &gt;= ExecuteDuration ) {
+if( Duration != undefined &amp;&amp; Step &gt;= Duration ) {
     instance_destroy();
     exit;
 }
 
-if( Step == 1 ) {
+CurrentPhase = min( CurrentPhase, Period );
+CurrentPhase--;
+var executePeriod = Period;
+while( CurrentPhase &lt;= 0 ) {
+    CurrentPhase += executePeriod;
     event_user( 0 );
     ExecuteCount++;
-} else {
-    CurrentPeriod = min( CurrentPeriod, ExecutePeriod );
-    CurrentPeriod--;
-    var executePeriod = ExecutePeriod;
-    while( CurrentPeriod &lt;= 0 ) {
-        CurrentPeriod += executePeriod;
-        event_user( 0 );
-        ExecuteCount++;
-    }
 }
 </string>
           </argument>

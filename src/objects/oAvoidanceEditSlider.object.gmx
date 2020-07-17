@@ -25,10 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>editSliderLength = 1000;
-editSliderY = 48;
-editSliderLeft = 64;
-editSliderRight = editSliderLeft + editSliderLength;
+            <string>EditSliderY = 48;
+
+var editMargin = 64;
+EditSliderLeft = editMargin;
+EditSliderRight = view_wview[0] - editMargin;
+EditSliderLength = EditSliderRight - EditSliderLeft;
 
 </string>
           </argument>
@@ -53,13 +55,13 @@ editSliderRight = editSliderLeft + editSliderLength;
           <argument>
             <kind>1</kind>
             <string>if( mouse_check_button_pressed( mb_left ) ) {
-    var clickDeltaY = abs( mouse_y - editSliderY );
+    var avoidance = global.ActiveAvoidance;
+    var clickDeltaY = abs( mouse_y - EditSliderY );
     if( clickDeltaY &lt; 24 ) {
-        var clickPosX = mouse_x - editSliderLeft;
-        var relPos = clickPosX / editSliderLength;
+        var clickPosX = mouse_x - EditSliderLeft;
+        var relPos = clickPosX / EditSliderLength;
         relPos = clamp( relPos, 0, 1 );
-        var stepPos = round( relPos * oAvoidance.Duration );
-
+        var stepPos = round( relPos * avoidance.Duration );
         avoidance_set_step( stepPos );
     }
 }
@@ -85,25 +87,26 @@ editSliderRight = editSliderLeft + editSliderLength;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var step = Avoidance.Step;
+            <string>var avoidance = global.ActiveAvoidance;
+var step = avoidance.Step;
 
-var relPos = step / Avoidance.Duration;
+var relPos = step / avoidance.Duration;
 relPos = clamp( relPos, 0, 1 );
-var pxOffset = relPos * editSliderLength;
+var pxOffset = relPos * EditSliderLength;
 
-var sliderBarX = editSliderLeft + pxOffset;
-var sliderBarY = editSliderY;
+var sliderBarX = EditSliderLeft + pxOffset;
+var sliderBarY = EditSliderY;
 var sliderBarWidth = 4;
 var sliderBarHeight = 20;
 
 var sliderLineHeight = 2;
-var sliderLeftLineWidth = pxOffset - editSliderLeft;
+var sliderLeftLineWidth = pxOffset - EditSliderLeft;
 var sliderLeftLineHeight = 2;
 
 draw_set_colour( c_white );
-draw_rectangle( sliderBarX, editSliderY - sliderLineHeight, editSliderRight, editSliderY + sliderLineHeight, false );
+draw_rectangle( sliderBarX, EditSliderY - sliderLineHeight, EditSliderRight, EditSliderY + sliderLineHeight, false );
 draw_set_colour( c_lime );
-draw_rectangle( editSliderLeft, editSliderY - sliderLineHeight, sliderBarX, editSliderY + sliderLineHeight, false );
+draw_rectangle( EditSliderLeft, EditSliderY - sliderLineHeight, sliderBarX, EditSliderY + sliderLineHeight, false );
 draw_set_colour( c_white );
 draw_rectangle( sliderBarX - sliderBarWidth / 2, sliderBarY + sliderBarHeight / 2, sliderBarX + sliderBarWidth / 2, sliderBarY - sliderBarHeight / 2, false );
 

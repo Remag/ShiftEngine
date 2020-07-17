@@ -38,7 +38,8 @@ Jump1 = 8.5;
 Jump2 = 7;
 OnPlatform = false;
 Frozen = false;
-Djump = false;
+AirJumpCount = 1;
+CurrentAirJumpCount = AirJumpCount;
 Hscap = 3;
 Vscap = 9;
 set_mask();
@@ -199,7 +200,7 @@ if( !OnPlatform ) {
 if( floorConveyor != noone ) {
     hspeed += floorConveyor.Cspeed; 
 }
-// vspeed capping.
+// Vspeed capping.
 if( abs( vspeed ) &gt; Vscap ) {
     vspeed = sign( vspeed ) * Vscap; 
     HFrameStep = 0;
@@ -232,15 +233,19 @@ if( !Frozen ) {
         var touchingWater3 = inWater3 || place_meeting( x, y + GravityDir, oWater3 );
         if( OnPlatform || abovePlatform || aboveBlock || touchingWater1 ) {
             vspeed = -Jump1; // First jump
-            Djump = true; // Make sure you can djump afterwards
+            CurrentAirJumpCount = AirJumpCount; // Make sure you can air jump afterwards
             HFrameStep = 0;
             play_sound( seJump ); // Jump sound
-        } else if( Djump || global.InfiniteJump || touchingWater2 || touchingWater3 ) { 
-            Djump = touchingWater3;
-            vspeed = -Jump2; // Doublejump
+        } else if( CurrentAirJumpCount != 0 || global.DebugInfiniteJump || touchingWater2 || touchingWater3 ) { 
+            if( touchingWater3 ) {
+                CurrentAirJumpCount = AirJumpCount;
+            } else {
+                CurrentAirJumpCount--;
+            }
+            vspeed = -Jump2; // Air jump height
             HFrameStep = 0;
             AnimationState = 2;
-            play_sound( seJump2 ); // Djump sound
+            play_sound( seJump2 ); // Air jump sound
         }
     }
     if( button_check_released( global.JumpKeyBind ) ) {
@@ -261,7 +266,7 @@ if( !Frozen ) {
         }
     }
     if( global.CanSuicide &amp;&amp; button_check_pressed( global.SuicideKeyBind ) ) {
-        die();
+        player_kill();
     }
 }
 
@@ -349,8 +354,8 @@ if( global.WrapPlayerY ) {
 }
 
 // Check for screen edge.
-if( global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt; room_height || y &lt; 0 ) ) {
-    die();
+if( !global.God &amp;&amp; global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_width || x &lt; 0 || y &gt; room_height || y &lt; 0 ) ) {
+    player_kill();
 }
 
 // Calculate key frames for vertical movement.
@@ -419,7 +424,7 @@ with( oKillerActivationCommand ) {
 }
 
 if( !global.God ) {
-    die();
+    player_kill();
 }
 
 </string>
@@ -470,7 +475,7 @@ with( oKillerActivationCommand ) {
 }
 
 if( !global.God ) {
-    die();
+    player_kill();
 }
 
 </string>
@@ -503,7 +508,7 @@ if( GravityDir == 1 ) {
         vspeed = other.vspeed;
         HFrameStep = 0;
         OnPlatform = true;
-        Djump = true;
+        CurrentAirJumpCount = AirJumpCount;
     }
 } else {
     if( y - vspeed / 2 &gt;= other.y + 23 ) {
@@ -511,7 +516,7 @@ if( GravityDir == 1 ) {
         vspeed = other.vspeed;
         HFrameStep = 0;
         OnPlatform = true;
-        Djump = true;
+        CurrentAirJumpCount = AirJumpCount;
     }
 }
 
@@ -562,7 +567,9 @@ if( verticalCollision ) {
     }
     
     var isLanding = ( GravityDir == 1 &amp;&amp; vspeed &gt;= 0 ) || ( GravityDir == -1 &amp;&amp; vspeed &lt;= 0 );
-    Djump = Djump || isLanding;
+    if( isLanding ) {
+        CurrentAirJumpCount = AirJumpCount;
+    }
     vspeed = 0;
     HFrameStep = 0;
 }
@@ -615,11 +622,11 @@ if( global.God ) {
 }
 
 draw_sprite_ext( sprite_index, image_index, xd, yd, image_xscale * Dir,
-    image_yscale * GravityDir, image_angle, image_blend, alpha );
+    image_yscale * GravityDir, image_angle, image_blend, image_alpha * alpha );
 
 if( global.DrawHitbox ) {
     draw_sprite_ext( mask_index, image_index, x, y, image_xscale,
-        image_yscale, image_angle, image_blend, alpha * 0.8 );
+        image_yscale, image_angle, image_blend, image_alpha * alpha * 0.8 );
 }
 
 </string>

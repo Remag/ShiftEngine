@@ -347,6 +347,7 @@ event_user( 15 );
           <argument>
             <kind>1</kind>
             <string>event_user( 14 );
+event_inherited();
 </string>
           </argument>
         </arguments>

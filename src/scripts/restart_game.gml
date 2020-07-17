@@ -6,15 +6,22 @@ var sy = oWorld.SaveData[? "engine.y"];
 var sr = oWorld.SaveData[? "engine.room"];
 var sd = oWorld.SaveData[? "engine.dir"];
 var sg = oWorld.SaveData[? "engine.grav"];
-var sdj = oWorld.SaveData[? "engine.djump"];
+var smaj = oWorld.SaveData[? "engine.maxairjump"];
+var saj = oWorld.SaveData[? "engine.curairjump"];
    
 if( room_exists( sr ) ) {
-    if( sx != noone && sy != noone && sd != noone && sg != noone && sdj != noone ) {
-        // Schedule player for loading on the next room.
+    cleanup_game();
+    if( sx != noone && sy != noone && sd != noone && sg != noone && saj != noone ) {
+        // Schedule the player for loading in the next room.
         var entranceData = instance_create( sx, sy, oPlayerEntranceData );
         entranceData.EntranceId = -1;
         entranceData.Dir = sd;
-        entranceData.Djump = sdj || global.SaveHop;
+        entranceData.MaxAirJumpCount = smaj;
+        if( global.SaveHop ) {
+            entranceData.CurrentAirJumpCount = smaj;
+        } else {
+            entranceData.CurrentAirJumpCount = saj;
+        }
         entranceData.GravityDir = sg;
     }
     room_goto( sr );

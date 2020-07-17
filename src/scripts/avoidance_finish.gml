@@ -1,4 +1,6 @@
-with( oAvoidance ) {
+var avoidance = global.ActiveAvoidance;
+with( avoidance ) {
+    global.ActiveAvoidance = PreviousActiveAvoidance;
     instance_destroy();
 }
 

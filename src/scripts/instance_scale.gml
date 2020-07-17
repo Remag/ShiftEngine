@@ -9,7 +9,7 @@ if( argument_count > 3 ) {
 }
 
 with( targetId ) {
-    var command = instance_create( x, y, oChangeScaleCommand );
+    var command = instance_create( x, y, oScaleCommand );
     command.TargetId = id;
     command.StartScale = image_xscale;
     command.ScaleDelta = targetScale - image_xscale;

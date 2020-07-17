@@ -3,8 +3,8 @@
 
 with( oPlayer ) {
     GravityDir = -GravityDir;
-    if( global.GiveDjumpOnFlip ) {
-        Djump = true;
+    if( global.GiveAirJumpsOnFlip ) {
+        CurrentAirJumpCount = AirJumpCount;
     }
     vspeed = 0;
     Jump1 = abs( Jump1 ) * GravityDir;

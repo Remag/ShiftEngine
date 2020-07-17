@@ -30,7 +30,8 @@
 if( EntranceId == -1 ) {
     var player = instance_create( x, y, oPlayer );
     player.Dir = Dir;
-    player.Djump = Djump;
+    player.AirJumpCount = MaxAirJumpCount;
+    player.CurrentAirJumpCount = CurrentAirJumpCount;
     if( player.GravityDir != GravityDir ) {
         player_flip();
     }

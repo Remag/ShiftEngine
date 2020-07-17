@@ -22,9 +22,10 @@ var resultExecutor = noone;
 with( ownerId ) {
     var executor = instance_create( x, y, oAttachedExecutor );
     executor.OwnerInstance = id;
-    executor.ExecutePeriod = executePeriod;
+    executor.Period = executePeriod;
+    executor.CurrentPhase = 1;
     executor.TargetScript = targetScript;
-    executor.ExecuteDuration = executeDuration;
+    executor.Duration = executeDuration;
     Executor = executor;
     if( resultExecutor == noone ) {
         resultExecutor = executor;
