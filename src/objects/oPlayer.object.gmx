@@ -239,6 +239,8 @@ if( !Frozen ) {
         } else if( CurrentAirJumpCount != 0 || global.DebugInfiniteJump || touchingWater2 || touchingWater3 ) { 
             if( touchingWater3 ) {
                 CurrentAirJumpCount = AirJumpCount;
+            } else if( touchingWater2 ) {
+                CurrentAirJumpCount = max( 0, CurrentAirJumpCount - 1 );
             } else {
                 CurrentAirJumpCount--;
             }
