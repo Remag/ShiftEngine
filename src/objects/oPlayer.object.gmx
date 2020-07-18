@@ -180,14 +180,14 @@ if( h != 0 ) {
 }
 
 if( !OnPlatform ) {
-    if( floorBlock == noone ) {
-        // Air animation state.
-        var fallDir = vspeed * GravityDir;
-        if( fallDir &lt;= 0 ) {
-            AnimationState = 2;
-        } else {
-            AnimationState = 3;
-        }
+    // Air animation state.
+    var fallDir = vspeed * GravityDir;
+    if( fallDir &lt; 0 ) {
+        // Jumping.
+        AnimationState = 2;   
+    } else if( floorBlock == noone ) {
+        // Falling.
+        AnimationState = 3;
     }
 } else {
     // Platform Magic.

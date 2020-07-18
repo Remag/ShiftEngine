@@ -78,8 +78,10 @@ RoomCount = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>Step++;
-RealStep += room_speed * delta_time / 1000000;
+            <string>if( !IsPaused ) {
+    Step++;
+    RealStep += room_speed * delta_time / 1000000;
+}
 </string>
           </argument>
         </arguments>
