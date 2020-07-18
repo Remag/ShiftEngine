@@ -14,7 +14,7 @@ with( targetId ) {
     command.StartDirection = direction;
     command.DeltaDirection = targetAngle - direction;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_ChangeDirectionCommand = command;
 }

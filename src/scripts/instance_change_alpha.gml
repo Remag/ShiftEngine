@@ -14,7 +14,7 @@ with( targetId ) {
     command.StartAlpha = image_alpha;
     command.DeltaAlpha = targetAlpha - image_alpha;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_AlphaChangeCommand = command;
 }

@@ -14,7 +14,7 @@ with( targetId ) {
     command.StartDirection = image_angle;
     command.DeltaDirection = targetAngle - image_angle;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_RotateImageCommand = command;
 }

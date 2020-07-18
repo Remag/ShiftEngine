@@ -14,7 +14,7 @@ with( targetId ) {
     command.StartScaleX = image_xscale;
     command.ScaleDeltaX = targetScale - image_xscale;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_XScaleChangeCommand = command;
 }

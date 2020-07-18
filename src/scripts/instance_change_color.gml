@@ -14,7 +14,7 @@ with( targetId ) {
     command.StartColor = image_blend;
     command.EndColor = targetColor;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_ColorChangeCommand = command;
 }

@@ -15,7 +15,7 @@ with( targetId ) {
     command.DeltaX = deltaX;
     command.DeltaY = deltaY;
     command.Step = 0;
-    command.Duration = duration;
+    command.Duration = max( duration, 1 );
     command.Smoother = easingFunc;
     self.ShiftInternal_MoveCommand = command;
 }
