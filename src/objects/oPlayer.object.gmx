@@ -262,7 +262,7 @@ if( !Frozen ) {
             with( instance_create( x, y - 3, oBullet ) ) { // Create bullet
                 Shooter = other.id;
                 hspeed = other.Dir * 16; // Set speed (16px/f)
-                alarm[0] = 40; // Destroy in 40 frames
+                alarm[0] = 60; // Destroy in 60 frames
                 play_sound( seShoot ); // Play sound
             }
         }
