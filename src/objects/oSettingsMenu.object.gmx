@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>RectWidth = 420;
-RectHeight = 300;
+RectHeight = 350;
 
 RectColor = make_color_rgb( 70, 70, 70 );
 BorderColor = make_color_rgb( 30, 30, 30 );
@@ -37,40 +37,45 @@ ActiveOptionColor = c_yellow;
 MenuOptions[0] = "Master Volume:";
 MenuOptions[1] = "Music Volume:";
 MenuOptions[2] = "Mute Music:";
-MenuOptions[3] = "Keyboard Controls"
-MenuOptions[4] = "Back"
+MenuOptions[3] = "Smoothing:";
+MenuOptions[4] = "Keyboard Controls"
+MenuOptions[5] = "Back"
 
 ValueOptionLineWidth = 330;
 event_user( 15 );
-OptionValues[3] = "";
 OptionValues[4] = "";
+OptionValues[5] = "";
 
 OptionDisabled[0] = false;
 OptionDisabled[1] = false;
 OptionDisabled[2] = false;
 OptionDisabled[3] = false;
 OptionDisabled[4] = false;
+OptionDisabled[5] = false;
 
 // Events triggered on pressing confirm.
 ConfirmEventIds[0] = -1;
 ConfirmEventIds[1] = -1;
 ConfirmEventIds[2] = 4;
-ConfirmEventIds[3] = 5;
-ConfirmEventIds[4] = 6;
+ConfirmEventIds[3] = 7;
+ConfirmEventIds[4] = 5;
+ConfirmEventIds[5] = 6;
 
 // Events triggered on pressing increase.
 IncreaseEventIds[0] = 0;
 IncreaseEventIds[1] = 2;
 IncreaseEventIds[2] = 4;
-IncreaseEventIds[3] = -1;
+IncreaseEventIds[3] = 7;
 IncreaseEventIds[4] = -1;
+IncreaseEventIds[5] = -1;
 
 // Events triggered on pressing decrease.
 DecreaseEventIds[0] = 1;
 DecreaseEventIds[1] = 3;
 DecreaseEventIds[2] = 4;
-DecreaseEventIds[3] = -1;
-IncreaseEventIds[4] = -1;
+DecreaseEventIds[3] = 7;
+DecreaseEventIds[4] = -1;
+IncreaseEventIds[5] = -1;
 
 BackEventId = 6;
 
@@ -108,6 +113,10 @@ OptionValues[2] = "Off";
 if( global.MusicMuted ) {
     OptionValues[2] = "On";
 }
+OptionValues[3] = "Off";
+if( global.SmoothTextures ) {
+    OptionValues[3] = "On";
+}
 </string>
           </argument>
         </arguments>
@@ -135,7 +144,34 @@ ini_open( "settings.ini" );
 ini_write_real( "Settings", "MasterVolume", global.MasterVolume );
 ini_write_real( "Settings", "MusicVolume", global.MusicVolume );
 ini_write_real( "Settings", "MusicMuted", global.MusicMuted );
+ini_write_real( "Settings", "SmoothTextures", global.SmoothTextures );
 ini_close();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="17">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Toggle texture smoothing.
+global.SmoothTextures = !global.SmoothTextures;
+texture_set_interpolation( global.SmoothTextures );
+event_user( 15 );
 </string>
           </argument>
         </arguments>

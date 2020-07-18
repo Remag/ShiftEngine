@@ -36,7 +36,6 @@ global.ActiveAvoidance = noone; // Instance id of the last created avoidance obj
 /// [World]
 global.SSaves = false; // S key for saving instead of shooting/touchshooting
 global.StartRoom = rNeedleDemo; // The first room when a new game is started
-texture_set_interpolation( false ); // Make sure sprite interpolation is off
 
 /// [Mixer]
 global.CurrentBGM = noone; // Current BGM (set by update_bgm)

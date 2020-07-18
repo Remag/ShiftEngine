@@ -3,7 +3,7 @@
   <spriteName>sWorldIcon</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1337</depth>
+  <depth>1000000000</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -176,6 +176,8 @@ if( global.Debug ) {
     }
 }
 
+// Set sprite interpolation for the current frame.
+texture_set_interpolation( global.SmoothTextures ); 
 </string>
           </argument>
         </arguments>

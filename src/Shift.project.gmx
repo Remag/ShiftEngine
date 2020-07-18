@@ -92,6 +92,7 @@
       <script>scripts\update_kid_sprite.gml</script>
       <script>scripts\update_music_volume.gml</script>
       <script>scripts\set_mask.gml</script>
+      <script>scripts\smoothing_mode_get_default.gml</script>
       <scripts name="saves">
         <script>scripts\get_save_file_name.gml</script>
         <script>scripts\create_save_data.gml</script>
@@ -206,6 +207,7 @@
       <objects name="internal">
         <objects name="world">
           <object>objects\oGameInitializer</object>
+          <object>objects\oUiWorld</object>
           <object>objects\oWorld</object>
         </objects>
         <objects name="avoidance">
