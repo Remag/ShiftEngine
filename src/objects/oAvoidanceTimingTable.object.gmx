@@ -33,6 +33,7 @@ CrossRectHWidth = 20;
 CrossRectHHeight = LineHeight / 2;
 SelectionRectLeft = -10;
 SelectionRectRight = 140;
+TimingDisplayDelay = 100;
 
 TableFreezeTiming = -1;
 </string>
@@ -61,7 +62,7 @@ TableFreezeTiming = -1;
 var step = avoidance.Step;
 var timingsList = oAvoidancePersistentData.TimingsList;
 var timingsCount = ds_list_size( timingsList );
-if( instance_exists( oPlayer ) &amp;&amp; !avoidance.IsPaused ) {
+if( !avoidance.IsPaused ) {
     for( var i = 0; i &lt; timingsCount; i++ ) {  
         var timing = timingsList[|i];   
         if( timing == step + 1 ) {
@@ -87,8 +88,10 @@ if( button_check_pressed( global.AvoidanceAddTiming ) ) {
     play_sound( sndSnap );
 }
 
-if( mouse_check_button_pressed( mb_left ) ) {
-    // Find the display count.\
+var lMousePressed = mouse_check_button_pressed( mb_left );
+var rMousePressed = mouse_check_button_pressed( mb_right );
+if( lMousePressed || rMousePressed ) {
+    // Find the display count.
     var displayStep = step;
     if( TableFreezeTiming != -1 ) {
        displayStep = TableFreezeTiming;
@@ -99,7 +102,7 @@ if( mouse_check_button_pressed( mb_left ) ) {
     var firstTimingPos = 0;
     for( var i = 0; i &lt; count; i++ ) {
         var currentStep = timingsList[|i];
-        if( currentStep &gt; displayStep - 40 ) {
+        if( currentStep &gt; displayStep - TimingDisplayDelay ) {
             firstTimingPos = i;
             displayCount = min( MaxLineDisplayCount + 1, count - i );
             break;
@@ -113,23 +116,34 @@ if( mouse_check_button_pressed( mb_left ) ) {
     if( mouse_x &gt;= lineLeft &amp;&amp; mouse_x &lt; lineRight ) {
         if( mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
             var oldTiming = timingsList[|timingPos];
-            var newTiming = get_integer( "Adjust timing", oldTiming );
-            if( newTiming &gt; 0 ) {
-                // Delete the old timing and insert a new one.
-                ds_list_delete( timingsList, timingPos );
-                for( var i = 0; i &lt; timingsCount; i++ ) {
-                    var timing = timingsList[|i];   
-                    if( timing &gt;= newTiming ) {
-                        ds_list_insert( timingsList, i, newTiming );
-                        exit;
+            if( lMousePressed ) {
+                var newTiming = get_integer( "Adjust timing", oldTiming );
+                if( newTiming &gt; 0 ) {
+                    // Delete the old timing and insert a new one.
+                    ds_list_delete( timingsList, timingPos );
+                    for( var i = 0; i &lt; timingsCount; i++ ) {
+                        var timing = timingsList[|i];   
+                        if( timing &gt;= newTiming ) {
+                            ds_list_insert( timingsList, i, newTiming );
+                            exit;
+                        }
                     }
+                    ds_list_add( timingsList, newTiming );
                 }
-                ds_list_add( timingsList, newTiming );
+            } else if( rMousePressed ) {
+                avoidance_set_step( oldTiming );
+                TableFreezeTiming = oldTiming;
             }
         }
     } else if( mouse_x &gt;= lineRight &amp;&amp; mouse_x &lt; lineRight + 2 * CrossRectHWidth ) {
         if( mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
-            ds_list_delete( timingsList, timingPos );
+            if( lMousePressed ) {
+                ds_list_delete( timingsList, timingPos );
+            } else if( rMousePressed ) {
+                var timing = timingsList[|timingPos];
+                avoidance_set_step( timing );
+                TableFreezeTiming = oldTiming;
+            }
         }
     }   
 }
@@ -166,12 +180,12 @@ var count = ds_list_size( timingsList );
 var displayCount = 0;
 for( var i = 0; i &lt; count; i++ ) {
     var currentStep = timingsList[|i];
-    if( currentStep &gt; step - 40 ) {
+    if( currentStep &gt; step - TimingDisplayDelay ) {
         var timingAlpha;
         var timingColor;
         if( currentStep &lt; step ) {
-            var alphaDiff = ( step - currentStep ) / 40;
-            var colorDiff = ( step - currentStep ) / 40;
+            var alphaDiff = ( step - currentStep ) / TimingDisplayDelay;
+            var colorDiff = ( step - currentStep ) / TimingDisplayDelay;
             timingAlpha = 1 - alphaDiff;    
             timingColor = merge_color( c_lime, c_white, colorDiff );
         } else {

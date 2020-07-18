@@ -32,6 +32,7 @@ EditSliderLeft = editMargin;
 EditSliderRight = view_wview[0] - editMargin;
 EditSliderLength = EditSliderRight - EditSliderLeft;
 
+ActiveTickPos = -1;
 </string>
           </argument>
         </arguments>
@@ -54,17 +55,41 @@ EditSliderLength = EditSliderRight - EditSliderLeft;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( mouse_check_button_pressed( mb_left ) ) {
-    var avoidance = global.ActiveAvoidance;
-    var clickDeltaY = abs( mouse_y - EditSliderY );
-    if( clickDeltaY &lt; 24 ) {
+            <string>// Find an active tick.
+var avoidance = global.ActiveAvoidance;
+var mouseDeltaY = abs( mouse_y - EditSliderY );
+var bestTickPos = -1;
+if( mouseDeltaY &lt; 24 ) {
+    var timingsList = oAvoidancePersistentData.TimingsList;
+    var count = ds_list_size( timingsList );
+    var bestTickDelta = 5;
+    for( var i = 0; i &lt; count; i++ ) {
+        var tickStep = timingsList[|i];
+        var tickRelPos = tickStep / avoidance.Duration;
+        tickRelPos = clamp( tickRelPos, 0, 1 );
+        var tickPxPos = EditSliderLeft + tickRelPos * EditSliderLength;
+        var mouseDeltaX = abs( mouse_x - tickPxPos );
+        if( mouseDeltaX &lt;= bestTickDelta ) {
+            bestTickPos = i;
+            bestTickDelta = mouseDeltaX;
+        }
+    }
+}
+ActiveTickPos = bestTickPos;
+
+if( mouse_check_button_pressed( mb_left ) ) {
+    if( mouseDeltaY &lt; 24 ) {
         var clickPosX = mouse_x - EditSliderLeft;
         var relPos = clickPosX / EditSliderLength;
+        if( ActiveTickPos != -1 ) {
+            relPos = ( timingsList[|ActiveTickPos] - 1 ) / avoidance.Duration;
+        }
         relPos = clamp( relPos, 0, 1 );
         var stepPos = round( relPos * avoidance.Duration );
         avoidance_set_step( stepPos );
     }
 }
+
 </string>
           </argument>
         </arguments>
@@ -98,17 +123,36 @@ var sliderBarX = EditSliderLeft + pxOffset;
 var sliderBarY = EditSliderY;
 var sliderBarWidth = 4;
 var sliderBarHeight = 20;
+var tickLineHeight = 40;
 
-var sliderLineHeight = 2;
+var sliderLineRadius = 2;
 var sliderLeftLineWidth = pxOffset - EditSliderLeft;
 var sliderLeftLineHeight = 2;
 
 draw_set_colour( c_white );
-draw_rectangle( sliderBarX, EditSliderY - sliderLineHeight, EditSliderRight, EditSliderY + sliderLineHeight, false );
+draw_rectangle( sliderBarX, EditSliderY - sliderLineRadius, EditSliderRight, EditSliderY + sliderLineRadius, false );
 draw_set_colour( c_lime );
-draw_rectangle( EditSliderLeft, EditSliderY - sliderLineHeight, sliderBarX, EditSliderY + sliderLineHeight, false );
+draw_rectangle( EditSliderLeft, EditSliderY - sliderLineRadius, sliderBarX, EditSliderY + sliderLineRadius, false );
 draw_set_colour( c_white );
 draw_rectangle( sliderBarX - sliderBarWidth / 2, sliderBarY + sliderBarHeight / 2, sliderBarX + sliderBarWidth / 2, sliderBarY - sliderBarHeight / 2, false );
+
+// Timing ticks.
+var timingsList = oAvoidancePersistentData.TimingsList;
+var count = ds_list_size( timingsList );
+for( var i = 0; i &lt; count; i++ ) {
+    var tickStep = timingsList[|i];
+    var tickColor = c_white;
+    if( i == ActiveTickPos ) {
+        tickColor = c_yellow;
+    } else if( step &gt; tickStep ) {
+        tickColor = c_lime;
+    }
+    var tickRelPos = tickStep / avoidance.Duration;
+    tickRelPos = clamp( tickRelPos, 0, 1 );
+    var tickPxPos = EditSliderLeft + tickRelPos * EditSliderLength;
+    draw_set_color( tickColor );
+    draw_rectangle( tickPxPos, EditSliderY - tickLineHeight / 2, tickPxPos, EditSliderY + tickLineHeight / 2, false );
+}
 
 draw_set_colour( c_white );
 </string>

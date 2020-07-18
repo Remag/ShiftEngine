@@ -172,7 +172,7 @@ game_end();
 IsEnabled = false;
 oSettingsMenu.alarm[0] = 1;
 instance_move_to( oSettingsMenu, xstart, ystart, 30 );
-instance_move_to( id, oSaveSlotMenu.x, oSaveSlotMenu.y, 30 );
+instance_move_to( id, oSaveSlotMenu.xstart, oSaveSlotMenu.ystart, 30 );
 </string>
           </argument>
         </arguments>
@@ -212,7 +212,7 @@ if( isSlot1Fresh &amp;&amp; isSlot2Fresh &amp;&amp; isSlot3Fresh ) {
     oSaveSlotMenu.alarm[0] = 1;
     oSaveSlotMenu.ForceStartNewGame = true;
     instance_move_to( oSaveSlotMenu, xstart, ystart, 30 );
-    instance_move_to( id, oSettingsMenu.x, oSettingsMenu.y, 30 );
+    instance_move_to( id, oSettingsMenu.xstart, oSettingsMenu.ystart, 30 );
 }
 </string>
           </argument>
@@ -259,7 +259,7 @@ if( !isSlot1Fresh &amp;&amp; isSlot2Fresh &amp;&amp; isSlot3Fresh ) {
     oSaveSlotMenu.alarm[0] = 1;
     oSaveSlotMenu.ForceStartNewGame = false;
     instance_move_to( oSaveSlotMenu, xstart, ystart, 30 );
-    instance_move_to( id, oSettingsMenu.x, oSettingsMenu.y, 30 );
+    instance_move_to( id, oSettingsMenu.xstart, oSettingsMenu.ystart, 30 );
 }
 </string>
           </argument>

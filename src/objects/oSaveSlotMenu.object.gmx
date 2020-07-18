@@ -195,7 +195,7 @@ if( OverwriteModePos != -1 ) {
 } else {
     IsEnabled = false;
     oMainMenu.alarm[0] = 1;
-    instance_move_to( oMainMenu, x, y, 30 );
+    instance_move_to( oMainMenu, oMainMenu.xstart, oMainMenu.ystart, 30 );
     instance_move_to( id, xstart, ystart, 30 );
 }
 </string>
@@ -329,8 +329,8 @@ var slotVMargin = slotHMargin;
 // Slot bounding rectangle.
 var rectL = x - bgRectWidth / 2;
 var rectR = x + bgRectWidth / 2;
-var rectT = y;
-var rectB = y + bgRectHeight;
+var rectT = y - bgRectHeight / 2;
+var rectB = y + bgRectHeight / 2;
 draw_set_color( MenuBgColor );
 draw_rectangle( rectL, rectB, rectR, rectT, false );
 draw_set_color( MenuBorderColor );
@@ -433,7 +433,7 @@ draw_set_halign( fa_center );
 draw_set_valign( fa_center );
 draw_set_font( fMenuOptionFont );
 var optionX = x;
-var optionY = y + slotHeight + 50;
+var optionY = rectT + slotHeight + 50;
 var fontColor = OptionColor;
 if( 1 == ActiveOptionPos ) {
     fontColor = ActiveOptionColor;

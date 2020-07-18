@@ -170,6 +170,7 @@
       <script>scripts\instance_rotate_image.gml</script>
       <script>scripts\instance_redirect.gml</script>
       <script>scripts\instance_fade_out.gml</script>
+      <script>scripts\instance_inbounds_check.gml</script>
       <script>scripts\killer_set_active.gml</script>
       <script>scripts\trail_attach.gml</script>
     </scripts>

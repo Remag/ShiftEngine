@@ -128,11 +128,16 @@ if( button_check( global.MenuNextKeyBind ) ) {
     MenuNextHoldStep = 0;
 }
 if( button_check_pressed( global.MenuNextKeyBind ) || ( MenuNextHoldStep &gt;= 23 &amp;&amp; MenuNextHoldStep % 4 == 0 ) ) {
-    for( var optionPos = ActiveOptionPos + 1; optionPos &lt; OptionCount; optionPos++ ) {
-        if( !OptionDisabled[optionPos] ) {
+    var optionPos = ActiveOptionPos + 1;
+    while( true ) {
+        if( optionPos &gt;= OptionCount ) {
+            optionPos = 0;
+        }
+        if( !OptionDisabled[optionPos] || optionPos == ActiveOptionPos ) {
             ActiveOptionPos = optionPos;
             break;
         }
+        optionPos++;
     }
 }
 
@@ -142,11 +147,16 @@ if( button_check( global.MenuPreviousKeyBind ) ) {
     MenuPrevHoldStep = 0;
 }
 if( button_check_pressed( global.MenuPreviousKeyBind ) || ( MenuPrevHoldStep &gt;= 23 &amp;&amp; MenuPrevHoldStep % 4 == 0 ) ) {
-    for( var optionPos = ActiveOptionPos - 1; optionPos &gt;= 0; optionPos-- ) {
-        if( !OptionDisabled[optionPos] ) {
+    var optionPos = ActiveOptionPos - 1;
+    while( true ) {
+        if( optionPos &lt; 0 ) {
+            optionPos = OptionCount - 1;
+        }
+        if( !OptionDisabled[optionPos] || optionPos == ActiveOptionPos ) {
             ActiveOptionPos = optionPos;
             break;
-        }
+        }   
+        optionPos--;
     }
 }
 
@@ -314,7 +324,7 @@ draw_set_color_write_enable( true, true, true, true );
 
 surface_reset_target();
 var rLeft = x - RectWidth / 2;
-var rTop = y - lineHeight / 2 - menuMargin;
+var rTop = y - RectHeight / 2;
 draw_surface_ext( MenuSurface, rLeft, rTop, image_xscale, image_yscale, image_angle, image_blend, image_alpha );
 draw_set_alpha( 1 );
 </string>

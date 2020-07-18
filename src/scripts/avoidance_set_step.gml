@@ -1,3 +1,4 @@
+/// avoidance_set_step( newStep )
 var newStep = argument0;
 with( oAvoidanceEntity ) {
     instance_destroy();

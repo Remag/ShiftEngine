@@ -153,6 +153,13 @@ if( button_check_pressed( global.MenuNextKeyBind ) || ( MenuNextHoldStep &gt;= 2
         ActiveOptionPos = OptionCount - 1;
     } else if( ActiveOptionPos &lt; OptionCount - 1 ) {
         ActiveOptionPos++;
+    } else {
+        // Jump to the first option on an active column.
+        var menuPos = 0;
+        for( var i = 0; i &lt; ActiveColumnPos; i++ ) {
+            menuPos += ColumnKeyCount[i];
+        }
+        ActiveOptionPos = menuPos;
     }
 }
 
@@ -163,6 +170,7 @@ if( button_check( global.MenuPreviousKeyBind ) ) {
 }
 if( button_check_pressed( global.MenuPreviousKeyBind ) || ( MenuPrevHoldStep &gt;= 23 &amp;&amp; MenuPrevHoldStep % 4 == 0 ) ) {
     if( ActiveOptionPos == OptionCount - 1 ) {
+        // Jump to the bottom option of an active column.
         var menuPos = 0;
         for( var i = 0; i &lt; ActiveColumnPos; i++ ) {
             menuPos += ColumnKeyCount[i];
@@ -175,6 +183,8 @@ if( button_check_pressed( global.MenuPreviousKeyBind ) || ( MenuPrevHoldStep &gt
         }
         if( columnPos &gt; 0 ) {
             ActiveOptionPos--;
+        } else {
+            ActiveOptionPos = OptionCount - 1;
         }
     }
 }
@@ -244,7 +254,7 @@ if( button_check_pressed( global.MenuDecreaseKeyBind ) || MenuDecHoldStep &gt;= 
 IsEnabled = false;
 IsKeyScanActive = false;
 oSettingsMenu.alarm[0] = 1;
-instance_move_to( oSettingsMenu, x, y, 30 );
+instance_move_to( oSettingsMenu, oMainMenu.xstart, oMainMenu.ystart, 30 );
 instance_move_to( id, xstart, ystart, 30 );
 </string>
           </argument>
@@ -305,7 +315,7 @@ var menuHeight = lineHeight * ( HighKeyCount + 1 );
 var menuVMargin = ( RectHeight - menuHeight ) / 2;
 var rLeft = x - RectWidth / 2;
 var rRight = rLeft + RectWidth;
-var rTop = y - lineHeight / 2 - menuVMargin;
+var rTop = y - RectHeight / 2;
 var rBottom = rTop + RectHeight;
 
 var menuHMargin = ( RectWidth - ColumnCount * ValueOptionLineWidth ) / ( ColumnCount + 1 )
@@ -330,7 +340,7 @@ for( var i = 0; i &lt; KeybindCount; i++ ) {
         columnPos -= ColumnKeyCount[j];
     }
     var optionX = menuLeft + columnIndex * lineWidth;
-    var optionY = y + columnPos * lineHeight;
+    var optionY = rTop + menuVMargin + columnPos * lineHeight;
     var fontColor = OptionColor;
     var keyValueStr = get_virtual_key_name( KeyCodes[i] );
     var keyValueWidth = string_width( keyValueStr );
@@ -358,7 +368,7 @@ draw_set_font( fMenuOptionFont );
 draw_set_halign( fa_center );
 draw_set_valign( fa_center );
 var optionX = x;
-var optionY = y + lineHeight * HighKeyCount + 40;
+var optionY = rTop + menuVMargin + lineHeight * HighKeyCount + 40;
 var fontColor = OptionColor;
 if( OptionCount - 1 == ActiveOptionPos ) {
     fontColor = ActiveOptionColor;

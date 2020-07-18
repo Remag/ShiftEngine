@@ -198,7 +198,7 @@ event_user( 15 );
 
 IsEnabled = false;
 oMainMenu.alarm[0] = 1;
-instance_move_to( oMainMenu, x, y, 30 );
+instance_move_to( oMainMenu, oMainMenu.xstart, oMainMenu.ystart, 30 );
 instance_move_to( id, xstart, ystart, 30 );
 event_user( 14 );
 </string>
@@ -227,8 +227,8 @@ event_user( 14 );
 
 IsEnabled = false;
 oKeyboardControlsMenu.alarm[0] = 1;
-instance_move_to( oKeyboardControlsMenu, x, y, 30 );
-instance_move_to( id, oMainMenu.x, oMainMenu.y, 30 );
+instance_move_to( oKeyboardControlsMenu, oMainMenu.xstart, oMainMenu.ystart, 30 );
+instance_move_to( id, oSaveSlotMenu.xstart, oSaveSlotMenu.ystart, 30 );
 event_user( 14 );
 </string>
           </argument>
