@@ -142,7 +142,7 @@ if( lMousePressed || rMousePressed ) {
             } else if( rMousePressed ) {
                 var timing = timingsList[|timingPos];
                 avoidance_set_step( timing );
-                TableFreezeTiming = oldTiming;
+                TableFreezeTiming = timing;
             }
         }
     }   
