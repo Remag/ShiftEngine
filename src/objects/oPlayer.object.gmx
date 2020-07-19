@@ -402,33 +402,41 @@ update_kid_sprite( prevAnimationState );
             <kind>1</kind>
             <string>/// Death check
 
+if( global.God ) {
+    exit;
+}
+
+var playerId = id;
 var killer = other.id;
+// Check direct killer commands.
 with( oKillerActivationCommand ) {
     if( KillerId == killer ) {
         if( IsActive ) {
-            break;
-        } else {
+            with( playerId ) {
+                player_kill();
+            }
+        }
+        exit;
+    }   
+}
+// Check object killer commands.
+var objectId = killer.object_index;
+do {
+    with( oKillerActivationCommand ) {
+        if( KillerId == objectId ) {
+            if( IsActive ) {
+                with( playerId ) {
+                    player_kill();
+                }
+            }
             exit;
         }
     }
-    // Check the inheritance chain to see if any ids match.
-    var checkId = killer.object_index;
-    do {
-        if( KillerId == checkId ) {
-            if( IsActive ) {
-               break;
-            } else {
-               exit;
-            }
-        }
-        checkId = object_get_parent( checkId );
-    } until( checkId == -100 );
-}
+    objectId = object_get_parent( objectId );
+} until( objectId == -100 );
 
-if( !global.God ) {
-    player_kill();
-}
-
+// No relevant killer commands found, kill the player by default.
+player_kill();
 </string>
           </argument>
         </arguments>
@@ -453,33 +461,41 @@ if( !global.God ) {
             <kind>1</kind>
             <string>/// Death check
 
+if( global.God ) {
+    exit;
+}
+
+var playerId = id;
 var killer = other.id;
+// Check direct killer commands.
 with( oKillerActivationCommand ) {
     if( KillerId == killer ) {
         if( IsActive ) {
-            break;
-        } else {
+            with( playerId ) {
+                player_kill();
+            }
+        }
+        exit;
+    }   
+}
+// Check object killer commands.
+var objectId = killer.object_index;
+do {
+    with( oKillerActivationCommand ) {
+        if( KillerId == objectId ) {
+            if( IsActive ) {
+                with( playerId ) {
+                    player_kill();
+                }
+            }
             exit;
         }
     }
-    // Check the inheritance chain to see if any ids match.
-    var checkId = killer.object_index;
-    do {
-        if( KillerId == checkId ) {
-            if( IsActive ) {
-               break;
-            } else {
-               exit;
-            }
-        }
-        checkId = object_get_parent( checkId );
-    } until( checkId == -100 );
-}
+    objectId = object_get_parent( objectId );
+} until( objectId == -100 );
 
-if( !global.God ) {
-    player_kill();
-}
-
+// No relevant killer commands found, kill the player by default.
+player_kill();
 </string>
           </argument>
         </arguments>
