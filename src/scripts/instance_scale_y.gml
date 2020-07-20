@@ -1,4 +1,5 @@
 /// instance_scale_y( targetId, targetScale, duration, easingFunc = tween_sine_inout )
+// Change the Y scale of an instance or all instances of an object.
 var targetId = argument[0];
 var targetScale = argument[1];
 var duration = argument[2];

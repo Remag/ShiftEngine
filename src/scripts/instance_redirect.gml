@@ -1,4 +1,5 @@
 /// instance_redirect( targetId, targetDirection, duration, easingFunc = tween_sine_inout )
+// Change the direction of an instance or all instances of an object.
 var targetId = argument[0];
 var targetAngle = argument[1];
 var duration = argument[2];

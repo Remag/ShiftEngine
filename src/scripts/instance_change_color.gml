@@ -1,4 +1,6 @@
 /// instance_change_color( targetId, targetColor, duration, easingFunc = tween_linear )
+// Change the color of an instance or all instances of an object.
+// New instance commands override existing ones.
 var targetId = argument[0];
 var targetColor = argument[1];
 var duration = argument[2];

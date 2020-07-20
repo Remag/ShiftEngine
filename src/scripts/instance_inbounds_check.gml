@@ -1,6 +1,5 @@
 /// instance_inbounds_check( instanceId = id )
 // Check if an instance lies within the current room and destroy it if it doesn't.
-
 var instanceId = noone;
 if( argument_count > 0 ) {
     instanceId = argument[0];

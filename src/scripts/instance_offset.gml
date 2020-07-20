@@ -1,4 +1,6 @@
 /// instance_offset( targetId, deltaX, deltaY, duration, easingFunc = tween_sine_inout )
+// Offset an instance or all instances of an object by a given vector.
+// New instance commands override existing ones.
 var targetId = argument[0];
 var deltaX = argument[1];
 var deltaY = argument[2];

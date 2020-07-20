@@ -1,4 +1,6 @@
 /// instance_change_alpha( targetId, targetAlpha, duration, easingFunc = tween_linear )
+// Change the alpha of an instance or all instances of an object.
+// New instance commands override existing ones.
 var targetId = argument[0];
 var targetAlpha = argument[1];
 var duration = argument[2];

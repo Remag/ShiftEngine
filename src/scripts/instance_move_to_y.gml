@@ -1,4 +1,6 @@
 /// instance_move_to_y( targetId, targetY, duration, easingFunc = tween_sine_inout )
+// Move an instance or all instances of an object to a given Y position.
+// New instance commands override existing ones.
 var targetId = argument[0];
 var targetY = argument[1];
 var duration = argument[2];

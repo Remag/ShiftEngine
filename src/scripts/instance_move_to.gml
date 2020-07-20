@@ -1,4 +1,6 @@
 /// instance_move_to( targetId, targetX, targetY, duration, easingFunc = tween_sine_inout )
+// Move an instance or all instances of an object to a given position.
+// New instance commands override existing ones.
 var targetId = argument[0];
 var targetX = argument[1];
 var targetY = argument[2];

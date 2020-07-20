@@ -1,4 +1,5 @@
 /// instance_rotate_image( targetId, targetAngle, duration, easingFunc = tween_sine_inout )
+// Change the image angle of an instance or all instances of an object.
 var targetId = argument[0];
 var targetAngle = argument[1];
 var duration = argument[2];
