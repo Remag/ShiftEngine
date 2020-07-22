@@ -409,7 +409,7 @@ if( global.God ) {
 var playerId = id;
 var killer = other.id;
 // Check direct killer commands.
-with( oKillerActivationCommand ) {
+with( oKillerInstanceActivationCommand ) {
     if( KillerId == killer ) {
         if( IsActive ) {
             with( playerId ) {
@@ -422,7 +422,7 @@ with( oKillerActivationCommand ) {
 // Check object killer commands.
 var objectId = killer.object_index;
 do {
-    with( oKillerActivationCommand ) {
+    with( oKillerObjectActivationCommand ) {
         if( KillerId == objectId ) {
             if( IsActive ) {
                 with( playerId ) {
