@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>PanelX = 48;
-PanelY = 88;
+            <string>PanelXOffset = 48;
+PanelYOffset = 88;
 LineHeight = 32;
 MaxLineDisplayCount = 5;
 CrossRectHWidth = 20;
@@ -58,10 +58,17 @@ TableFreezeTiming = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var avoidance = global.ActiveAvoidance;
+            <string>if( !avoidance_is_playing() ) {
+    instance_destroy();
+    exit;
+}
+var avoidance = global.ActiveAvoidance;
 var step = avoidance.Step;
 var timingsList = oAvoidancePersistentData.TimingsList;
 var timingsCount = ds_list_size( timingsList );
+var panelX = view_xview[0] + PanelXOffset;
+var panelY = view_yview[0] + PanelYOffset;
+
 if( !avoidance.IsPaused ) {
     for( var i = 0; i &lt; timingsCount; i++ ) {  
         var timing = timingsList[|i];   
@@ -109,10 +116,10 @@ if( lMousePressed || rMousePressed ) {
         }
     }
 
-    var mouseLinePos = floor( ( mouse_y - PanelY + 5 ) / LineHeight );
+    var mouseLinePos = floor( ( mouse_y - panelY + 5 ) / LineHeight );
     var timingPos = mouseLinePos + firstTimingPos;
-    var lineLeft = PanelX + SelectionRectLeft;
-    var lineRight = PanelX + SelectionRectRight;
+    var lineLeft = panelX + SelectionRectLeft;
+    var lineRight = panelX + SelectionRectRight;
     if( mouse_x &gt;= lineLeft &amp;&amp; mouse_x &lt; lineRight ) {
         if( mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
             var oldTiming = timingsList[|timingPos];
@@ -172,6 +179,9 @@ if( lMousePressed || rMousePressed ) {
             <string>var timingsList = oAvoidancePersistentData.TimingsList;
 var avoidance = global.ActiveAvoidance;
 var step = avoidance.Step;
+var panelX = view_xview[0] + PanelXOffset;
+var panelY = view_yview[0] + PanelYOffset;
+
 if( TableFreezeTiming != -1 ) {
     step = TableFreezeTiming;
 }
@@ -193,10 +203,10 @@ for( var i = 0; i &lt; count; i++ ) {
             timingColor = merge_color( c_lime, c_white, timingPosition );
             timingAlpha = 1;
         }
-        var lineY = PanelY + displayCount * LineHeight;
+        var lineY = panelY + displayCount * LineHeight;
         var timingStr = 'Step: ' + string( currentStep );
         draw_set_alpha( timingAlpha );
-        draw_text_outline( PanelX, lineY, timingStr, timingColor, c_black );
+        draw_text_outline( panelX, lineY, timingStr, timingColor, c_black );
         displayCount++;
     }
     if( displayCount &gt; MaxLineDisplayCount ) {
@@ -205,10 +215,10 @@ for( var i = 0; i &lt; count; i++ ) {
 }
 
 draw_set_alpha( 1 );
-var mouseLinePos = floor( ( mouse_y - PanelY + 5 ) / LineHeight );
-var lineLeft = PanelX + SelectionRectLeft;
-var lineRight = PanelX + SelectionRectRight;
-var lineTop = PanelY + mouseLinePos * LineHeight - 5;
+var mouseLinePos = floor( ( mouse_y - panelY + 5 ) / LineHeight );
+var lineLeft = panelX + SelectionRectLeft;
+var lineRight = panelX + SelectionRectRight;
+var lineTop = panelY + mouseLinePos * LineHeight - 5;
 var lineBottom = lineTop + LineHeight;
 if( mouse_x &gt;= lineLeft &amp;&amp; mouse_x &lt; lineRight + 2 * CrossRectHWidth &amp;&amp; mouseLinePos &gt;= 0 &amp;&amp; mouseLinePos &lt; displayCount ) {
     draw_set_color( c_white );

@@ -1,3 +1,5 @@
+/// avoidance_finish()
+// Stop the current avoidance and its music.
 var avoidance = global.ActiveAvoidance;
 with( avoidance ) {
     global.ActiveAvoidance = PreviousActiveAvoidance;

@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -49,6 +49,11 @@
           <argument>
             <kind>1</kind>
             <string>/// General hotkeys
+if( !avoidance_is_playing() ) {
+    instance_destroy();
+    exit;
+}
+
 var avoidance = global.ActiveAvoidance;
 if( button_check_pressed( global.AvoidancePause ) ) {
     avoidance.IsPaused = !avoidance.IsPaused;   

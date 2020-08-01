@@ -137,6 +137,7 @@
     </scripts>
     <scripts name="avoidance">
       <script>scripts\avoidance_start.gml</script>
+      <script>scripts\avoidance_is_playing.gml</script>
       <script>scripts\avoidance_finish.gml</script>
       <script>scripts\avoidance_set_step.gml</script>
       <script>scripts\avoidance_get_step.gml</script>
@@ -173,6 +174,7 @@
       <script>scripts\instance_inbounds_check.gml</script>
       <script>scripts\killer_set_active.gml</script>
       <script>scripts\trail_attach.gml</script>
+      <script>scripts\instance_set_scale.gml</script>
     </scripts>
     <scripts name="easing">
       <scripts name="return">

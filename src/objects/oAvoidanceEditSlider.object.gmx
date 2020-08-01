@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,12 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>EditSliderY = 48;
-
-var editMargin = 64;
-EditSliderLeft = editMargin;
-EditSliderRight = view_wview[0] - editMargin;
-EditSliderLength = EditSliderRight - EditSliderLeft;
+            <string>SliderHMargin = 64;
+SliderVMargin = 48;
 
 ActiveTickPos = -1;
 </string>
@@ -55,9 +51,20 @@ ActiveTickPos = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Find an active tick.
+            <string>if( !avoidance_is_playing() ) {
+    instance_destroy();
+    exit;
+}
+
+// Find an active tick.
+
+var editSliderY = view_yview[0] + SliderVMargin;
+var editSliderLeft = view_xview[0] + SliderHMargin;
+var editSliderRight = view_xview[0] + view_wview[0] - SliderHMargin;
+var editSliderLength = editSliderRight - editSliderLeft;
+
 var avoidance = global.ActiveAvoidance;
-var mouseDeltaY = abs( mouse_y - EditSliderY );
+var mouseDeltaY = abs( mouse_y - editSliderY );
 var bestTickPos = -1;
 if( mouseDeltaY &lt; 24 ) {
     var timingsList = oAvoidancePersistentData.TimingsList;
@@ -67,7 +74,7 @@ if( mouseDeltaY &lt; 24 ) {
         var tickStep = timingsList[|i];
         var tickRelPos = tickStep / avoidance.Duration;
         tickRelPos = clamp( tickRelPos, 0, 1 );
-        var tickPxPos = EditSliderLeft + tickRelPos * EditSliderLength;
+        var tickPxPos = editSliderLeft + tickRelPos * editSliderLength;
         var mouseDeltaX = abs( mouse_x - tickPxPos );
         if( mouseDeltaX &lt;= bestTickDelta ) {
             bestTickPos = i;
@@ -79,8 +86,8 @@ ActiveTickPos = bestTickPos;
 
 if( mouse_check_button_pressed( mb_left ) ) {
     if( mouseDeltaY &lt; 24 ) {
-        var clickPosX = mouse_x - EditSliderLeft;
-        var relPos = clickPosX / EditSliderLength;
+        var clickPosX = mouse_x - editSliderLeft;
+        var relPos = clickPosX / editSliderLength;
         if( ActiveTickPos != -1 ) {
             relPos = ( timingsList[|ActiveTickPos] - 1 ) / avoidance.Duration;
         }
@@ -115,24 +122,29 @@ if( mouse_check_button_pressed( mb_left ) ) {
             <string>var avoidance = global.ActiveAvoidance;
 var step = avoidance.Step;
 
+var editSliderY = view_yview[0] + SliderVMargin;
+var editSliderLeft = view_xview[0] + SliderHMargin;
+var editSliderRight = view_xview[0] + view_wview[0] - SliderHMargin;
+var editSliderLength = editSliderRight - editSliderLeft;
+
 var relPos = step / avoidance.Duration;
 relPos = clamp( relPos, 0, 1 );
-var pxOffset = relPos * EditSliderLength;
+var pxOffset = relPos * editSliderLength;
 
-var sliderBarX = EditSliderLeft + pxOffset;
-var sliderBarY = EditSliderY;
+var sliderBarX = editSliderLeft + pxOffset;
+var sliderBarY = editSliderY;
 var sliderBarWidth = 4;
 var sliderBarHeight = 20;
 var tickLineHeight = 40;
 
 var sliderLineRadius = 2;
-var sliderLeftLineWidth = pxOffset - EditSliderLeft;
+var sliderLeftLineWidth = pxOffset - editSliderLeft;
 var sliderLeftLineHeight = 2;
 
 draw_set_colour( c_white );
-draw_rectangle( sliderBarX, EditSliderY - sliderLineRadius, EditSliderRight, EditSliderY + sliderLineRadius, false );
+draw_rectangle( sliderBarX, editSliderY - sliderLineRadius, editSliderRight, editSliderY + sliderLineRadius, false );
 draw_set_colour( c_lime );
-draw_rectangle( EditSliderLeft, EditSliderY - sliderLineRadius, sliderBarX, EditSliderY + sliderLineRadius, false );
+draw_rectangle( editSliderLeft, editSliderY - sliderLineRadius, sliderBarX, editSliderY + sliderLineRadius, false );
 draw_set_colour( c_white );
 draw_rectangle( sliderBarX - sliderBarWidth / 2, sliderBarY + sliderBarHeight / 2, sliderBarX + sliderBarWidth / 2, sliderBarY - sliderBarHeight / 2, false );
 
@@ -149,9 +161,9 @@ for( var i = 0; i &lt; count; i++ ) {
     }
     var tickRelPos = tickStep / avoidance.Duration;
     tickRelPos = clamp( tickRelPos, 0, 1 );
-    var tickPxPos = EditSliderLeft + tickRelPos * EditSliderLength;
+    var tickPxPos = editSliderLeft + tickRelPos * editSliderLength;
     draw_set_color( tickColor );
-    draw_rectangle( tickPxPos, EditSliderY - tickLineHeight / 2, tickPxPos, EditSliderY + tickLineHeight / 2, false );
+    draw_rectangle( tickPxPos, editSliderY - tickLineHeight / 2, tickPxPos, editSliderY + tickLineHeight / 2, false );
 }
 
 draw_set_colour( c_white );

@@ -10,6 +10,8 @@ if( button_check_pressed( global.GameResetKeyBind ) ) {
         // Destroy all instances.
         instance_destroy(); 
     }
+    // Mute sound.
+    audio_stop_all();
     // Goto init.
     room_goto( rInit ); 
 }

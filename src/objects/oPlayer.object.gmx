@@ -402,10 +402,6 @@ update_kid_sprite( prevAnimationState );
             <kind>1</kind>
             <string>/// Death check
 
-if( global.God ) {
-    exit;
-}
-
 var playerId = id;
 var killer = other.id;
 // Check direct killer commands.
@@ -460,11 +456,6 @@ player_kill();
           <argument>
             <kind>1</kind>
             <string>/// Death check
-
-if( global.God ) {
-    exit;
-}
-
 var playerId = id;
 var killer = other.id;
 // Check direct killer commands.

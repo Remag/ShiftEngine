@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -48,7 +48,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MusicVolumeAlpha -= 0.05;
+            <string>if( !avoidance_is_playing() ) {
+    instance_destroy();
+    exit;
+}
+MusicVolumeAlpha -= 0.05;
 </string>
           </argument>
         </arguments>
@@ -73,8 +77,8 @@
             <kind>1</kind>
             <string>if( global.Debug ) {
     var avoidance = global.ActiveAvoidance;
-    var panelX = view_wview[0] - 200;
-    var panelY = 88;
+    var panelX = view_xview[0] + view_wview[0] - 200;
+    var panelY = view_yview[0] + 88;
     var lineHeight = 16;
     
     var step = avoidance.Step;
@@ -82,18 +86,18 @@
     draw_set_halign( fa_left );
     draw_set_valign( fa_top );
     draw_text_outline( panelX, panelY, "Frame: " + string( step ), c_white, c_black );
-    var secondsCount = floor( step / 50 mod 60 );
+    var secondsCount = floor( ( step / room_speed ) mod 60 );
     var secondsStr;
     if( secondsCount &lt; 10 ) {
         secondsStr = '0' + string( secondsCount );
     } else {
         secondsStr = string( secondsCount );
     }
-    draw_text_outline( panelX, panelY + lineHeight, "Time: " + string( floor( step / 50 / 60 ) ) + ":" + string( secondsStr ), c_white, c_black );
+    draw_text_outline( panelX, panelY + lineHeight, "Time: " + string( floor( step / room_speed / 60 ) ) + ":" + string( secondsStr ), c_white, c_black );
     draw_text_outline( panelX, panelY + 2 * lineHeight, "Count: " + string( instance_count ), c_white, c_black );
     
-    var volumeX = 350;
-    var volumeY = 88;
+    var volumeX = view_xview[0] + 350;
+    var volumeY = view_yview[0] + 88;
     draw_set_alpha( MusicVolumeAlpha );
     var volumeLevel = round( 100 * avoidance.MusicVolume );
     draw_text_outline( volumeX, volumeY, "Music: " + string( volumeLevel ) + "%", c_lime, c_black );
