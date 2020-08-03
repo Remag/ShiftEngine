@@ -14,4 +14,3 @@ with( oAvoidanceTimingTable ) {
     instance_destroy();
 }
 global.ActiveAvoidance = noone;
-audio_stop_all();
