@@ -78,7 +78,6 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="internal">
-      <script>scripts\init.gml</script>
       <script>scripts\init_settings.gml</script>
       <script>scripts\load_metadata.gml</script>
       <script>scripts\save_metadata.gml</script>
@@ -198,6 +197,7 @@
       <script>scripts\tween_linear.gml</script>
       <script>scripts\oscillate_sine.gml</script>
     </scripts>
+    <script>scripts\init.gml</script>
     <script>scripts\init_controls.gml</script>
   </scripts>
   <fonts name="fonts">
