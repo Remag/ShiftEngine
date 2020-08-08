@@ -34,14 +34,16 @@ HFrameStep = 0;
 // Instance Variables.
 GravityDir = 1;
 Gravity = 0.4;
-Jump1 = 8.5;
-Jump2 = 7;
+Jump1 = 5.667;
+Jump2 = 4.667;
 OnPlatform = false;
 Frozen = false;
 AirJumpCount = 1;
 CurrentAirJumpCount = AirJumpCount;
-Hscap = 3;
-Vscap = 9;
+Hscap = 2;
+Vscap = 6;
+VKeyDeltas[0] = 0;
+PrevVKeyDelta = 0;
 set_mask();
 Dir = 1;
 LastMoveDir = 1;
@@ -64,7 +66,9 @@ SQuarterStep = sPlayerQuarterStep;
 SFallStart = sPlayerFallStart;
 
 sprite_index = SIdle; // Ensuring it's the right sprite from creation
-image_speed = 0.135;
+IdleImageSpeed = 0.084;
+MovementImageSpeed = 0.209;
+image_speed = IdleImageSpeed;
 </string>
           </argument>
         </arguments>
@@ -199,11 +203,6 @@ if( !OnPlatform ) {
 // Conveyor Magic.
 if( floorConveyor != noone ) {
     hspeed += floorConveyor.Cspeed; 
-}
-// Vspeed capping.
-if( abs( vspeed ) &gt; Vscap ) {
-    vspeed = sign( vspeed ) * Vscap; 
-    HFrameStep = 0;
 }
 
 // Player controlled movement.
@@ -362,19 +361,33 @@ if( !global.God &amp;&amp; global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_widt
 
 // Calculate key frames for vertical movement.
 if( HFrameStep == 0 ) {
-    var classicDelta1 = vspeed + Gravity;
-    var classicDelta2 = vspeed + 2 * Gravity;
-    HFrameDelta1 = 2 * classicDelta1 / 3;
-    HFrameDelta2 = classicDelta1 / 3 + classicDelta2 / 3;
-    HFrameDelta3 = 2 * classicDelta2 / 3;
-    vspeed = 3 * HFrameDelta1 / 2;
-    HFrameStep++;
-} else if( HFrameStep == 1 ) {
-    vspeed = 3 * HFrameDelta2 / 2;
-    HFrameStep++;
-} else if( HFrameStep == 2 ) {
-    vspeed = 3 * HFrameDelta3 / 2;
+    var timeModifier = 120 / 50;
+    var spaceModifier = 1280 / 800;
+    var adjustedSpeed = vspeed * timeModifier;
+    var adjustedGrav = Gravity * spaceModifier;
+    VKeyDeltas[1] = adjustedSpeed + adjustedGrav;
+    VKeyDeltas[2] = VKeyDeltas[1] + adjustedSpeed + 2 * adjustedGrav;
+    VKeyDeltas[3] = VKeyDeltas[2] + adjustedSpeed + 3 * adjustedGrav;
+    VKeyDeltas[4] = VKeyDeltas[3] + adjustedSpeed + 4 * adjustedGrav;
+    VKeyDeltas[5] = VKeyDeltas[4] + adjustedSpeed + 5 * adjustedGrav;
+    PrevVKeyDelta = 0;
+}
+HFrameStep++;
+if( HFrameStep == 12 ) {
     HFrameStep = 0;
+    vspeed = VKeyDeltas[5] - PrevVKeyDelta;
+} else {
+    var framePos = HFrameStep * 5 / 12;
+    var keyPos = floor( framePos );
+    var fractPos = frac( framePos );
+    var newKDelta = lerp( VKeyDeltas[keyPos], VKeyDeltas[keyPos + 1], fractPos );
+    vspeed = newKDelta - PrevVKeyDelta;
+    PrevVKeyDelta = newKDelta;
+}
+
+// Vspeed capping.
+if( abs( vspeed ) &gt; Vscap ) {
+    vspeed = sign( vspeed ) * Vscap;
 }
 
 update_kid_sprite( prevAnimationState );

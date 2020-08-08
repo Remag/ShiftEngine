@@ -23,34 +23,34 @@ if( AnimationDir != Dir ) {
 var baseSprite;
 if( AnimationState == 0 ) {
     // Idle.
-    image_speed = 0.135;
+    image_speed = IdleImageSpeed;
     baseSprite = SIdle;
     
 } else if( AnimationState == 1 ) {
     // Running.
     baseSprite = SRun;
-    image_speed = 0.335;
+    image_speed = MovementImageSpeed;
 
 } else if( AnimationState == 2 ) {
     // Jumping.
     baseSprite = SJump;
-    image_speed = 0.335;
+    image_speed = MovementImageSpeed;
 
 } else if( AnimationState == 3 ) {
     // Falling.
     if( AnimationStep <= 12 && SFallStart >= 0 ) {
         baseSprite = SFallStart;
         image_speed = 0;  
-        image_index = min( AnimationStep * 0.334, 3 );
+        image_index = min( AnimationStep * MovementImageSpeed, 3 );
     } else {
         baseSprite = SFall;
-        image_speed = 0.335;
+        image_speed = MovementImageSpeed;
     } 
 
 } else if( AnimationState == 4 ) {
     // Sliding.
     baseSprite = SSlide;
-    image_speed = 0.335;
+    image_speed = MovementImageSpeed;
 }
 
 // Choose directed sprite from base sprite and animation direction.
