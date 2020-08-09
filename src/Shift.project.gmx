@@ -73,7 +73,7 @@
     </sprites>
   </sprites>
   <backgrounds name="background">
-    <background>background\guyTiles</background>
+    <background>background\tGuyTiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">

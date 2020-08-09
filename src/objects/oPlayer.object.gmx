@@ -260,8 +260,8 @@ if( !Frozen ) {
         if( instance_number( oBullet ) &lt; global.BulletCap ) {
             with( instance_create( x, y - 3, oBullet ) ) { // Create bullet
                 Shooter = other.id;
-                hspeed = other.Dir * 16; // Set speed (16px/f)
-                alarm[0] = 60; // Destroy in 60 frames
+                hspeed = other.Dir * 11; // Set speed (16px/f)
+                alarm[0] = 96; // Destroy in 96 frames
                 play_sound( seShoot ); // Play sound
             }
         }
@@ -291,12 +291,12 @@ if( onVineL || onVineR ) {
             // Jumping off from vines.
             // Jumpoff hspeed.
             if( onVineR ) {
-                hspeed = -15;
+                hspeed = -10;
             } else {
-                hspeed = 15;
+                hspeed = 10;
             } 
             // Jumpoff vspeed.
-            vspeed = -9 * GravityDir; 
+            vspeed = -6 * GravityDir; 
             // Play vine-jump sound.
             play_sound( seJump3 ); 
             // Jumping sprite.
@@ -304,9 +304,9 @@ if( onVineL || onVineR ) {
         } else {
             // Falling off from vines.
             if( onVineR ) {
-                hspeed = -3; 
+                hspeed = -2; 
             } else {
-                hspeed = 3;
+                hspeed = 2;
             }
             AnimationState = 3;
         }
@@ -362,7 +362,7 @@ if( !global.God &amp;&amp; global.KillPlayerOnEdge &amp;&amp; ( x &gt; room_widt
 // Calculate key frames for vertical movement.
 if( HFrameStep == 0 ) {
     var timeModifier = 120 / 50;
-    var spaceModifier = 1280 / 800;
+    var spaceModifier = 1250 / 800;
     var adjustedSpeed = vspeed * timeModifier;
     var adjustedGrav = Gravity * spaceModifier;
     VKeyDeltas[1] = adjustedSpeed + adjustedGrav;
@@ -647,7 +647,7 @@ draw_sprite_ext( sprite_index, image_index, xd, yd, image_xscale * Dir,
     image_yscale * GravityDir, image_angle, image_blend, image_alpha * alpha );
 
 if( global.DrawHitbox ) {
-    draw_sprite_ext( mask_index, image_index, x, y, image_xscale,
+    draw_sprite_ext( mask_index, image_index, x, round( y ), image_xscale,
         image_yscale, image_angle, image_blend, image_alpha * alpha * 0.8 );
 }
 

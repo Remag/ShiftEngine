@@ -81,9 +81,9 @@ instance_destroy();
 
 repeat( 30 ) {
     with( instance_create(x, y, oPlayerBlood ) ) {
-        gravity = ( 0.1 + random( 0.2 ) ) * other.GravityDir;
+        gravity = ( 0.08 + random( 0.15 ) ) * other.GravityDir;
         direction = random( 360 );
-        speed = random( 8 );
+        speed = random( 5 );
     }
 }
 
