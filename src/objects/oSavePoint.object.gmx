@@ -26,15 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>/// Variables
-Difficulty = 2; // Difficulty max - Shows up at VeryHard &amp; Below
 Grav = image_yscale; // Normal Gravity
 
 image_speed = 0;
 Cooldown = false;
 
-if( global.Difficulty &gt; Difficulty ) {
-    instance_destroy();
-}
 
 </string>
           </argument>
@@ -105,7 +101,7 @@ if( !Cooldown &amp;&amp; instance_exists( oPlayer ) ) {
        alarm[0] = 30;
        image_index = 1;
        image_speed = 0.017;
-       save_game(); 
+       game_save_player(); 
     }
 }   
 

@@ -6,8 +6,8 @@ if( global.God ) {
 }
 oWorld.DeathCount++;
 update_title();
-if( !get_game_value( "engine.freshSave" ) ) {
-    save_stats();
+if( !game_get_value( "engine.freshSave" ) ) {
+    game_save_stats();
 }
 if( global.CurrentBGM != noone ) {
     audio_pause_sound( global.InstanceBGM );

@@ -38,8 +38,8 @@ Jump1 = 5.667;
 Jump2 = 4.667;
 OnPlatform = false;
 Frozen = false;
-AirJumpCount = 1;
-CurrentAirJumpCount = AirJumpCount;
+MaxAirJumpCount = 1;
+CurrentAirJumpCount = MaxAirJumpCount;
 Hscap = 2;
 Vscap = 6;
 VKeyDeltas[0] = 0;
@@ -232,12 +232,12 @@ if( !Frozen ) {
         var touchingWater3 = inWater3 || place_meeting( x, y + GravityDir, oWater3 );
         if( OnPlatform || abovePlatform || aboveBlock || touchingWater1 ) {
             vspeed = -Jump1; // First jump
-            CurrentAirJumpCount = AirJumpCount; // Make sure you can air jump afterwards
+            CurrentAirJumpCount = MaxAirJumpCount; // Make sure you can air jump afterwards
             HFrameStep = 0;
             play_sound( seJump ); // Jump sound
         } else if( CurrentAirJumpCount != 0 || global.DebugInfiniteJump || touchingWater2 || touchingWater3 ) { 
             if( touchingWater3 ) {
-                CurrentAirJumpCount = AirJumpCount;
+                CurrentAirJumpCount = MaxAirJumpCount;
             } else if( touchingWater2 ) {
                 CurrentAirJumpCount = max( 0, CurrentAirJumpCount - 1 );
             } else {
@@ -530,7 +530,7 @@ if( GravityDir == 1 ) {
         vspeed = other.vspeed;
         HFrameStep = 0;
         OnPlatform = true;
-        CurrentAirJumpCount = AirJumpCount;
+        CurrentAirJumpCount = MaxAirJumpCount;
     }
 } else {
     if( y - vspeed / 2 &gt;= other.y + 23 ) {
@@ -538,7 +538,7 @@ if( GravityDir == 1 ) {
         vspeed = other.vspeed;
         HFrameStep = 0;
         OnPlatform = true;
-        CurrentAirJumpCount = AirJumpCount;
+        CurrentAirJumpCount = MaxAirJumpCount;
     }
 }
 
@@ -590,7 +590,7 @@ if( verticalCollision ) {
     
     var isLanding = ( GravityDir == 1 &amp;&amp; vspeed &gt;= 0 ) || ( GravityDir == -1 &amp;&amp; vspeed &lt;= 0 );
     if( isLanding ) {
-        CurrentAirJumpCount = AirJumpCount;
+        CurrentAirJumpCount = MaxAirJumpCount;
     }
     vspeed = 0;
     HFrameStep = 0;

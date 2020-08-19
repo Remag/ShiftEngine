@@ -19,7 +19,7 @@ world.TimeSeconds = world.SaveData[? "engine.time"];
 update_title();
 
 // Start the loaded game.
-if( !restart_game() ) {
+if( !game_reload_world() ) {
     delete_save_data( slotIndex );
     initialize_game( slotIndex );
 }

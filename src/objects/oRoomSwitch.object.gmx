@@ -28,7 +28,11 @@
             <string>/// Setup
 
 RoomTo = noone;
+EntranceTo = 0;
 Autosave = false;
+
+PreserveAirJumps = false;
+PreserveGravity = false;
 
 </string>
           </argument>
@@ -54,8 +58,20 @@ Autosave = false;
             <kind>1</kind>
             <string>/// Go to room
 if( room_exists( RoomTo ) ) {
-    if( Autosave ) {
-        global.Autosave = true;
+    var entranceData = instance_create( 0, 0, oPlayerEntranceData );
+    entranceData.Autosave = Autosave;
+    entranceData.EntranceId = EntranceTo;
+    entranceData.Dir = other.Dir;
+    entranceData.MaxAirJumpCount = other.MaxAirJumpCount;
+    if( PreserveAirJumps ) {
+        entranceData.CurrentAirJumpCount = other.CurrentAirJumpCount;
+    } else {
+        entranceData.CurrentAirJumpCount = other.MaxAirJumpCount;
+    }
+    if( PreserveGravity ) {
+        entranceData.GravityDir = other.GravityDir;
+    } else {
+        entranceData.GravityDir = 0;
     }
     room_goto( RoomTo );
 } else {

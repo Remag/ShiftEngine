@@ -123,7 +123,7 @@ if( button_check_pressed( global.ExitKeyBind ) ) {
 }
 // Restart the room.
 if( button_check_pressed( global.RestartKeyBind ) ) {
-    restart_game();
+    game_reload_world();
 }
 // Debug hotkeys.
 if( global.Debug ) {
@@ -134,7 +134,7 @@ if( global.Debug ) {
     
     // Save state.
     if( button_check_pressed( global.SaveDebugKeyBind ) ) {
-        save_game();
+        game_save_player();
         play_sound( seShoot );
     }
     

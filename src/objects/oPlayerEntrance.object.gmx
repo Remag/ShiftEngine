@@ -50,32 +50,48 @@
             <kind>1</kind>
             <string>/// Create Player
 
-var shouldLoadFromHere;
-if( instance_exists( oPlayerEntranceData ) ) {
-    // Check entrance data to see if we load from this spot.
-    shouldLoadFromHere = oPlayerEntranceData.EntranceId == EntranceId;
-} else {
-    // No entrance data, use the default loading spot.
-    shouldLoadFromHere = ( EntranceId == 0 );
-}
-
-if( shouldLoadFromHere &amp;&amp; !instance_exists( oPlayer ) ) {
-    var player = instance_create( x + 26 * sign( image_xscale ), y + 35, oPlayer );
-    // Invert horizontally in editor to spawn facing left.
-    if( image_xscale &lt; 0 ) {
-        player.Dir = -1;
-    }
-    // Autosaving.
-    if( global.Autosave ) {
-        save_game();
-        global.Autosave = false;
-    }
-    with( oPlayerEntranceData ) { instance_destroy(); }
-    with( oPlayerEntrance ) { instance_destroy(); }   
-} else {
+if( instance_exists( oPlayerLoadData ) ) {
     instance_destroy();
+    exit;
 }
 
+var playerOffsetX = 27;
+var playerOffsetY = 36;
+if( !instance_exists( oPlayerEntranceData ) ) {
+    if( EntranceId == 0 ) {
+        // Default load.
+        var loadDir = sign( image_xscale );
+        var player = instance_create( x + playerOffsetX * loadDir, y + playerOffsetY, oPlayer );
+        player.Dir = loadDir;
+        with( oPlayerEntrance ) {
+            if( id != other.id ) {
+                instance_destroy();
+            }
+        }       
+    }
+} else if( oPlayerEntranceData.EntranceId == EntranceId ) {
+    // Entrance load.
+    var loadDir = oPlayerEntranceData.Dir;
+    var gravDir = oPlayerEntranceData.GravityDir;
+    var player = instance_create( x + playerOffsetX * loadDir, y + playerOffsetY, oPlayer );
+    if( gravDir != 0 ) {
+        player.GravityDir = gravDir;
+    }
+    player.MaxAirJumpCount = oPlayerEntranceData.MaxAirJumpCount;
+    player.CurrentAirJumpCount = oPlayerEntranceData.CurrentAirJumpCount;
+    if( oPlayerEntranceData.Autosave ) {
+        game_save_player();
+    }
+    with( oPlayerEntranceData ) {
+        instance_destroy();
+    }
+    with( oPlayerEntrance ) {
+        if( id != other.id ) {
+            instance_destroy();
+        }
+    }
+}
+instance_destroy();
 
 </string>
           </argument>

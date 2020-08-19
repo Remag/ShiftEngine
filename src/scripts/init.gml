@@ -22,8 +22,6 @@ global.TimeWhileDead = false; // Determines if time should advance while the pla
 global.ShowVineParticles = true; // Determines if decorative particles spawn during player slide animation.
 
 /// [Internal]
-global.Autosave = false; // Makes the player save(true) on next creation
-global.Difficulty = 0; // Not really implemented - only used in saves
 global.IsPaused = false; // Determines if the game is paused
 global.TimeTicking = true; // Determines if time should be incrementing
 global.WindowTitle = "ShiftEngine Game";

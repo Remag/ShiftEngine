@@ -112,16 +112,18 @@
     <scripts name="player">
       <script>scripts\player_kill.gml</script>
       <script>scripts\player_flip.gml</script>
-      <script>scripts\player_set_air_jump_count.gml</script>
+      <script>scripts\player_set_max_air_jumps.gml</script>
       <script>scripts\room_set_infinite_jump.gml</script>
     </scripts>
     <scripts name="saves">
-      <script>scripts\restart_game.gml</script>
-      <script>scripts\save_game.gml</script>
-      <script>scripts\save_stats.gml</script>
-      <script>scripts\get_game_value.gml</script>
-      <script>scripts\get_game_flag.gml</script>
-      <script>scripts\set_game_value.gml</script>
+      <script>scripts\game_reload_world.gml</script>
+      <script>scripts\game_save_player.gml</script>
+      <script>scripts\game_save_stats.gml</script>
+      <script>scripts\game_get_value.gml</script>
+      <script>scripts\game_get_flag.gml</script>
+      <script>scripts\game_set_value.gml</script>
+      <script>scripts\game_set_clear.gml</script>
+      <script>scripts\game_get_clear.gml</script>
     </scripts>
     <scripts name="controls">
       <script>scripts\register_keybind.gml</script>
@@ -174,6 +176,7 @@
       <script>scripts\killer_set_active.gml</script>
       <script>scripts\trail_attach.gml</script>
       <script>scripts\instance_set_scale.gml</script>
+      <script>scripts\instance_bounce_block.gml</script>
     </scripts>
     <scripts name="easing">
       <scripts name="return">
@@ -286,6 +289,7 @@
         <object>objects\oBullet</object>
         <object>objects\oPlayer</object>
         <object>objects\oPlayerEntranceData</object>
+        <object>objects\oPlayerLoadData</object>
         <object>objects\oPlayerEntrance</object>
       </objects>
       <objects name="triggers">
